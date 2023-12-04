@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button>Check In</button>
+        <button v-on:click="sendCheckIn">Check In</button>
         <button>Check Out</button>
 
     </div>
@@ -30,7 +30,20 @@ export default {
         },
         setUserId() {
             this.CheckInOut.userId = this.$store.getters.getUserId;
+        },
+        sendCheckIn() {
+            this.getCurrentTime(),
+                this.setCheckInTime(),
+                this.setUserId(),
+                CheckInOutService.checkIn(this.CheckInOut)
+                    .then(response => {
+                        if (response.status === 201) {
+                            //we are successful
+                            console.log(response.data);
+                        }
+                    })
         }
+
     }
 }
 

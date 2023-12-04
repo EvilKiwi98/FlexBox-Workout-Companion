@@ -2,12 +2,12 @@ import axios from 'axios';
 
 export default {
 
-  checkIn(user) {
-    return axios.post('/CheckIn', user)
+  checkIn(CheckInOut) {
+    return axios.post('/CheckIn', CheckInOut)
   },
 
-  checkOut(user) {
-    return axios.put('/CheckOut', user)
+  checkOut(CheckInOut) {
+    return axios.put('/CheckOut', CheckInOut)
   }
 
 }

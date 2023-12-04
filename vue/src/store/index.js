@@ -24,11 +24,11 @@ export function createStore(currentToken, currentUser) {
         state.user = {};
         axios.defaults.headers.common = {};
       },
-      getters: {
-        getUserId: state => state.user.userId || null
-        
-      }
     },
+    getters: {
+      getUserId: state => state.user.userId || null
+      
+    }
   });
   return store;
 }
