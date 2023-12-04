@@ -22,6 +22,9 @@ public class CheckInOut {
         this.userVisitId = userVisitId;
     }
 
+    public CheckInOut() {
+    }
+
     public int getUserVisitId() {
         return userVisitId;
     }
