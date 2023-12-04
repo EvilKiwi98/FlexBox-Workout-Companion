@@ -23,6 +23,10 @@ export function createStore(currentToken, currentUser) {
         state.token = '';
         state.user = {};
         axios.defaults.headers.common = {};
+      },
+      getters: {
+        getUserId: state => state.user.userId || null
+        
       }
     },
   });
