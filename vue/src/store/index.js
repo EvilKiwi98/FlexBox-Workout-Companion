@@ -17,6 +17,9 @@ export function createStore(currentToken, currentUser) {
         state.user = user;
         localStorage.setItem('user', JSON.stringify(user));
       },
+      SET_USER_ID(state, userId){
+        state.user.id = userId;
+      },
       LOGOUT(state) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -26,7 +29,7 @@ export function createStore(currentToken, currentUser) {
       },
     },
     getters: {
-      getUserId: state => state.user.userId || null
+      getUserId: state => state.user.id || null
       
     }
   });

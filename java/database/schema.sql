@@ -14,8 +14,8 @@ CREATE TABLE users (
 CREATE TABLE user_visits (
         user_visit_id SERIAL PRIMARY KEY,
         user_id INTEGER,
-        check_in_date TIMESTAMP NOT NULL,
-        check_out_date TIMESTAMP,
+        check_in_date TIMESTAMP WITH TIME ZONE NOT NULL,
+        check_out_date TIMESTAMP WITH TIME ZONE,
         duration INTERVAL,
         FOREIGN KEY (user_id) REFERENCES users(user_id)
     );
