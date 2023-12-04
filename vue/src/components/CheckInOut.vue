@@ -1,11 +1,14 @@
 <template>
     <div>
-        <button @click="toggleCheckInOut">{{ checkInOutLabel }}</button>
-        <p v-if="isCheckedIn">You have check in at: {{ CheckInOut.checkInTime }}</p>
-        <p v-if="!isCheckedIn">You have checked out at: {{ currentTime }}</p>
-
+      <button @click="toggleCheckInOut" :class="{ 'check-btn-in': !isCheckedIn, 'check-btn-out': isCheckedIn }">{{ checkInOutLabel }}</button>
+      <div v-if="isCheckedIn" class="status-message success">
+        <i class="fas fa-check-circle"></i> <span class="check-time">Checked in at: {{ CheckInOut.checkInTime }}</span>
+      </div>
+      <div v-if="!isCheckedIn" class="status-message">
+        <i class="fas fa-info-circle"></i> Checked out at: {{ currentTime }}
+      </div>
     </div>
-</template>
+  </template>
 
 <script>
 import CheckInOutService from '../services/CheckInOutService';
@@ -85,4 +88,59 @@ export default {
 
 
 </script>
-<style></style>
+
+
+<style scoped>
+.check-btn-in,
+.check-btn-out {
+  background-color: #2ecc71; /* Green color for Check In */
+  color: #fff;
+  padding: 25px 50px; /* Increased padding for a bigger button */
+  font-size: 20px; /* Increased font size */
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box shadow for a modern look */
+}
+
+.check-btn-in:hover {
+  background-color: #27ae60; /* Darker green on hover */
+}
+
+.check-btn-out {
+  background-color: #e74c3c; /* Red color for Check Out */
+}
+
+.check-btn-out:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Rest of the styles */
+.status-message {
+  margin-top: 20px;
+  font-size: 16px;
+  text-align: center;
+  padding: 10px;
+}
+
+.check-time {
+  color: black; /* Set the text color to black */
+}
+
+.success {
+  color: #2ecc71;
+}
+
+.fa-check-circle, .fa-info-circle {
+  margin-right: 5px;
+}
+
+.fa-check-circle {
+  color: #2ecc71;
+}
+
+.fa-info-circle {
+  color: #3498db;
+}
+</style>
