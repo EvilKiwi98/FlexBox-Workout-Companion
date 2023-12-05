@@ -81,22 +81,12 @@ export default {
     setUserId() {
       this.exercise.userId = this.$store.getters.getUserId;
     },
-    getExerciseByUserId() {
-      ExerciseService.getExerciseByUserId(this.$store.getters.getUserId).then(
-        (response) => {
-          this.isLoading = false;
-          this.exercises = response.data;
-        }
-      );
-    },
-
     employeeGetExerciseByUserId(userId) {
       ExerciseService.getExerciseByUserId(userId).then((response) => {
         this.isLoading = false;
         this.exercises = response.data;
       });
     },
-
     formatDate(date) {
       const options = { year: "numeric", month: "short", day: "numeric" };
       return new Date(date).toLocaleDateString("en-US", options);
