@@ -58,10 +58,22 @@
   <div>
     <h2>Exercise List</h2>
     <ul class="exercise-list">
-        <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
-          <span class="exercise-name">{{ exercise.exercise_name }}</span>
-          <span class="exercise-date">{{ formatDate(exercise.date) }}</span>
-        </li>
+      <li
+        v-for="exercise in exercises"
+        :key="exercise.exercise_id"
+        class="exercise-item"
+      >
+        <span class="exercise-name">{{ exercise.exerciseName }}</span>
+        <span class="exercise-sets">Sets: {{ exercise.sets }}</span>
+        <span v-show="exercise.mode === 'reps'" class="exercise-reps"
+          >Reps: {{ exercise.reps }}</span
+        >
+        <span v-show="exercise.mode === 'duration'" class="exercise-duration"
+          >Duration: {{ exercise.duration }} mins</span
+        >
+        <span class="exercise-weight">Weight: {{ exercise.weight }} lbs</span>
+        <span class="exercise-date">Date: {{ exercise.date }}</span>
+      </li>
     </ul>
   </div>
 
@@ -72,7 +84,7 @@ import ExerciseService from "../services/ExerciseService.js";
 export default {
   data() {
     return {
-        exercises: [],
+      exercises: [],
       exercise: {
         exerciseName: "",
         userId: "",
@@ -91,18 +103,23 @@ export default {
       ],
     };
   },
-  mounted(){
+  mounted() {
     this.getExerciseByUserId();
   },
   methods: {
     submitExercise() {
       this.setUserId();
-        ExerciseService.addExercise(this.exercise).then((response) => {
-          if (response.status === 200) {
-            console.log(response.data);
-          }
-          this.exercise = {};
-        });
+      if (this.exercise.mode === "reps") {
+        this.exercise.duration = null; // Reset duration if reps mode is selected
+      } else if (this.exercise.mode === "duration") {
+        this.exercise.reps = null; // Reset reps if duration mode is selected
+      }
+      ExerciseService.addExercise(this.exercise).then((response) => {
+        if (response.status === 200) {
+          console.log(response.data);
+        }
+        this.exercise = {};
+      });
     },
     setUserId() {
       this.exercise.userId = this.$store.getters.getUserId;
@@ -112,10 +129,6 @@ export default {
         this.isLoading = false;
         this.exercises = response.data;
       });
-    },
-    formatDate(date) {
-      const options = { year: 'numeric', month: 'short', day: 'numeric' };
-      return new Date(date).toLocaleDateString('en-US', options);
     },
   },
 };
@@ -137,7 +150,7 @@ label {
   padding: 0;
 }
 .exercise-item {
-  background-color: #F4F4F4;
+  background-color: #f4f4f4;
   padding: 10px;
   margin-bottom: 5px;
   border-radius: 5px;
