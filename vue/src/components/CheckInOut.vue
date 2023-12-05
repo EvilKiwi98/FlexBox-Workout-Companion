@@ -2,10 +2,10 @@
     <div>
       <button @click="toggleCheckInOut" :class="{ 'check-btn-in': !isCheckedIn, 'check-btn-out': isCheckedIn }">{{ checkInOutLabel }}</button>
       <div v-if="isCheckedIn" class="status-message success">
-        <i class="fas fa-check-circle"></i> <span class="check-time">Checked in at: {{ CheckInOut.checkInTime }}</span>
+        <i class="fas fa-check-circle"></i> <span class="check-time">Checked in at: {{ CheckInOut.checkInTime.toLocaleString('en-US', { timeZone: 'EST' }) }}</span>
       </div>
       <div v-if="!isCheckedIn" class="status-message">
-        <i class="fas fa-info-circle"></i> Checked out at: {{ currentTime }}
+        <i class="fas fa-info-circle"></i> Checked out at: {{ checkOutTime }}
       </div>
     </div>
   </template>
@@ -16,6 +16,7 @@ export default {
     data() {
         return {
             currentTime: null,
+            checkOutTime: null,
             isCheckedIn: false,
             CheckInOut: {
                 userVisitId: "",
@@ -71,6 +72,7 @@ export default {
                                 //we are successful
                                 console.log(response.data);
                                 this.isCheckedIn = false;
+                                this.checkOutTime = this.CheckInOut.checkOutTime.toLocaleString('en-US', { timeZone: 'EST' })
                                 this.CheckInOut = {}
                             }
                         })

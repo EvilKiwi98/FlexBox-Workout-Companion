@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, user_visits, workouts, exercise, equipment, workout_details, exercise_details CASCADE;
+DROP TABLE IF EXISTS users, user_visits, exercise, equipment, exercise_details, exercise_equipment CASCADE;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -23,19 +23,20 @@ CREATE TABLE exercise (
     exercise_name varchar (50),
     user_id INT,
     date DATE,
-    duration INT,
+    reps INT,
+    weight DECIMAL(10, 2),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 CREATE TABLE equipment (
     equipment_id INT PRIMARY KEY,
     equipment_name VARCHAR(100)
 );
-CREATE TABLE exercise_details (
-    exercise_detail_id INT PRIMARY KEY,
+-- rename to exercise_equipment as it is just a join for linking the exercise that uses equipment. move weight and reps to
+--exercise table
+CREATE TABLE exercise_equipment (
     exercise_id INT,
     equipment_id INT,
-    reps INT,
-    weight DECIMAL(10, 2),
+    PRIMARY KEY (exercise_id, equipment_id),
     FOREIGN KEY (exercise_id) REFERENCES exercise(exercise_id),
     FOREIGN KEY (equipment_id) REFERENCES equipment(equipment_id)
 );

@@ -17,8 +17,8 @@ public class JdbcExerciseDao implements ExerciseDao{
 
     @Override
     public Exercise createExercise(Exercise exercise) {
-    String sql = "INSERT INTO exercise (user_id, exercise_name, date, duration) VALUES (?,?,?,?) RETURNING exercise_id;";
-        int exerciseId = jdbcTemplate.queryForObject(sql, int.class, exercise.getUserId(), exercise.getExerciseName(), exercise.getDate(), exercise.getDurationInMinutes());
+    String sql = "INSERT INTO exercise (user_id, exercise_name, date, reps, weight) VALUES (?,?,?,?,?) RETURNING exercise_id;";
+        int exerciseId = jdbcTemplate.queryForObject(sql, int.class, exercise.getUserId(), exercise.getExerciseName(), exercise.getDate(), exercise.getReps(), exercise.getWeight());
        exercise.setExerciseId(exerciseId);
         return exercise;
     }
@@ -26,7 +26,7 @@ public class JdbcExerciseDao implements ExerciseDao{
     @Override
     public List<Exercise> getExercisesByUserId(int userId) {
         List <Exercise> exerciseList = new ArrayList<>();
-        String sql = "SELECT exercise_id, exercise_name, user_id, date, duration FROM exercise WHERE user_id = ?;";
+        String sql = "SELECT exercise_id, exercise_name, user_id, date, reps, weight FROM exercise WHERE user_id = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
         while(results.next()){
             Exercise exercise = mapToRowSet(results);
@@ -41,7 +41,7 @@ public class JdbcExerciseDao implements ExerciseDao{
         exercise.setExerciseName(results.getString("exercise_name"));
         exercise.setUserId(results.getInt("user_id"));
         exercise.setDate(results.getDate("date").toLocalDate());
-        exercise.setDurationInMinutes(results.getInt("duration"));
+       // exercise.setDurationInMinutes(results.getInt("duration"));
         return exercise;
     }
 }
