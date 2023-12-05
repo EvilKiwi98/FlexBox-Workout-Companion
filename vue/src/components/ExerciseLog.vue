@@ -66,10 +66,10 @@
       >
         <span class="exercise-name">{{ exercise.exerciseName }}</span>
         <span class="exercise-sets">Sets: {{ exercise.sets }}</span>
-        <span class="exercise-reps"
+        <span v-show="exercise.mode === 'reps'" class="exercise-reps"
           >Reps: {{ exercise.reps }}</span
         >
-        <span  class="exercise-duration"
+        <span v-show="exercise.mode === 'duration'" class="exercise-duration"
           >Duration: {{ exercise.duration }} mins</span
         >
         <span class="exercise-weight">Weight: {{ exercise.weight }} lbs</span>
@@ -85,7 +85,7 @@ import ExerciseService from "../services/ExerciseService.js";
 export default {
   data() {
     return {
-      exercises: [],
+        exercises: [],
       exercise: {
         exerciseName: "",
         userId: "",
@@ -104,7 +104,7 @@ export default {
       ],
     };
   },
-  mounted() {
+  mounted(){
     this.getExerciseByUserId();
   },
   methods: {
@@ -114,8 +114,7 @@ export default {
         this.exercise.duration = null; // Reset duration if reps mode is selected
       } else if (this.exercise.mode === "duration") {
         this.exercise.reps = null; // Reset reps if duration mode is selected
-        this.exercise.weight = null;
-      } 
+      }
       ExerciseService.addExercise(this.exercise).then((response) => {
         if (response.status === 200) {
           console.log(response.data);
@@ -132,9 +131,14 @@ export default {
         this.exercises = response.data;
       });
     },
+    formatDate(date) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      return new Date(date).toLocaleDateString('en-US', options);
+    },
   },
 };
 </script>
+
 <style scoped>
 .exercise-form {
   max-width: 400px;
@@ -147,22 +151,4 @@ label {
   display: block;
   margin-bottom: 5px;
 }
-.exercise-list {
-  list-style-type: none;
-  padding: 0;
-}
-.exercise-item {
-  background-color: #f4f4f4;
-  padding: 10px;
-  margin-bottom: 5px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-}
-.exercise-name {
-  font-weight: bold;
-}
-.exercise-date {
-  color: #555;
-}
-</style>
+</style>]
