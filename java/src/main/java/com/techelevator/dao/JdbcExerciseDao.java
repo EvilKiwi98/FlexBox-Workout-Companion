@@ -17,8 +17,8 @@ public class JdbcExerciseDao implements ExerciseDao{
 
     @Override
     public Exercise createExercise(Exercise exercise) {
-    String sql = "INSERT INTO exercise (user_id, exercise_name, date, reps, weight, duration, sets) VALUES (?,?,?,?,?,?,?) RETURNING exercise_id;";
-        int exerciseId = jdbcTemplate.queryForObject(sql, int.class, exercise.getUserId(), exercise.getExerciseName(), exercise.getDate(), exercise.getReps(), exercise.getWeight(),exercise.getDurationInMinutes(),exercise.getSets());
+    String sql = "INSERT INTO exercise (user_id, exercise_name, date, reps, weight, duration, sets, mode) VALUES (?,?,?,?,?,?,?,?) RETURNING exercise_id;";
+        int exerciseId = jdbcTemplate.queryForObject(sql, int.class, exercise.getUserId(), exercise.getExerciseName(), exercise.getDate(), exercise.getReps(), exercise.getWeight(),exercise.getDuration(),exercise.getSets(),exercise.getMode());
        exercise.setExerciseId(exerciseId);
         return exercise;
     }
@@ -26,7 +26,7 @@ public class JdbcExerciseDao implements ExerciseDao{
     @Override
     public List<Exercise> getExercisesByUserId(int userId) {
         List <Exercise> exerciseList = new ArrayList<>();
-        String sql = "SELECT exercise_id, exercise_name, user_id, date, reps, weight, duration, sets FROM exercise WHERE user_id = ?;";
+        String sql = "SELECT exercise_id, exercise_name, user_id, date, reps, weight, duration, sets, mode FROM exercise WHERE user_id = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
         while(results.next()){
             Exercise exercise = mapToRowSet(results);
@@ -37,13 +37,15 @@ public class JdbcExerciseDao implements ExerciseDao{
 
     public Exercise mapToRowSet(SqlRowSet results){
         Exercise exercise = new Exercise();
+        exercise.setWeight(results.getDouble("weight"));
         exercise.setExerciseId(results.getInt("exercise_id"));
         exercise.setExerciseName(results.getString("exercise_name"));
         exercise.setUserId(results.getInt("user_id"));
         exercise.setDate(results.getDate("date").toLocalDate());
-        exercise.setDurationInMinutes(results.getInt("duration"));
+        exercise.setDuration(results.getInt("duration"));
         exercise.setSets(results.getInt("sets"));
         exercise.setReps(results.getInt("reps"));
+        exercise.setMode(results.getString("mode"));
         return exercise;
     }
 }

@@ -1,94 +1,110 @@
 <template>
-    <div>
-      <button @click="toggleCheckInOut" :class="{ 'check-btn-in': !isCheckedIn, 'check-btn-out': isCheckedIn }">{{ checkInOutLabel }}</button>
-      <div v-if="isCheckedIn" class="status-message success">
-        <i class="fas fa-check-circle"></i> <span class="check-time">Checked in at: {{ CheckInOut.checkInTime.toLocaleString('en-US', { timeZone: 'EST' }) }}</span>
-      </div>
-      <div v-if="!isCheckedIn" class="status-message">
-        <i class="fas fa-info-circle"></i> Checked out at: {{ checkOutTime }}
-      </div>
+  <div>
+    <button
+      @click="toggleCheckInOut"
+      :class="{ 'check-btn-in': !isCheckedIn, 'check-btn-out': isCheckedIn }"
+    >
+      {{ checkInOutLabel }}
+    </button>
+    <div v-if="isCheckedIn" class="status-message success">
+      <i class="fas fa-check-circle"></i>
+      <span class="check-time"
+        >Checked in at:
+        {{
+          CheckInOut.checkInTime.toLocaleString("en-US", { timeZone: "EST" })
+        }}</span
+      >
     </div>
-  </template>
+    <div v-if="!isCheckedIn" class="status-message">
+      <i class="fas fa-info-circle"></i> Checked out at: {{ checkOutTime }}
+      <span>Duration: {{ CheckInOut.duration }}</span>
+    </div>
+  </div>
+</template>
 
 <script>
-import CheckInOutService from '../services/CheckInOutService';
+import CheckInOutService from "../services/CheckInOutService";
 export default {
-    data() {
-        return {
-            currentTime: null,
-            checkOutTime: null,
-            isCheckedIn: false,
-            CheckInOut: {
-                userVisitId: "",
-                checkInTime: "",
-                checkOutTime: "",
-                duration: "",
-                userId: "",
-
-            }
-        }
+  data() {
+    return {
+      currentTime: null,
+      checkOutTime: null,
+      isCheckedIn: false,
+      CheckInOut: {
+        userVisitId: "",
+        checkInTime: "",
+        checkOutTime: "",
+        duration: "",
+        userId: "",
+      },
+    };
+  },
+  computed: {
+    checkInOutLabel() {
+      return this.isCheckedIn ? "Check Out" : "Check In";
     },
-    computed: {
-        checkInOutLabel() {
-            return this.isCheckedIn ? 'Check Out' : 'Check In';
-        }
+  },
+  methods: {
+    getCurrentTime() {
+      this.currentTime = new Date();
+      // this.currentTime = this.currentTime.toLocaleString('en-US', { timeZone: 'America/New_York' });
     },
-        methods: {
-            getCurrentTime() {
-                this.currentTime = new Date()
-                // this.currentTime = this.currentTime.toLocaleString('en-US', { timeZone: 'America/New_York' });
-            },
-            setCheckInTime() {
-                this.CheckInOut.checkInTime = this.currentTime;
-            },
-            setCheckOutTime() {
-                this.CheckInOut.checkOutTime = this.currentTime;
-            },
-            setUserId() {
-                this.CheckInOut.userId = this.$store.getters.getUserId;
-            },
-            sendCheckIn() {
-                this.getCurrentTime(),
-                    this.setCheckInTime(),
-                    this.setUserId(),
-                    CheckInOutService.checkIn(this.CheckInOut)
-                        .then(response => {
-                            if (response.status === 200) {
-                                //we are successful
-                                console.log(response.data);
-                                this.CheckInOut.userVisitId = response.data.userVisitId
-                                this.isCheckedIn = true
-
-                            }
-                        })
-            },
-            sendCheckOut() {
-                this.getCurrentTime(),
-                    this.setCheckOutTime(),
-                    this.setUserId(),
-                    CheckInOutService.checkOut(this.CheckInOut)
-                        .then(response => {
-                            if (response.status === 200) {
-                                //we are successful
-                                console.log(response.data);
-                                this.isCheckedIn = false;
-                                this.checkOutTime = this.CheckInOut.checkOutTime.toLocaleString('en-US', { timeZone: 'EST' })
-                                this.CheckInOut = {}
-                            }
-                        })
-            },
-            toggleCheckInOut() {
+    setCheckInTime() {
+      this.CheckInOut.checkInTime = this.currentTime;
+    },
+    setCheckOutTime() {
+      this.CheckInOut.checkOutTime = this.currentTime;
+    },
+    setUserId() {
+      this.CheckInOut.userId = this.$store.getters.getUserId;
+    },
+    calculateDuration() {
+      const checkInTime = new Date(this.CheckInOut.checkInTime);
+      const checkOutTime = new Date(this.CheckInOut.checkOutTime);
+      const durationInMillis = checkOutTime - checkInTime;
+      const durationInMinutes = durationInMillis / (1000 * 60);
+      this.CheckInOut.duration = `${Math.floor(durationInMinutes)} minutes`;
+    },
+    sendCheckIn() {
+      this.getCurrentTime(),
+        this.setCheckInTime(),
+        this.setUserId(),
+        CheckInOutService.checkIn(this.CheckInOut).then((response) => {
+          if (response.status === 200) {
+            //we are successful
+            console.log(response.data);
+            this.CheckInOut.userVisitId = response.data.userVisitId;
+            this.isCheckedIn = true;
+          }
+        });
+    },
+    sendCheckOut() {
+      this.getCurrentTime(),
+        this.setCheckOutTime(),
+        this.setUserId(),
+        CheckInOutService.checkOut(this.CheckInOut).then((response) => {
+          if (response.status === 200) {
+            //we are successful
+            console.log(response.data);
+            this.isCheckedIn = false;
+            this.checkOutTime = this.CheckInOut.checkOutTime.toLocaleString(
+              "en-US",
+              { timeZone: "EST" }
+            );
+            this.calculateDuration();
+            this.CheckInOut = {};
+          }
+        });
+    },
+    toggleCheckInOut() {
       if (this.isCheckedIn) {
         this.sendCheckOut();
       } else {
         this.sendCheckIn();
       }
-            }
-        }
-    }
-
-
-
+    },
+  },
+};
 </script>
 
 
@@ -134,7 +150,8 @@ export default {
   color: #2ecc71;
 }
 
-.fa-check-circle, .fa-info-circle {
+.fa-check-circle,
+.fa-info-circle {
   margin-right: 5px;
 }
 

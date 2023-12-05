@@ -13,21 +13,32 @@ public class Exercise {
     private int reps;
     private double weight;
     private LocalDate date;
-    private int durationInMinutes;
+    private int duration;
+    private String mode;
 
 
-    public Exercise(String exerciseName, int userId, int exerciseId, int reps, double weight, LocalDate date,int durationInMinutes, int sets) {
+    public Exercise(String exerciseName, int userId, int exerciseId, int reps, double weight, LocalDate date,int duration, int sets, String mode) {
         this.exerciseName = exerciseName;
         this.userId = userId;
         this.exerciseId = exerciseId;
         this.reps = reps;
         this.weight = weight;
         this.date = date;
-        this.durationInMinutes = durationInMinutes;
+        this.duration = duration;
         this.sets = sets;
+        this.mode = mode;
     }
     public Exercise() {
     }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -54,12 +65,12 @@ public class Exercise {
         this.sets = sets;
     }
 
-    public int getDurationInMinutes() {
-        return durationInMinutes;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setDurationInMinutes(int durationInMinutes) {
-        this.durationInMinutes = durationInMinutes;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public String getExerciseName() {
