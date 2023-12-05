@@ -8,5 +8,9 @@ export default {
 
   getExerciseByUserId(userId) {
     return axios.get(`/exercise/${userId}`)
+  },
+
+  getTotalVisitDurationByUserId(userId) {
+    return axios.get(`/visits/${userId}`)
   }
 }

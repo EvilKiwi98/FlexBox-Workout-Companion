@@ -21,4 +21,8 @@ public class CheckInOutController {
     public void checkOut(@RequestBody CheckInOut checkOutTime) {
         checkInOutDao.setCheckOutTime(checkOutTime);
     }
+    @RequestMapping(path = "/visits/{userId}", method = RequestMethod.GET)
+    public int fetchDurationByUserId (@PathVariable int userId){
+        return checkInOutDao.getDurationTotalByUserId(userId);
+    }
 }

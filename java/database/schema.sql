@@ -15,7 +15,7 @@ CREATE TABLE user_visits (
         user_id INTEGER,
         check_in_date TIMESTAMP WITH TIME ZONE NOT NULL,
         check_out_date TIMESTAMP WITH TIME ZONE,
-        duration INTERVAL,
+        duration INTEGER,
         FOREIGN KEY (user_id) REFERENCES users(user_id)
     );
 CREATE TABLE exercise (

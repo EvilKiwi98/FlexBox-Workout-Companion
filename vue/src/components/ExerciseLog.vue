@@ -1,19 +1,40 @@
 <template>
   <div>
+    <div v-on:click="getTotalVisitDurationByUserId()">
+      <p> Your total visit time is : {{ totalVisitDuration }}</p>
+    </div>
+
+    <btn v-on:click="showEmployeeForm = !showEmployeeForm"> Show Employee Search </btn>
+    <div class="employeeSearch" v-show="showEmployeeForm">
+      <label for="userIdInput"> Enter User Id: </label>
+      <input type="number" id="userIdInput" v-model="userId" />
+      <btn v-on:click="getExerciseByUserId(userId)"> Search </btn>
+      <ul class="exercise-list">
+        <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
+          <span class="exercise-name">{{ exercise.exerciseName }}</span>
+          <span class="exercise-sets">Sets: {{ exercise.sets }}</span>
+          <span v-show="exercise.mode === 'reps'" class="exercise-reps">Reps: {{ exercise.reps }}</span>
+          <span v-show="exercise.mode === 'duration'" class="exercise-duration">Duration: {{ exercise.duration }}
+            mins</span>
+          <span class="exercise-weight">Weight: {{ exercise.weight }} lbs</span>
+          <span class="exercise-date">Date: {{ exercise.date }}</span>
+        </li>
+      </ul>
+    </div>
+
+
     <h1>Please log your exercise</h1>
     <form class="exerciseForm" v-on:submit.prevent="submitExercise">
       <div class="form-group">
         <label for="exerciseName">Exercise Name:</label>
         <select id="exerciseName" v-model="exercise.exerciseName" required>
-          <option
-            v-for="exerciseOption in exerciseOptions"
-            :key="exerciseOption.id"
-            :value="exerciseOption.name"
-          >
+          <option v-for="exerciseOption in exerciseOptions" :key="exerciseOption.id" :value="exerciseOption.name">
             {{ exerciseOption.name }}
           </option>
         </select>
       </div>
+
+
       <div class="form-group">
         <label for="sets">Sets:</label>
         <input type="number" id="sets" v-model="exercise.sets" required />
@@ -36,12 +57,7 @@
       </div>
       <div class="form-group" v-if="exercise.mode == 'duration'">
         <label for="duration">Duration (minutes):</label>
-        <input
-          type="number"
-          id="duration"
-          v-model="exercise.duration"
-          required
-        />
+        <input type="number" id="duration" v-model="exercise.duration" required />
       </div>
       <div class="form-group" v-if="exercise.mode == 'reps'">
         <label for="weight">Weight:</label>
@@ -54,30 +70,24 @@
       </div>
       <button type="submit">Submit</button>
     </form>
+
+
   </div>
 
   <div>
     <h2>Exercise List</h2>
     <ul class="exercise-list">
-      <li
-        v-for="exercise in exercises"
-        :key="exercise.exercise_id"
-        class="exercise-item"
-      >
+      <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
         <span class="exercise-name">{{ exercise.exerciseName }}</span>
         <span class="exercise-sets">Sets: {{ exercise.sets }}</span>
-        <span v-show="exercise.mode === 'reps'" class="exercise-reps"
-          >Reps: {{ exercise.reps }}</span
-        >
-        <span v-show="exercise.mode === 'duration'" class="exercise-duration"
-          >Duration: {{ exercise.duration }} mins</span
-        >
+        <span v-show="exercise.mode === 'reps'" class="exercise-reps">Reps: {{ exercise.reps }}</span>
+        <span v-show="exercise.mode === 'duration'" class="exercise-duration">Duration: {{ exercise.duration }}
+          mins</span>
         <span class="exercise-weight">Weight: {{ exercise.weight }} lbs</span>
         <span class="exercise-date">Date: {{ exercise.date }}</span>
       </li>
     </ul>
   </div>
-
 </template>
 <script>
 import ExerciseService from "../services/ExerciseService.js";
@@ -85,7 +95,10 @@ import ExerciseService from "../services/ExerciseService.js";
 export default {
   data() {
     return {
-        exercises: [],
+      totalVisitDuration: "",
+      exercises: [],
+      showEmployeeForm: false,
+      userId: "",
       exercise: {
         exerciseName: "",
         userId: "",
@@ -104,7 +117,7 @@ export default {
       ],
     };
   },
-  mounted(){
+  mounted() {
     this.getExerciseByUserId();
   },
   methods: {
@@ -126,7 +139,7 @@ export default {
       this.exercise.userId = this.$store.getters.getUserId;
     },
     getExerciseByUserId() {
-      ExerciseService.getExerciseByUserId(1).then((response) => {
+      ExerciseService.getExerciseByUserId(this.$store.getters.getUserId).then((response) => {
         this.isLoading = false;
         this.exercises = response.data;
       });
@@ -135,6 +148,14 @@ export default {
       const options = { year: 'numeric', month: 'short', day: 'numeric' };
       return new Date(date).toLocaleDateString('en-US', options);
     },
+    getTotalVisitDurationByUserId() {
+      ExerciseService.getTotalVisitDurationByUserId(this.$store.getters.getUserId)
+        .then(response => {
+          if (response.status === 200) {
+            this.totalVisitDuration = response.data
+          }
+        })
+    }
   },
 };
 </script>
@@ -144,9 +165,11 @@ export default {
   max-width: 400px;
   margin: auto;
 }
+
 .form-group {
   margin-bottom: 15px;
 }
+
 label {
   display: block;
   margin-bottom: 5px;

@@ -17,7 +17,7 @@
     </div>
     <div v-if="!isCheckedIn" class="status-message">
       <i class="fas fa-info-circle"></i> Checked out at: {{ checkOutTime }}
-      <span>Duration: {{ CheckInOut.duration }}</span>
+      <span>Duration: {{ visitDuration }} {{ visitDuration === 1 ? 'minute' : 'minutes' }}</span>
     </div>
   </div>
 </template>
@@ -30,6 +30,7 @@ export default {
       currentTime: null,
       checkOutTime: null,
       isCheckedIn: false,
+      visitDuration: "",
       CheckInOut: {
         userVisitId: "",
         checkInTime: "",
@@ -63,7 +64,7 @@ export default {
       const checkOutTime = new Date(this.CheckInOut.checkOutTime);
       const durationInMillis = checkOutTime - checkInTime;
       const durationInMinutes = Math.floor(durationInMillis /(1000*60));
-      this.CheckInOut.duration = `${durationInMinutes} minutes`;
+      this.CheckInOut.duration = `${durationInMinutes}`;
     },
     sendCheckIn() {
       this.getCurrentTime(),
@@ -82,16 +83,19 @@ export default {
       this.getCurrentTime(),
         this.setCheckOutTime(),
         this.setUserId(),
+        this.calculateDuration();
+        this.visitDuration = this.CheckInOut.duration;
         CheckInOutService.checkOut(this.CheckInOut).then((response) => {
           if (response.status === 200) {
             //we are successful
             console.log(response.data);
             this.isCheckedIn = false;
+            this.CheckInOut.checkOutTime = new Date();
             this.checkOutTime = this.CheckInOut.checkOutTime.toLocaleString(
               "en-US",
               { timeZone: "EST" }
             );
-            this.calculateDuration();
+            
             this.CheckInOut = {};
           }
         });
