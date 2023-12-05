@@ -6,7 +6,7 @@ export default {
     return axios.post('/exercise', newExercise)
   },
 
-  checkOut(CheckInOut) {
-    return axios.put('/CheckOut', CheckInOut)
+  getExerciseByUserId(userId) {
+    return axios.get(`/exercise/${userId}`)
   }
 }
