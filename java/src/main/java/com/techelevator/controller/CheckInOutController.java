@@ -29,7 +29,7 @@ public class CheckInOutController {
         return checkInOutDao.getDurationTotalByUserId(userId);
     }
     @RequestMapping(path ="/visits/{userId}", method = RequestMethod.GET)
-    public List<CheckInOut> getExercisesByUserId (@PathVariable int userId){
+    public List<CheckInOut> getVisitsByUserId (@PathVariable int userId){
         return checkInOutDao.getVisitsByUserId(userId);
     }
 }

@@ -8,5 +8,8 @@ export default {
 
   checkOut(CheckInOut) {
     return axios.put('/CheckOut', CheckInOut)
+  },
+  getVisitsByUserId(userId){
+    return axios.get(`/visits/${userId}`)
   }
 }
