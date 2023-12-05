@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="exercise-list-container">
     <h2>Your total visit time is: ({{ totalVisitDuration }})</h2>
     <h2>Exercise List</h2>
     <ul class="exercise-list">
@@ -85,5 +85,37 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.exercise-list-container {
+  margin-top: 20px;
+}
+
+.exercise-list {
+  list-style: none;
+  padding: 0;
+}
+
+.exercise-item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 15px;
+  background-color: #f9f9f9;
+}
+
+.exercise-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.exercise-sets,
+.exercise-reps,
+.exercise-duration,
+.exercise-weight,
+.exercise-date {
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #555;
+}
 </style>
