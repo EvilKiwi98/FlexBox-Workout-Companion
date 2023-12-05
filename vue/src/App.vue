@@ -15,8 +15,8 @@
 }
 
 #nav {
-  background-color: #333;
-  color: #fff;
+  background-color: #7f7373;
+  color: #ffffff;
   padding: 10px;
   text-align: center;
 }
