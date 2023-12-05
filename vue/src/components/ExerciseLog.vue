@@ -112,11 +112,6 @@ export default {
       this.exercise.userId = this.$store.getters.getUserId;
     },
     getExerciseByUserId() {
-      if (!this.userId) {
-        console.error("User ID is required");
-        return;
-      }
-
       ExerciseService.getExerciseByUserId(this.$store.getters.getUserId).then(
         (response) => {
           this.isLoading = false;
