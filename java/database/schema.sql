@@ -23,7 +23,9 @@ CREATE TABLE exercise (
     exercise_name varchar (50),
     user_id INT,
     date DATE,
+    sets INT,
     reps INT,
+    duration INT,
     weight DECIMAL(10, 2),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );

@@ -6,22 +6,25 @@ import java.time.LocalDateTime;
 
 public class Exercise {
 
+    private int sets;
     private String exerciseName;
     private int userId;
     private int exerciseId;
     private int reps;
     private double weight;
     private LocalDate date;
+    private int durationInMinutes;
 
 
-    public Exercise(String exerciseName, int userId, int exerciseId, int reps, double weight, LocalDate date) {
+    public Exercise(String exerciseName, int userId, int exerciseId, int reps, double weight, LocalDate date,int durationInMinutes, int sets) {
         this.exerciseName = exerciseName;
         this.userId = userId;
         this.exerciseId = exerciseId;
         this.reps = reps;
         this.weight = weight;
         this.date = date;
-       // this.durationInMinutes = durationInMinutes;
+        this.durationInMinutes = durationInMinutes;
+        this.sets = sets;
     }
     public Exercise() {
     }
@@ -43,13 +46,21 @@ public class Exercise {
         this.date = date;
     }
 
-//    public int getDurationInMinutes() {
-//        return durationInMinutes;
-//    }
-//
-//    public void setDurationInMinutes(int durationInMinutes) {
-//        this.durationInMinutes = durationInMinutes;
-//    }
+    public int getSets() {
+        return sets;
+    }
+
+    public void setSets(int sets) {
+        this.sets = sets;
+    }
+
+    public int getDurationInMinutes() {
+        return durationInMinutes;
+    }
+
+    public void setDurationInMinutes(int durationInMinutes) {
+        this.durationInMinutes = durationInMinutes;
+    }
 
     public String getExerciseName() {
         return exerciseName;
