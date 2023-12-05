@@ -11,6 +11,6 @@ export default {
   },
 
   getTotalVisitDurationByUserId(userId) {
-    return axios.get(`/visits/${userId}`)
+    return axios.get(`/visits/duration/${userId}`)
   }
 }
