@@ -30,11 +30,11 @@
           </label>
         </div>
       </div>
-      <div class="form-group" v-if="exercise.mode === 'reps'">
+      <div class="form-group" v-if="exercise.mode == 'reps'">
         <label for="reps">Reps:</label>
         <input type="number" id="reps" v-model="exercise.reps" required />
       </div>
-      <div class="form-group" v-else-if="exercise.mode === 'duration'">
+      <div class="form-group" v-if="exercise.mode == 'duration'">
         <label for="duration">Duration (minutes):</label>
         <input
           type="number"
@@ -43,9 +43,10 @@
           required
         />
       </div>
-      <div class="form-group">
+      <div class="form-group" v-if="exercise.mode == 'reps'">
         <label for="weight">Weight:</label>
         <input type="number" id="weight" v-model="exercise.weight" required />
+
       </div>
       <div class="form-group">
         <label for="date">Date:</label>
@@ -65,10 +66,10 @@
       >
         <span class="exercise-name">{{ exercise.exerciseName }}</span>
         <span class="exercise-sets">Sets: {{ exercise.sets }}</span>
-        <span v-show="exercise.mode === 'reps'" class="exercise-reps"
+        <span class="exercise-reps"
           >Reps: {{ exercise.reps }}</span
         >
-        <span v-show="exercise.mode === 'duration'" class="exercise-duration"
+        <span  class="exercise-duration"
           >Duration: {{ exercise.duration }} mins</span
         >
         <span class="exercise-weight">Weight: {{ exercise.weight }} lbs</span>
@@ -97,8 +98,8 @@ export default {
         mode: "", // Added property for reps or duration choice
       },
       exerciseOptions: [
-        { id: 1, name: "Exercise 1" },
-        { id: 2, name: "Exercise 2" },
+        { id: 1, name: "Bench press", mode: "reps" },
+        { id: 2, name: "Treadmill", mode: "duration" },
         { id: 3, name: "Exercise 3" },
       ],
     };
@@ -113,7 +114,8 @@ export default {
         this.exercise.duration = null; // Reset duration if reps mode is selected
       } else if (this.exercise.mode === "duration") {
         this.exercise.reps = null; // Reset reps if duration mode is selected
-      }
+        this.exercise.weight = null;
+      } 
       ExerciseService.addExercise(this.exercise).then((response) => {
         if (response.status === 200) {
           console.log(response.data);

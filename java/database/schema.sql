@@ -27,6 +27,7 @@ CREATE TABLE exercise (
     reps INT,
     duration INT,
     weight DECIMAL(10, 2),
+    mode varchar (30),
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 CREATE TABLE equipment (
