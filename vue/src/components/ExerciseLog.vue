@@ -1,38 +1,70 @@
 <template>
-    <div>
-        <h1>Please log your exercise</h1>
-        <form class="exerciseForm" v-on:submit.prevent="submitExercise">
-            <div class="form-group">
+  <div>
+    <h1>Please log your exercise</h1>
+    <form class="exerciseForm" v-on:submit.prevent="submitExercise">
+      <div class="form-group">
         <label for="exerciseName">Exercise Name:</label>
         <select id="exerciseName" v-model="exercise.exerciseName" required>
-          <option v-for="exerciseOption in exerciseOptions" :key="exerciseOption.id" :value="exerciseOption.name">
+          <option
+            v-for="exerciseOption in exerciseOptions"
+            :key="exerciseOption.id"
+            :value="exerciseOption.name"
+          >
             {{ exerciseOption.name }}
           </option>
         </select>
       </div>
       <div class="form-group">
         <label for="sets">Sets:</label>
-        <input type="number" id="sets" v-model="exercise.sets" required>
+        <input type="number" id="sets" v-model="exercise.sets" required />
       </div>
       <div class="form-group">
+        <label>Choose one:</label>
+        <div>
+          <label>
+            <input type="radio" v-model="exercise.mode" value="reps" /> Reps
+          </label>
+          <label>
+            <input type="radio" v-model="exercise.mode" value="duration" />
+            Duration (minutes)
+          </label>
+        </div>
+      </div>
+      <div class="form-group" v-if="exercise.mode === 'reps'">
         <label for="reps">Reps:</label>
-        <input type="number" id="reps" v-model="exercise.reps" required>
+        <input type="number" id="reps" v-model="exercise.reps" required />
       </div>
-      <div class="form-group">
-        <label for="duration">Duration:</label>
-        <input type="number" id="duration" v-model="exercise.duration" required>
+      <div class="form-group" v-else-if="exercise.mode === 'duration'">
+        <label for="duration">Duration (minutes):</label>
+        <input
+          type="number"
+          id="duration"
+          v-model="exercise.duration"
+          required
+        />
       </div>
       <div class="form-group">
         <label for="weight">Weight:</label>
-        <input type="number" id="weight" v-model="exercise.weight" required>
+        <input type="number" id="weight" v-model="exercise.weight" required />
       </div>
       <div class="form-group">
         <label for="date">Date:</label>
-        <input type="date" id="date" v-model="exercise.date" required>
+        <input type="date" id="date" v-model="exercise.date" required />
       </div>
       <button type="submit">Submit</button>
     </form>
   </div>
+
+  <div>
+    <h2>Exercise List</h2>
+    <ul class="exercise-list">
+        <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
+          <span class="exercise-name">{{ exercise.exercise_name }}</span>
+          <span class="exercise-date">{{ formatDate(exercise.date) }}</span>
+        </li>
+    </ul>
+  </div>
+
 </template>
 <script>
 import ExerciseService from "../services/ExerciseService.js";
@@ -40,6 +72,7 @@ import ExerciseService from "../services/ExerciseService.js";
 export default {
   data() {
     return {
+        exercises: [],
       exercise: {
         exerciseName: "",
         userId: "",
@@ -49,26 +82,40 @@ export default {
         duration: "",
         weight: "",
         date: "",
+        mode: "", // Added property for reps or duration choice
       },
       exerciseOptions: [
-        { id: 1, name: 'Exercise 1' },
-        { id: 2, name: 'Exercise 2' },
-        { id: 3, name: 'Exercise 3' },
-        ]
+        { id: 1, name: "Exercise 1" },
+        { id: 2, name: "Exercise 2" },
+        { id: 3, name: "Exercise 3" },
+      ],
     };
+  },
+  mounted(){
+    this.getExerciseByUserId();
   },
   methods: {
     submitExercise() {
-      this.setUserId(),
+      this.setUserId();
         ExerciseService.addExercise(this.exercise).then((response) => {
           if (response.status === 200) {
             console.log(response.data);
           }
-          this.exercise = {}
+          this.exercise = {};
         });
     },
     setUserId() {
       this.exercise.userId = this.$store.getters.getUserId;
+    },
+    getExerciseByUserId() {
+      ExerciseService.getExerciseByUserId(1).then((response) => {
+        this.isLoading = false;
+        this.exercises = response.data;
+      });
+    },
+    formatDate(date) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      return new Date(date).toLocaleDateString('en-US', options);
     },
   },
 };
