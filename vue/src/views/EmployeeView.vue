@@ -1,10 +1,10 @@
 <template>
   <div>
-    <btn v-on:click="showEmployeeForm = !showEmployeeForm">
+    <btn v-on:click="showEmployeeForm = !showEmployeeForm" id="searchButton">
       Show Employee Search
     </btn>
 
-    <div class="employeeSearch" v-show="showEmployeeForm">
+    <div class="employeeSearchForm" v-show="showEmployeeForm">
       <label for="userIdInput"> Enter User Id: </label>
       <input type="number" id="userIdInput" v-model="userId" />
       <btn v-on:click="employeeGetExerciseByUserId(userId)"> Search </btn>
@@ -114,5 +114,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
+
 </style>
