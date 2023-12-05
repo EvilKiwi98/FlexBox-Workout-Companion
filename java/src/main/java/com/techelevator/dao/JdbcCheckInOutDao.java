@@ -81,7 +81,7 @@ public class JdbcCheckInOutDao implements CheckInOutDao {
         checkInOut.setUserVisitId(results.getInt("user_visit_id"));
         checkInOut.setUserId(results.getInt("user_id"));
         Timestamp checkInTimestamp = results.getTimestamp("check_in_date");
-        Timestamp checkOutTimestamp = results.getTimestamp("check_out_time");
+        Timestamp checkOutTimestamp = results.getTimestamp("check_out_date");
 
         if (checkInTimestamp != null) {
             checkInOut.setCheckInTime(checkInTimestamp.toLocalDateTime());
