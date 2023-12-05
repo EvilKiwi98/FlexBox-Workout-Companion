@@ -1,6 +1,7 @@
 <template>
   <div>
     <exercise-list/>
+    <visit-list></visit-list>
   </div>
 </template>
 
@@ -8,10 +9,11 @@
 
 
 import ExerciseList from '../components/ExerciseList.vue';
-
+import VisitList from '../components/VisitList.vue';
 export default {
   components:{
-    ExerciseList
+    ExerciseList,
+    VisitList
   }
 
 }
