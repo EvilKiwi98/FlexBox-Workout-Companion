@@ -17,6 +17,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.profile-view {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
 </style>
