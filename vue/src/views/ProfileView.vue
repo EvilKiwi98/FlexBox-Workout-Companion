@@ -1,17 +1,17 @@
 <template>
   <div>
-    <exercise-log/>
+    <exercise-list/>
   </div>
 </template>
 
 <script>
-import CheckInOutService from '../services/CheckInOutService';
-import ExerciseService from '../services/ExerciseService';
-import ExerciseLog from '../components/ExerciseLog.vue';
+
+
+import ExerciseList from '../components/ExerciseList.vue';
 
 export default {
   components:{
-    ExerciseLog
+    ExerciseList
   }
 
 }
