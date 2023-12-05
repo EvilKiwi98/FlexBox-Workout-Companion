@@ -5,10 +5,12 @@
     </div>
 
     <btn v-on:click="showEmployeeForm = !showEmployeeForm"> Show Employee Search </btn>
+
     <div class="employeeSearch" v-show="showEmployeeForm">
       <label for="userIdInput"> Enter User Id: </label>
       <input type="number" id="userIdInput" v-model="userId" />
-      <btn v-on:click="getExerciseByUserId(userId)"> Search </btn>
+      <btn v-on:click="employeeGetExerciseByUserId(userId)"> Search </btn>
+
       <ul class="exercise-list">
         <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
           <span class="exercise-name">{{ exercise.exerciseName }}</span>
@@ -98,7 +100,7 @@ export default {
       totalVisitDuration: "",
       exercises: [],
       showEmployeeForm: false,
-      userId: "",
+      userId: null,
       exercise: {
         exerciseName: "",
         userId: "",
@@ -139,11 +141,24 @@ export default {
       this.exercise.userId = this.$store.getters.getUserId;
     },
     getExerciseByUserId() {
+      if(!this.userId) {
+        console.error("User ID is required");
+        return;
+      }
+
       ExerciseService.getExerciseByUserId(this.$store.getters.getUserId).then((response) => {
         this.isLoading = false;
         this.exercises = response.data;
       });
     },
+
+    employeeGetExerciseByUserId(userId){
+      ExerciseService.getExerciseByUserId(userId).then((response) => {
+        this.isLoading = false;
+        this.exercises = response.data;
+      });
+    },
+
     formatDate(date) {
       const options = { year: 'numeric', month: 'short', day: 'numeric' };
       return new Date(date).toLocaleDateString('en-US', options);
