@@ -4,9 +4,9 @@
       <ul class="visit-list">
         <li v-for="visit in visits" :key="visit.visitId" class="visit-item">
           <span class="visit-id">{{ visit.visitId }}</span>
-          <span class="visit-checkInDate">Check In: {{ visit.checkInDate }}</span>
-          <span class="visit-checkOutDate">Check Out: {{ visit.checkOutDate }}</span>
-          <span class="visit-duration">Duration: {{ visit.duration }}</span>
+          <span class="visit-checkInDate"> Check In: {{ visit.checkInTime }} </span>
+          <span class="visit-checkOutDate"> Check Out: {{ visit.checkOutTime }} </span>
+          <span class="visit-duration"> Duration: {{ visit.duration }} </span>
         </li>
       </ul>
     </div>
