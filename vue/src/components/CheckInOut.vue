@@ -62,8 +62,8 @@ export default {
       const checkInTime = new Date(this.CheckInOut.checkInTime);
       const checkOutTime = new Date(this.CheckInOut.checkOutTime);
       const durationInMillis = checkOutTime - checkInTime;
-      const durationInMinutes = durationInMillis / (1000 * 60);
-      this.CheckInOut.duration = `${Math.floor(durationInMinutes)} minutes`;
+      const durationInMinutes = Math.floor(durationInMillis /(1000*60));
+      this.CheckInOut.duration = `${durationInMinutes} minutes`;
     },
     sendCheckIn() {
       this.getCurrentTime(),
