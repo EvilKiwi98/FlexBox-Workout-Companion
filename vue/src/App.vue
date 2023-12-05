@@ -9,3 +9,25 @@
     <router-view />
   </div>
 </template>
+<style scoped>
+#capstone-app {
+  font-family: 'Arial', sans-serif;
+}
+
+#nav {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+</style>
