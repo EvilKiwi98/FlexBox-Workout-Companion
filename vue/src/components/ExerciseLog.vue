@@ -1,14 +1,10 @@
 <template>
   <div>
-    <div v-on:click="getTotalVisitDurationByUserId()">
-      <p>Your total visit time is: {{ totalVisitDuration }} minutes</p>
-    </div>
-
     <h1>Log Your Exercise</h1>
     <form class="exercise-form" v-on:submit.prevent="submitExercise">
       <div class="form-group">
         <label for="exerciseName">Exercise Name</label>
-        <select id="exerciseName" v-model="exercise.exerciseName" required>
+        <select id="exerciseName" v-model="exercise.exerciseName" required @change="updateExerciseMode">
           <option
             v-for="exerciseOption in exerciseOptions"
             :key="exerciseOption.id"
@@ -22,19 +18,6 @@
       <div class="form-group">
         <label for="sets">Sets</label>
         <input type="number" id="sets" v-model="exercise.sets" required />
-      </div>
-
-      <div class="form-group">
-        <label>Choose one</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" v-model="exercise.mode" value="reps" /> Reps
-          </label>
-          <label>
-            <input type="radio" v-model="exercise.mode" value="duration" />
-            Duration (minutes)
-          </label>
-        </div>
       </div>
 
       <div v-if="exercise.mode === 'reps'">
@@ -91,9 +74,8 @@ export default {
         { id: 1, name: "Bench Press", mode: "reps" },
         { id: 2, name: "Treadmill", mode: "duration" },
         { id: 3, name: "Dumbell", mode: "reps" },
-        { id: 4, name: "Dumbell", mode: "reps" },
-        { id: 5, name: "Lat Pulldown", mode: "reps" },
-        { id: 6, name: "Rowing Machine", mode: "duration" },
+        { id: 4, name: "Lat Pulldown", mode: "reps" },
+        { id: 5, name: "Rowing Machine", mode: "duration" },
       ],
     };
   },
@@ -147,15 +129,46 @@ export default {
         }
       });
     },
+    updateExerciseMode() {
+      const selectedExercise = this.exerciseOptions.find(
+        (option) => option.name === this.exercise.exerciseName
+      );
+
+      if (selectedExercise) {
+        this.exercise.mode = selectedExercise.mode;
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  text-align: center;
+  color: #333;
+}
+
 .exercise-form {
   max-width: 400px;
   margin: auto;
   padding: 20px;
+  background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -177,15 +190,15 @@ select {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  box-sizing: border-box; /* Ensures padding and border are included in the width */
 }
 
-.radio-group {
-  display: flex;
-  gap: 10px;
+select {
+  cursor: pointer;
 }
 
 button {
-  background-color: #4285f4;
+  background-color: #4CAF50;
   color: #fff;
   padding: 10px 15px;
   border: none;
@@ -195,6 +208,6 @@ button {
 }
 
 button:hover {
-  background-color: #0052cc;
+  background-color: #45a049;
 }
 </style>
