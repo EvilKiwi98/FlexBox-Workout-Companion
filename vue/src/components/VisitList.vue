@@ -1,6 +1,13 @@
 <template>
   <div>
     <h2>Visit Metrics</h2>
+    <div>
+      <label for="monthNumInput"> Enter Month Number: </label>
+      <input type="number" id="monthNumInput" v-model="monthNum" />
+      <btn class="button" v-on:click="getVisitsByMonthByUserId(monthNum)"> Search </btn> |
+      <btn class="button" v-on:click="getVisitsByWeekByUserId"> View Past Week Visits </btn> |
+      <btn class="button" v-on:click="getVisitsByUserId"> View All Visits </btn>
+    </div>
     <ul class="visit-list">
       <li v-for="visit in visits" :key="visit.visitId" class="visit-item">
         <span class="visit-id">{{ visit.visitId }}</span>
@@ -43,7 +50,22 @@ export default {
       this.isLoading = true;
       CheckInOutService.getVisitsByUserId(this.$store.getters.getUserId).then(
         (response) => {
-          this.isLoading = false;
+          this.visits = response.data;
+        }
+      );
+    },
+    getVisitsByWeekByUserId() {
+      this.isLoading = true;
+      CheckInOutService.getVisitsByWeekByUserId(this.$store.getters.getUserId).then(
+        (response) => {
+          this.visits = response.data;
+        }
+      );
+    },
+    getVisitsByMonthByUserId(monthNum) {
+      this.isLoading = true;
+      CheckInOutService.getVisitsByMonthByUserId(this.$store.getters.getUserId, monthNum).then(
+        (response) => {
           this.visits = response.data;
         }
       );
@@ -100,5 +122,12 @@ export default {
   margin-top: 5px;
   font-size: 14px;
   color: #555;
+}
+.button {
+  border-style: solid;
+  border-radius: 2px;
+  background-color: grey;
+  text-align: center;
+  color: black
 }
 </style>

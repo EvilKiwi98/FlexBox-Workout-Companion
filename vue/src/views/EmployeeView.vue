@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div id="searchButton">
-      <btn v-on:click="showEmployeeForm = !showEmployeeForm" class="employeeSearchButton">
+      <btn class="button" v-on:click="showEmployeeForm = !showEmployeeForm">
         Show Employee Search
       </btn>
     </div>
@@ -9,7 +9,7 @@
     <div class="searchForm" v-show="showEmployeeForm">
       <label for="userIdInput"> Enter User Id: </label>
       <input type="number" id="userIdInput" v-model="userId" />
-      <btn v-on:click="employeeGetExerciseByUserId(userId)"> Search </btn>
+      <btn class="button" v-on:click="employeeGetExerciseByUserId(userId)"> Search </btn>
 
       <div class="exercise-list-container">
         <ul class="exercise-list">
@@ -152,6 +152,13 @@ export default {
   margin-top: 5px;
   font-size: 14px;
   color: #555;
+}
+.button {
+  border-style: solid;
+  border-radius: 2px;
+  background-color: grey;
+  text-align: center;
+  color: black
 }
 
 #userIdInput {
