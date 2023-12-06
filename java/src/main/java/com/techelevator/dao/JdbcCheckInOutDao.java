@@ -103,6 +103,20 @@ public class JdbcCheckInOutDao implements CheckInOutDao {
         return totalDuration;
     }
 
+    @Override
+    public double getAverageVisitDurationByUserId(int userId) {
+        double durationAverage = 0;
+        String sql = "SELECT user_id, ROUND(AVG(duration), 2) AS average_duration\n" +
+                "FROM user_visits\n" +
+                "WHERE user_id = ?\n" +
+                "GROUP BY user_id";
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, userId);
+        if (result.next()) {
+            durationAverage = result.getDouble("average_duration");
+        }
+        return durationAverage;
+    }
+
     public CheckInOut mapToRowSet(SqlRowSet results) {
         CheckInOut checkInOut = new CheckInOut();
         checkInOut.setUserVisitId(results.getInt("user_visit_id"));
