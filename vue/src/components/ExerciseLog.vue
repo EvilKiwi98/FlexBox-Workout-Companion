@@ -1,13 +1,13 @@
 <template>
   <div>
     <div v-on:click="getTotalVisitDurationByUserId()">
-      <p>Your total visit time is : {{ totalVisitDuration }}</p>
+      <p>Your total visit time is: {{ totalVisitDuration }} minutes</p>
     </div>
 
-    <h1>Please log your exercise</h1>
-    <form class="exerciseForm" v-on:submit.prevent="submitExercise">
+    <h1>Log Your Exercise</h1>
+    <form class="exercise-form" v-on:submit.prevent="submitExercise">
       <div class="form-group">
-        <label for="exerciseName">Exercise Name:</label>
+        <label for="exerciseName">Exercise Name</label>
         <select id="exerciseName" v-model="exercise.exerciseName" required>
           <option
             v-for="exerciseOption in exerciseOptions"
@@ -20,12 +20,13 @@
       </div>
 
       <div class="form-group">
-        <label for="sets">Sets:</label>
+        <label for="sets">Sets</label>
         <input type="number" id="sets" v-model="exercise.sets" required />
       </div>
+
       <div class="form-group">
-        <label>Choose one:</label>
-        <div>
+        <label>Choose one</label>
+        <div class="radio-group">
           <label>
             <input type="radio" v-model="exercise.mode" value="reps" /> Reps
           </label>
@@ -35,33 +36,36 @@
           </label>
         </div>
       </div>
-      <div class="form-group" v-if="exercise.mode == 'reps'">
-        <label for="reps">Reps:</label>
-        <input type="number" id="reps" v-model="exercise.reps" required />
+
+      <div v-if="exercise.mode === 'reps'">
+        <div class="form-group">
+          <label for="reps">Reps</label>
+          <input type="number" id="reps" v-model="exercise.reps" required />
+        </div>
+        <div class="form-group">
+          <label for="weight">Weight</label>
+          <input type="number" id="weight" v-model="exercise.weight" required />
+        </div>
       </div>
-      <div class="form-group" v-if="exercise.mode == 'duration'">
-        <label for="duration">Duration (minutes):</label>
-        <input
-          type="number"
-          id="duration"
-          v-model="exercise.duration"
-          required
-        />
+
+      <div v-if="exercise.mode === 'duration'">
+        <div class="form-group">
+          <label for="duration">Duration (minutes)</label>
+          <input type="number" id="duration" v-model="exercise.duration" required />
+        </div>
       </div>
-      <div class="form-group" v-if="exercise.mode == 'reps'">
-        <label for="weight">Weight:</label>
-        <input type="number" id="weight" v-model="exercise.weight" required />
-      </div>
+
       <div class="form-group">
-        <label for="date">Date:</label>
+        <label for="date">Date</label>
         <input type="date" id="date" v-model="exercise.date" required />
       </div>
+
       <button type="submit">Submit</button>
     </form>
   </div>
-
- 
 </template>
+
+
 <script>
 import ExerciseService from "../services/ExerciseService.js";
 
@@ -148,6 +152,10 @@ export default {
 .exercise-form {
   max-width: 400px;
   margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -157,5 +165,33 @@ export default {
 label {
   display: block;
   margin-bottom: 5px;
+  font-weight: bold;
 }
-</style>]
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  background-color: #4285f4;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0052cc;
+}
+</style>

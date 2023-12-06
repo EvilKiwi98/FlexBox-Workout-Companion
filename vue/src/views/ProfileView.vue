@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <exercise-list/>
+  <div class="profile-view">
+    <exercise-list />
     <visit-list></visit-list>
   </div>
 </template>

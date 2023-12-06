@@ -1,6 +1,11 @@
 <template>
   <div class="exercise-list-container">
-    <h2>Your total visit time is: ({{ totalVisitDuration }})</h2>
+    <div class="visit-info">
+      <h2>Your total visit time:</h2>
+      <p class="total-time">
+        {{ formatDuration(totalVisitDuration) }} ({{ totalVisitDuration }} minutes)
+      </p>
+    </div>
     <h2>Exercise List</h2>
     <ul class="exercise-list">
       <li
@@ -29,7 +34,7 @@ import ExerciseService from "../services/ExerciseService";
 export default {
   data() {
     return {
-      totalVisitDuration: "",
+      totalVisitDuration: 0,
       exercises: [],
       showEmployeeForm: false,
       userId: null,
@@ -81,6 +86,13 @@ export default {
         }
       });
     },
+    formatDuration(minutes) {
+      const days = Math.floor(minutes / 1440);
+      const hours = Math.floor((minutes % 1440) / 60);
+      const remainingMinutes = minutes % 60;
+
+      return `${days} days, ${hours} hours, ${remainingMinutes} minutes`;
+    },
   },
 };
 </script>
@@ -90,22 +102,43 @@ export default {
   margin-top: 20px;
 }
 
+.visit-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.total-time {
+  font-size: 24px;
+  color: #3498db;
+}
+
 .exercise-list {
   list-style: none;
   padding: 0;
 }
 
 .exercise-item {
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  margin-bottom: 10px;
-  padding: 15px;
-  background-color: #f9f9f9;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.exercise-item:hover {
+  transform: scale(1.02);
+}
+
+.exercise-details {
+  display: block;
 }
 
 .exercise-name {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
+  color: #333;
 }
 
 .exercise-sets,
@@ -114,8 +147,17 @@ export default {
 .exercise-weight,
 .exercise-date {
   display: block;
-  margin-top: 5px;
+  margin-top: 8px;
   font-size: 14px;
   color: #555;
+}
+
+.exercise-reps,
+.exercise-duration {
+  font-style: italic;
+}
+
+.exercise-date {
+  color: #777;
 }
 </style>
