@@ -30,16 +30,19 @@ export default {
   padding: 30px;
   max-width: 800px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f4f4f4;
 }
 
 h1 {
   color: #3498db;
   font-size: 32px;
+  margin-bottom: 10px;
 }
 
 .subtitle {
   color: #555;
   font-size: 18px;
+  margin-bottom: 20px;
 }
 
 .content {
@@ -50,9 +53,18 @@ h1 {
 }
 
 .dashboard-section {
+  background-color: #fff;
   border: 1px solid #ddd;
-  padding: 20px;
   border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  flex-grow: 1;
   margin: 0 10px;
+}
+
+.dashboard-section h2 {
+  color: #3498db;
+  font-size: 24px;
+  margin-bottom: 15px;
 }
 </style>
