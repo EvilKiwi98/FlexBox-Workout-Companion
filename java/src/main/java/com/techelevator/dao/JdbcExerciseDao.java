@@ -5,7 +5,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Component
 public class JdbcExerciseDao implements ExerciseDao{
@@ -28,6 +30,18 @@ public class JdbcExerciseDao implements ExerciseDao{
         List <Exercise> exerciseList = new ArrayList<>();
         String sql = "SELECT exercise_id, exercise_name, user_id, date, reps, weight, duration, sets, mode FROM exercise WHERE user_id = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+        while(results.next()){
+            Exercise exercise = mapToRowSet(results);
+            exerciseList.add(exercise);
+        }
+        return exerciseList;
+    }
+
+    @Override
+    public List<Exercise> getExerciseByUserIdByDate(int userId, LocalDate date) {
+        List <Exercise> exerciseList = new ArrayList<>();
+        String sql = "SELECT exercise_id, exercise_name, user_id, date, reps, weight, duration, sets, mode FROM exercise WHERE user_id = ? AND date = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, date);
         while(results.next()){
             Exercise exercise = mapToRowSet(results);
             exerciseList.add(exercise);

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +92,17 @@ public class JdbcCheckInOutDao implements CheckInOutDao {
         }
         return checkInOutList;
     }
+    public List<CheckInOut> getVisitByDayByUserId(int userId, LocalDate date){
+    List<CheckInOut> checkInOutList = new ArrayList<>();
+    String sql = "SELECT * FROM user_visits\n" +
+            "WHERE DATE(check_in_date) = ? AND user_id = ?;";
+    SqlRowSet results = jdbcTemplate.queryForRowSet(sql, date, userId);
+        while (results.next()) {
+        CheckInOut checkInOut = mapToRowSet(results);
+        checkInOutList.add(checkInOut);
+    }
+        return checkInOutList;
+}
 
     @Override
     public int getDurationTotalByUserId(int userId) {
