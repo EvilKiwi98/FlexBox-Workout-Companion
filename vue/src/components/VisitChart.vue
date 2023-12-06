@@ -1,4 +1,8 @@
 <template>
+  <span>
+    <button v-on:click="fetchVisitsByUserId"> Click me first</button>
+    <button v-on:click="populateChartData"> Click me second </button>
+  </span>
   <Bar :data="chartData" />
 </template>
 
@@ -14,10 +18,10 @@ export default {
   components: { Bar },
   data() {
     return {
-      userId: "", 
+      userId: "",
       durationValue: [],
       chartData: {
-        labels: ['January', 'February', 'March','April','May','June'],
+        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
         datasets: [
           {
             label: 'Data One',
@@ -32,26 +36,43 @@ export default {
     setUserId() {
       this.userId = this.$store.getters.getUserId;
     },
-    async fetchVisitsByUserId() {
-      try {
-        await this.setUserId(); 
-        const response = await CheckInOutService.getVisitsByUserId(this.userId);
-        this.durationValue = response.data.map((visit) => visit.duration);
-        console.log(this.durationValue);
-
-        
-        this.chartData.datasets[0].data = [];
-
-        this.durationValue.forEach(element => {
-          this.chartData.datasets[0].data.push(element);
-        });
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        
-      }
+    fetchVisitsByUserId() {
+      this.setUserId();
+      CheckInOutService.getVisitsByUserId(this.userId)
+        .then(response => {
+          if (response.status === 200) {
+            this.durationValue = response.data
+          }
+          console.log(this.durationValue)
+        })
     },
+    populateChartData() {
+
+        this.chartData.labels= this.durationValue;
+      
+    }
+
+    // async fetchVisitsByUserId() {
+    //   try {
+    //     await this.setUserId(); 
+    //     const response = await CheckInOutService.getVisitsByUserId(this.userId);
+    //     this.durationValue = response.data.map((visit) => visit.duration);
+    //     console.log(this.durationValue);
+
+
+    //     this.chartData.datasets[0].data = [];
+
+    //     this.durationValue.forEach(element => {
+    //       this.chartData.datasets[0].data.push(element);
+    //     });
+    //   } catch (error) {
+    //     console.error('Error fetching data:', error);
+
+    //   }
+    // },
   },
   mounted() {
+    this.setUserId
     this.fetchVisitsByUserId();
   },
 };
