@@ -96,6 +96,22 @@ export default {
 
       return `${days}d ${hours}h ${remainingMinutes}m`;
     },
+    getExerciseByDayByUserId(date) {
+      this.isLoading = true;
+      ExerciseService.getExerciseByDayByUserId(this.$store.getters.getUserId, date).then(
+        (response) => {
+          this.visits = response.data;
+        }
+      );
+    },
+    getExerciseBySelectedDate() {
+      const selectedDate = this.exercise.date;
+      if (selectedDate) {
+        this.getExerciseByDayByUserId(selectedDate);
+      } else {
+        console.warn("Please select a date.");
+      }
+    },
   },
 };
 </script>
