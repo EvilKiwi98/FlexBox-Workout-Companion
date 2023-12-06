@@ -2,8 +2,10 @@ package com.techelevator.controller;
 import com.techelevator.model.CheckInOut;
 import com.techelevator.dao.CheckInOutDao;
 import com.techelevator.model.Exercise;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -37,11 +39,15 @@ public class CheckInOutController {
     public List<CheckInOut> getVisitsByUserId (@PathVariable int userId){
         return checkInOutDao.getVisitsByUserId(userId);
     }
+    @RequestMapping(path ="/visits/{userId}/{date}", method = RequestMethod.GET)
+    public List<CheckInOut> getVisitByDayByUserId (@PathVariable int userId, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
+        return checkInOutDao.getVisitByDayByUserId(userId, date);
+    }
     @RequestMapping(path = "/visits/{userId}/week", method = RequestMethod.GET)
     public List<CheckInOut> getPastWeekOfVisitsByUserId (@PathVariable int userId){
         return checkInOutDao.getPastWeekOfVisitsByUserId(userId);
     }
-    @RequestMapping(path = "/visits/{userId}/{monthNum}", method = RequestMethod.GET)
+    @RequestMapping(path = "/visits/{userId}/month/{monthNum}", method = RequestMethod.GET)
     public List<CheckInOut> getSpecificMonthVisitsByUserId (@PathVariable int userId,@PathVariable int monthNum){
         return checkInOutDao.getSpecificMonthVisitsByUserId(userId, monthNum);
     }

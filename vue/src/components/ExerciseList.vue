@@ -1,30 +1,34 @@
 <template>
-  <div class="exercise-list-container">
+  <div class="container">
+    <div class="exercise-list-container">
+      <h2>Exercise List</h2>
+      <ul class="exercise-list">
+        <li
+          v-for="exercise in exercises"
+          :key="exercise.exercise_id"
+          class="exercise-item"
+        >
+          <span class="exercise-name">{{ exercise.exerciseName }}</span>
+          <span class="exercise-sets">Sets: {{ exercise.sets }}</span>
+          <span v-show="exercise.mode === 'reps'" class="exercise-reps"
+            >Reps: {{ exercise.reps }}</span
+          >
+          <span v-show="exercise.mode === 'duration'" class="exercise-duration"
+            >Duration: {{ exercise.duration }} mins</span
+          >
+          <span class="exercise-weight">Weight: {{ exercise.weight }} lbs</span>
+          <span class="exercise-date">Date: {{ formatDate(exercise.date) }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Total Visit Time Container -->
     <div class="visit-info">
       <h2>Your total visit time:</h2>
       <p class="total-time">
         {{ formatDuration(totalVisitDuration) }} ({{ totalVisitDuration }} minutes)
       </p>
     </div>
-    <h2>Exercise List</h2>
-    <ul class="exercise-list">
-      <li
-        v-for="exercise in exercises"
-        :key="exercise.exercise_id"
-        class="exercise-item"
-      >
-        <span class="exercise-name">{{ exercise.exerciseName }}</span>
-        <span class="exercise-sets">Sets: {{ exercise.sets }}</span>
-        <span v-show="exercise.mode === 'reps'" class="exercise-reps"
-          >Reps: {{ exercise.reps }}</span
-        >
-        <span v-show="exercise.mode === 'duration'" class="exercise-duration"
-          >Duration: {{ exercise.duration }} mins</span
-        >
-        <span class="exercise-weight">Weight: {{ exercise.weight }} lbs</span>
-        <span class="exercise-date">Date: {{ exercise.date }}</span>
-      </li>
-    </ul>
   </div>
 </template>
 
@@ -36,7 +40,6 @@ export default {
     return {
       totalVisitDuration: 0,
       exercises: [],
-      showEmployeeForm: false,
       userId: null,
       exercise: {
         exerciseName: "",
@@ -91,25 +94,38 @@ export default {
       const hours = Math.floor((minutes % 1440) / 60);
       const remainingMinutes = minutes % 60;
 
-      return `${days} days, ${hours} hours, ${remainingMinutes} minutes`;
+      return `${days}d ${hours}h ${remainingMinutes}m`;
     },
   },
 };
 </script>
 
 <style scoped>
-.exercise-list-container {
-  margin-top: 20px;
+.container {
+  display: flex; /* Use flexbox to position items */
+  max-width: 1200px; /* Set max-width for better responsiveness */
+  margin: 20px auto; /* Center the content */
 }
 
 .visit-info {
+  width: 25%; /* Adjust width as needed (1/4 of the container) */
+  padding: 15px;
+  margin-left: auto; /* Add left margin to push it to the right */
+  background-color: #3498db;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
-  margin-bottom: 20px;
+  overflow: hidden; /* Hide overflow content */
 }
 
 .total-time {
-  font-size: 24px;
-  color: #3498db;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.exercise-list-container {
+  width: 70%; /* Adjust width as needed (3/4 of the container) */
 }
 
 .exercise-list {
@@ -129,10 +145,6 @@ export default {
 
 .exercise-item:hover {
   transform: scale(1.02);
-}
-
-.exercise-details {
-  display: block;
 }
 
 .exercise-name {

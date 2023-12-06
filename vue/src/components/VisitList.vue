@@ -1,19 +1,19 @@
 <template>
   <div>
     <h2>Visit Metrics</h2>
-    <div>
-      <label for="monthNumInput"> Enter Month Number: </label>
+    <div class="search-options">
+      <label for="monthNumInput">Enter Month Number:</label>
       <input type="number" id="monthNumInput" v-model="monthNum" />
-      <btn class="button" v-on:click="getVisitsByMonthByUserId(monthNum)"> Search </btn> |
-      <btn class="button" v-on:click="getVisitsByWeekByUserId"> View Past Week Visits </btn> |
-      <btn class="button" v-on:click="getVisitsByUserId"> View All Visits </btn>
+      <button class="button" @click="getVisitsByMonthByUserId(monthNum)">Search</button> |
+      <button class="button" @click="getVisitsByWeekByUserId">View Past Week Visits</button> |
+      <button class="button" @click="getVisitsByUserId">View All Visits</button>
     </div>
     <ul class="visit-list">
       <li v-for="visit in visits" :key="visit.visitId" class="visit-item">
-        <span class="visit-id">{{ visit.visitId }}</span>
-        <span class="visit-checkInDate"> Check In: {{ formatDateTime(visit.checkInTime) }} </span>
-        <span class="visit-checkOutDate"> Check Out: {{ formatDateTime(visit.checkOutTime) }} </span>
-        <span class="visit-duration"> Duration: {{ visit.duration }} </span>
+        <span class="visit-id">Visit ID: {{ visit.visitId }}</span>
+        <span class="visit-check-in">Check In: {{ formatDateTime(visit.checkInTime) }}</span>
+        <span class="visit-check-out">Check Out: {{ formatDateTime(visit.checkOutTime) }}</span>
+        <span class="visit-duration">Duration: {{ visit.duration }} minutes</span>
       </li>
     </ul>
   </div>
@@ -22,6 +22,7 @@
 <script>
 import ExerciseService from '../services/ExerciseService';
 import CheckInOutService from '../services/CheckInOutService';
+
 export default {
   data() {
     return {
@@ -34,7 +35,7 @@ export default {
         checkOutDate: "",
         duration: "",
       },
-
+      monthNum: null,
     };
   },
   mounted() {
@@ -105,29 +106,48 @@ export default {
 .visit-item {
   border: 1px solid #ccc;
   border-radius: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding: 15px;
-  background-color: #f9f9f9;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.visit-item:hover {
+  transform: scale(1.02);
 }
 
 .visit-id {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
+  color: #333;
 }
 
-.visit-checkInDate,
-.visit-checkOutDate,
+.visit-check-in,
+.visit-check-out,
 .visit-duration {
   display: block;
-  margin-top: 5px;
+  margin-top: 8px;
   font-size: 14px;
   color: #555;
 }
+
 .button {
-  border-style: solid;
-  border-radius: 2px;
-  background-color: grey;
-  text-align: center;
-  color: black
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  margin: 8px;
+  cursor: pointer;
+  background-color: #3498db;
+  color: #fff;
+  font-size: 14px;
+}
+
+.search-options {
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #333;
 }
 </style>
