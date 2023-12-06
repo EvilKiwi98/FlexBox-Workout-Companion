@@ -88,9 +88,12 @@ export default {
         mode: "", // Added property for reps or duration choice
       },
       exerciseOptions: [
-        { id: 1, name: "Bench press", mode: "reps" },
+        { id: 1, name: "Bench Press", mode: "reps" },
         { id: 2, name: "Treadmill", mode: "duration" },
-        { id: 3, name: "Exercise 3" },
+        { id: 3, name: "Dumbell", mode: "reps" },
+        { id: 4, name: "Dumbell", mode: "reps" },
+        { id: 5, name: "Lat Pulldown", mode: "reps" },
+        { id: 6, name: "Rowing Machine", mode: "duration" },
       ],
     };
   },
