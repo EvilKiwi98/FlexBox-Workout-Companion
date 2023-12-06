@@ -30,5 +30,9 @@ public class ExerciseController {
     public List<Exercise> getExercisesByUserIdByDate (@PathVariable int userId, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
         return exerciseDao.getExerciseByUserIdByDate(userId, date);
     }
+    @RequestMapping(path ="/exercise/mostUsed/duration/{monthNum}", method = RequestMethod.GET)
+    public List<Exercise> getMostUsedDurationEquipmentByMonth (@PathVariable int monthNum){
+        return exerciseDao.getMostUsedDurationEquipmentByMonth(monthNum);
+    }
 
 }
