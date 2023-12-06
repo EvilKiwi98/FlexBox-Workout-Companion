@@ -1,23 +1,26 @@
 <template>
   <div class="container">
     <div class="exercise-list-container">
-      <h2>Exercise List</h2>
+      <h1>Exercise List</h1>
+      <div class="exercise-filter">
+        <label for="filterDate">Filter Exercises by Date</label>
+        <input type="date" id="filterDate" v-model="selectedDate" required />
+        <button @click="getExerciseByDayByUserId">Filter</button>
+        <button @click="getAllExercises">Show All Exercises</button>
+      </div>
       <ul class="exercise-list">
-        <li
-          v-for="exercise in exercises"
-          :key="exercise.exercise_id"
-          class="exercise-item"
-        >
+        <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
           <span class="exercise-name">{{ exercise.exerciseName }}</span>
           <span class="exercise-sets">Sets: {{ exercise.sets }}</span>
-          <span v-show="exercise.mode === 'reps'" class="exercise-reps"
-            >Reps: {{ exercise.reps }}</span
-          >
-          <span v-show="exercise.mode === 'duration'" class="exercise-duration"
-            >Duration: {{ exercise.duration }} mins</span
-          >
+          <span v-show="exercise.mode === 'reps'" class="exercise-reps">Reps: {{ exercise.reps }}</span>
+          <span v-show="exercise.mode === 'duration'" class="exercise-duration">Duration: {{ exercise.duration }}
+            mins</span>
           <span class="exercise-weight">Weight: {{ exercise.weight }} lbs</span>
           <span class="exercise-date">Date: {{ formatDate(exercise.date) }}</span>
+        </li>
+        <!-- Display a message if no exercises are available -->
+        <li v-if="exercises.length === 0" class="no-exercises-message">
+          No exercises available for the selected date.
         </li>
       </ul>
     </div>
@@ -41,6 +44,7 @@ export default {
       totalVisitDuration: 0,
       exercises: [],
       userId: null,
+      date: null,
       exercise: {
         exerciseName: "",
         userId: "",
@@ -57,6 +61,7 @@ export default {
         { id: 2, name: "Treadmill", mode: "duration" },
         { id: 3, name: "Exercise 3" },
       ],
+      selectedDate: null,
     };
   },
   mounted() {
@@ -96,21 +101,47 @@ export default {
 
       return `${days}d ${hours}h ${remainingMinutes}m`;
     },
-    getExerciseByDayByUserId(date) {
+    getExerciseByDayByUserId() {
+      if (!this.selectedDate) {
+        console.warn("Please select a date.");
+        return;
+      }
+
+      // Set the user ID before making the API call
+      this.setUserId();
+
       this.isLoading = true;
-      ExerciseService.getExerciseByDayByUserId(this.$store.getters.getUserId, date).then(
+      ExerciseService.getExerciseByDayByUserId(
+        this.$store.getters.getUserId,
+        this.selectedDate
+      ).then((response) => {
+        this.isLoading = false;
+        this.exercises = response.data.map((exercise) => ({
+          ...exercise,
+          date: this.reformatDate(exercise.date), // Reformat date
+        }));
+      });
+    },
+    // Add a method to reformat the date
+    reformatDate(date) {
+      // Assuming date is in "YYYY-MM-DD" format
+      const [year, month, day] = date.split("-");
+      return `${month}/${day}/${year}`;
+    },
+    getAllExercises() {
+      // Set the user ID before making the API call
+      this.setUserId();
+
+      this.isLoading = true;
+      ExerciseService.getExerciseByUserId(this.$store.getters.getUserId).then(
         (response) => {
-          this.visits = response.data;
+          this.isLoading = false;
+          this.exercises = response.data.map((exercise) => ({
+            ...exercise,
+            date: this.reformatDate(exercise.date), // Reformat date
+          }));
         }
       );
-    },
-    getExerciseBySelectedDate() {
-      const selectedDate = this.exercise.date;
-      if (selectedDate) {
-        this.getExerciseByDayByUserId(selectedDate);
-      } else {
-        console.warn("Please select a date.");
-      }
     },
   },
 };
@@ -118,21 +149,21 @@ export default {
 
 <style scoped>
 .container {
-  display: flex; /* Use flexbox to position items */
-  max-width: 1200px; /* Set max-width for better responsiveness */
-  margin: 20px auto; /* Center the content */
+  display: flex;
+  max-width: 1200px;
+  margin: 20px auto;
 }
 
 .visit-info {
-  width: 25%; /* Adjust width as needed (1/4 of the container) */
+  width: 25%;
   padding: 15px;
-  margin-left: auto; /* Add left margin to push it to the right */
+  margin-left: auto;
   background-color: #3498db;
   color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
-  overflow: hidden; /* Hide overflow content */
+  overflow: hidden;
 }
 
 .total-time {
@@ -141,7 +172,7 @@ export default {
 }
 
 .exercise-list-container {
-  width: 70%; /* Adjust width as needed (3/4 of the container) */
+  width: 70%;
 }
 
 .exercise-list {
@@ -187,5 +218,11 @@ export default {
 
 .exercise-date {
   color: #777;
+}
+
+.no-exercises-message {
+  font-style: italic;
+  color: #777;
+  margin-top: 10px;
 }
 </style>
