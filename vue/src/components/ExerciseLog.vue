@@ -138,6 +138,14 @@ export default {
         this.exercise.mode = selectedExercise.mode;
       }
     },
+    getExerciseByDayByUserId(date) {
+      this.isLoading = true;
+      ExerciseService.getExerciseByDayByUserId(this.$store.getters.getUserId, date).then(
+        (response) => {
+          this.visits = response.data;
+        }
+      );
+    },
   },
 };
 </script>

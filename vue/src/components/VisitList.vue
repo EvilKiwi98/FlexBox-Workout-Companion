@@ -71,6 +71,14 @@ export default {
         }
       );
     },
+    getVisitsByDayByUserId(date) {
+      this.isLoading = true;
+      CheckInOutService.getVisitsByDayByUserId(this.$store.getters.getUserId, date).then(
+        (response) => {
+          this.visits = response.data;
+        }
+      );
+    },
 
     formatDateTime(dateTime) {
       const options = {

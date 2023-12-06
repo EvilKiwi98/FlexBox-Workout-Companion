@@ -17,5 +17,8 @@ export default {
   },
   getVisitsByMonthByUserId(userId, monthNum){
     return axios.get(`/visits/${userId}/${monthNum}`)
+  },
+  getVisitsByDayByUserId(userId, date){
+    return axios.get(`/visits/${userId}/${date}`)
   }
 }
