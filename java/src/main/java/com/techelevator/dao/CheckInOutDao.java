@@ -13,6 +13,7 @@ public interface CheckInOutDao {
     public boolean setCheckOutTime(CheckInOut checkOutTime);
 
     public int getDurationTotalByUserId(int userId);
+    public double getAverageVisitDurationByUserId(int userId);
     public List<CheckInOut> getVisitsByUserId(int userId);
     public List<CheckInOut> getPastWeekOfVisitsByUserId(int userId);
     public List<CheckInOut> getSpecificMonthVisitsByUserId(int userId, int month);

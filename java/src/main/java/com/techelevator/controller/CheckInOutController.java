@@ -24,10 +24,15 @@ public class CheckInOutController {
     public void checkOut(@RequestBody CheckInOut checkOutTime) {
         checkInOutDao.setCheckOutTime(checkOutTime);
     }
-    @RequestMapping(path = "/visits/duration/{userId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/visits/{userId}/duration", method = RequestMethod.GET)
     public int fetchDurationByUserId (@PathVariable int userId){
         return checkInOutDao.getDurationTotalByUserId(userId);
     }
+    @RequestMapping(path = "/visits/{userId}/duration/average", method = RequestMethod.GET)
+    public double getAverageVisitDurationByUserId (@PathVariable int userId){
+        return checkInOutDao.getAverageVisitDurationByUserId(userId);
+    }
+
     @RequestMapping(path ="/visits/{userId}", method = RequestMethod.GET)
     public List<CheckInOut> getVisitsByUserId (@PathVariable int userId){
         return checkInOutDao.getVisitsByUserId(userId);
