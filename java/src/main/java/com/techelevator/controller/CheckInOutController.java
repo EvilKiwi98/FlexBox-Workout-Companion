@@ -32,4 +32,12 @@ public class CheckInOutController {
     public List<CheckInOut> getVisitsByUserId (@PathVariable int userId){
         return checkInOutDao.getVisitsByUserId(userId);
     }
+    @RequestMapping(path = "/visits/{userId}/week", method = RequestMethod.GET)
+    public List<CheckInOut> getPastWeekOfVisitsByUserId (@PathVariable int userId){
+        return checkInOutDao.getPastWeekOfVisitsByUserId(userId);
+    }
+    @RequestMapping(path = "/visits/{userId}/{monthNum}", method = RequestMethod.GET)
+    public List<CheckInOut> getSpecificMonthVisitsByUserId (@PathVariable int userId,@PathVariable int monthNum){
+        return checkInOutDao.getSpecificMonthVisitsByUserId(userId, monthNum);
+    }
 }

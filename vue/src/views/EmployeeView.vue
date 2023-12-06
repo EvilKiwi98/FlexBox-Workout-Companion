@@ -12,18 +12,18 @@
       <btn v-on:click="employeeGetExerciseByUserId(userId)"> Search </btn>
 
       <div class="exercise-list-container">
-      <ul class="exercise-list">
-        <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
-          <span class="exercise-name"> {{ exercise.exerciseName }} </span>
-          <span class="exercise-sets"> Sets: {{ exercise.sets }} </span>
-          <span v-show="exercise.mode === 'reps'" class="exercise-reps"> Reps: {{ exercise.reps }} </span>
-          <span v-show="exercise.mode === 'duration'" class="exercise-duration"> Duration: {{ exercise.duration }}
-            mins </span>
-          <span class="exercise-weight"> Weight: {{ exercise.weight }} lbs </span>
-          <span class="exercise-date"> Date: {{ exercise.date }} </span>
-        </li>
-      </ul>
-    </div>
+        <ul class="exercise-list">
+          <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
+            <span class="exercise-name"> {{ exercise.exerciseName }} </span>
+            <span class="exercise-sets"> Sets: {{ exercise.sets }} </span>
+            <span v-show="exercise.mode === 'reps'" class="exercise-reps"> Reps: {{ exercise.reps }} </span>
+            <span v-show="exercise.mode === 'duration'" class="exercise-duration"> Duration: {{ exercise.duration }}
+              mins </span>
+            <span class="exercise-weight"> Weight: {{ exercise.weight }} lbs </span>
+            <span class="exercise-date"> Date: {{ exercise.date }} </span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -102,21 +102,22 @@ export default {
 </script>
 
 <style scoped>
-.main{
-  text-align:center;
+.main {
+  text-align: center;
 }
-.employeeSearchButton{
-  border-style:solid;
+
+.employeeSearchButton {
+  border-style: solid;
   border-width: 2px;
   background-color: darkgray;
 }
 
-#searchButton{
-  margin-bottom:20px;
-  margin-top:20px;
+#searchButton {
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
-.searchForm{
+.searchForm {
   align-content: center;
 }
 
@@ -153,7 +154,7 @@ export default {
   color: #555;
 }
 
-#userIdInput{
-  width:25px;
+#userIdInput {
+  width: 25px;
 }
 </style>

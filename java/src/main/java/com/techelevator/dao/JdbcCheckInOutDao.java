@@ -66,6 +66,33 @@ public class JdbcCheckInOutDao implements CheckInOutDao {
     }
 
     @Override
+    public List<CheckInOut> getPastWeekOfVisitsByUserId(int userId) {
+        List<CheckInOut> checkInOutList = new ArrayList<>();
+        String sql = "SELECT user_visit_id, user_id, check_in_date, check_out_date, duration FROM user_visits\n" +
+                "WHERE check_in_date >= CURRENT_DATE - INTERVAL '7 days'\n" +
+                "AND user_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+        while (results.next()) {
+            CheckInOut checkInOut = mapToRowSet(results);
+            checkInOutList.add(checkInOut);
+        }
+        return checkInOutList;
+    }
+
+    @Override
+    public List<CheckInOut> getSpecificMonthVisitsByUserId(int userId, int monthNum) {
+        List<CheckInOut> checkInOutList = new ArrayList<>();
+        String sql = "SELECT user_visit_id, user_id, check_in_date, check_out_date, duration FROM user_visits\n" +
+                "WHERE EXTRACT (MONTH FROM check_in_date) = ? AND user_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, monthNum, userId);
+        while (results.next()) {
+            CheckInOut checkInOut = mapToRowSet(results);
+            checkInOutList.add(checkInOut);
+        }
+        return checkInOutList;
+    }
+
+    @Override
     public int getDurationTotalByUserId(int userId) {
         int totalDuration = 0;
         String sql = "SELECT SUM(duration) FROM user_visits WHERE user_id = ?";
@@ -82,11 +109,9 @@ public class JdbcCheckInOutDao implements CheckInOutDao {
         checkInOut.setUserId(results.getInt("user_id"));
         Timestamp checkInTimestamp = results.getTimestamp("check_in_date");
         Timestamp checkOutTimestamp = results.getTimestamp("check_out_date");
-
         if (checkInTimestamp != null) {
             checkInOut.setCheckInTime(checkInTimestamp.toLocalDateTime());
         }
-
         if (checkOutTimestamp != null) {
             checkInOut.setCheckOutTime(checkOutTimestamp.toLocalDateTime());
         }
