@@ -9,17 +9,38 @@
     <div class="searchForm" v-show="showEmployeeForm">
       <label for="userIdInput"> Enter User Id: </label>
       <input type="number" id="userIdInput" v-model="userId" />
-      <btn class="button" v-on:click="employeeGetExerciseByUserId(userId)"> Search </btn>
+      <btn class="button" v-on:click="employeeGetExerciseByUserId(userId)">
+        Search all exercises
+      </btn>
+      <btn class="button" v-on:click="sendCheckIn"> Check in user </btn>
+
+      <btn class="button" v-on:click="sendCheckOut"> Check out user </btn>
+      <span>
+        <p v-show="isCheckedIn">User checked in</p>
+        <p v-show="!isCheckedIn">User checked out</p>
+      </span>
 
       <div class="exercise-list-container">
         <ul class="exercise-list">
-          <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
+          <li
+            v-for="exercise in exercises"
+            :key="exercise.exercise_id"
+            class="exercise-item"
+          >
             <span class="exercise-name"> {{ exercise.exerciseName }} </span>
             <span class="exercise-sets"> Sets: {{ exercise.sets }} </span>
-            <span v-show="exercise.mode === 'reps'" class="exercise-reps"> Reps: {{ exercise.reps }} </span>
-            <span v-show="exercise.mode === 'duration'" class="exercise-duration"> Duration: {{ exercise.duration }}
-              mins </span>
-            <span class="exercise-weight"> Weight: {{ exercise.weight }} lbs </span>
+            <span v-show="exercise.mode === 'reps'" class="exercise-reps">
+              Reps: {{ exercise.reps }}
+            </span>
+            <span
+              v-show="exercise.mode === 'duration'"
+              class="exercise-duration"
+            >
+              Duration: {{ exercise.duration }} mins
+            </span>
+            <span class="exercise-weight">
+              Weight: {{ exercise.weight }} lbs
+            </span>
             <span class="exercise-date"> Date: {{ exercise.date }} </span>
           </li>
         </ul>
@@ -29,8 +50,8 @@
 </template>
 
 <script>
-
-import ExerciseService from '../services/ExerciseService';
+import ExerciseService from "../services/ExerciseService";
+import CheckInOutService from "../services/CheckInOutService";
 
 export default {
   data() {
@@ -50,16 +71,19 @@ export default {
         date: "",
         mode: "", // Added property for reps or duration choice
       },
-      exerciseOptions: [
-        { id: 1, name: "Bench press", mode: "reps" },
-        { id: 2, name: "Treadmill", mode: "duration" },
-        { id: 3, name: "Exercise 3" },
-      ],
+      currentTime: null,
+      checkOutTime: null,
+      isCheckedIn: false,
+      visitDuration: "",
+      CheckInOut: {
+        userVisitId: "",
+        checkInTime: "",
+        checkOutTime: "",
+        duration: "",
+        userId: "",
+      },
     };
   },
-  // mounted() {
-  //   this.getExerciseByUserId();
-  // },
   methods: {
     submitExercise() {
       this.setUserId();
@@ -74,9 +98,6 @@ export default {
         }
         this.exercise = {};
       });
-    },
-    setUserId() {
-      this.exercise.userId = this.$store.getters.getUserId;
     },
     employeeGetExerciseByUserId(userId) {
       ExerciseService.getExerciseByUserId(userId).then((response) => {
@@ -94,6 +115,59 @@ export default {
       ).then((response) => {
         if (response.status === 200) {
           this.totalVisitDuration = response.data;
+        }
+      });
+    },
+    getCurrentTime() {
+      this.currentTime = new Date();
+      // this.currentTime = this.currentTime.toLocaleString('en-US', { timeZone: 'America/New_York' });
+    },
+    setCheckInTime() {
+      this.CheckInOut.checkInTime = this.currentTime;
+    },
+    setCheckOutTime() {
+      this.CheckInOut.checkOutTime = this.currentTime;
+    },
+    setUserId() {
+      this.CheckInOut.userId = this.userId;
+    },
+    calculateDuration() {
+      const checkInTime = new Date(this.CheckInOut.checkInTime);
+      const checkOutTime = new Date(this.CheckInOut.checkOutTime);
+      const durationInMillis = checkOutTime - checkInTime;
+      const durationInMinutes = Math.floor(durationInMillis / (1000 * 60));
+      this.CheckInOut.duration = `${durationInMinutes}`;
+    },
+    sendCheckIn() {
+      this.getCurrentTime(),
+        this.setCheckInTime(),
+        this.setUserId(),
+        CheckInOutService.checkIn(this.CheckInOut).then((response) => {
+          if (response.status === 200) {
+            //we are successful
+            console.log(response.data);
+            this.CheckInOut.userVisitId = response.data.userVisitId;
+            this.isCheckedIn = true;
+          }
+        });
+    },
+    sendCheckOut() {
+      this.getCurrentTime(),
+        this.setCheckOutTime(),
+        this.setUserId(),
+        this.calculateDuration();
+      CheckInOutService.checkOut(this.CheckInOut).then((response) => {
+        if (response.status === 200) {
+          //we are successful
+          console.log(response.data);
+          this.isCheckedIn = false;
+          this.CheckInOut.checkOutTime = new Date();
+          this.checkOutTime = this.CheckInOut.checkOutTime.toLocaleString(
+            "en-US",
+            { timeZone: "EST" }
+          );
+
+          this.CheckInOut = {};
         }
       });
     },
@@ -158,7 +232,7 @@ export default {
   border-radius: 2px;
   background-color: grey;
   text-align: center;
-  color: black
+  color: black;
 }
 
 #userIdInput {
