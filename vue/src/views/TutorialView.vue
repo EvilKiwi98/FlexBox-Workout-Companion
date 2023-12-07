@@ -3,7 +3,7 @@
       <LiteYouTubeEmbed :videoId="currentVideoId" />
   
       <div class="video-buttons">
-        <button @click="changeVideo('qthXlEbdGEc')">Last video</button>
+        <button @click="changeVideo('qthXlEbdGEc')">Lat Pulldown</button>
         <button @click="changeVideo('z5u8DDnaZSg')">Bench Press</button>
         <button @click="changeVideo('yINN07eVVyg')">Dumbbell</button>
         <button @click="changeVideo('t7ylA_jv9Yg')">Fly</button>
