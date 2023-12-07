@@ -1,26 +1,27 @@
 <template>
   <div class="main">
     <div id="searchButton">
-      <btn class="button toggle-btn" v-on:click="toggleEmployeeForm">
+      <button class="button toggle-btn" v-on:click="toggleEmployeeForm">
         {{ showEmployeeForm ? 'Hide Employee Search' : 'Show Employee Search' }}
-      </btn>
+      </button>
     </div>
 
     <div class="search-form" v-show="showEmployeeForm">
       <p id="instructions"> Placeholder Instructions</p>
+
       <label for="userIdInput" id="user-id-label">Enter User Id:</label>
       <input type="number" id="user-id-input" v-model="userId" min=0 />
-      <btn class="button search-btn" v-on:click="employeeGetExerciseByUserId(userId)">
+      <button class="button search-btn" v-on:click="employeeGetExerciseByUserId(userId)">
         Search all exercises
-      </btn>
-      <div id="check-inout-button">
-      <button @click="toggleCheckInOut" :class="{ 'check-btn-in': !isCheckedIn, 'check-btn-out': isCheckedIn }">
-        {{ checkInOutLabel }}
       </button>
-    </div>
+      <div id="check-inout-button">
+        <button @click="toggleCheckInOut" :class="{ 'check-btn-in': !isCheckedIn, 'check-btn-out': isCheckedIn }">
+          {{ checkInOutLabel }}
+        </button>
+      </div>
       <span class="system-message" v-show="showMessage">
-        <p v-show="isCheckedIn" class="status-message">User checked in</p>
-        <p v-show="!isCheckedIn" class="status-message">User checked out</p>
+        <span v-show="isCheckedIn" class="status-message">User checked in</span>
+        <span v-show="!isCheckedIn" class="status-message">User checked out</span>
       </span>
 
       <div class="exercise-list-container">
@@ -50,7 +51,7 @@ export default {
       totalVisitDuration: "",
       exercises: [],
       showEmployeeForm: false,
-      showMessage: true,
+      showMessage: false,
       userId: null,
       exercise: {
         exerciseName: "",
@@ -93,10 +94,12 @@ export default {
         this.exercises = response.data;
       });
     },
+
     formatDate(date) {
       const options = { year: "numeric", month: "short", day: "numeric" };
       return new Date(date).toLocaleDateString("en-US", options);
     },
+
     getTotalVisitDurationByUserId() {
       ExerciseService.getTotalVisitDurationByUserId(
         this.$store.getters.getUserId
@@ -106,19 +109,24 @@ export default {
         }
       });
     },
+
     getCurrentTime() {
       this.currentTime = new Date();
       // this.currentTime = this.currentTime.toLocaleString('en-US', { timeZone: 'America/New_York' });
     },
+
     setCheckInTime() {
       this.CheckInOut.checkInTime = this.currentTime;
     },
+
     setCheckOutTime() {
       this.CheckInOut.checkOutTime = this.currentTime;
     },
+
     setUserId() {
       this.CheckInOut.userId = this.userId;
     },
+
     calculateDuration() {
       const checkInTime = new Date(this.CheckInOut.checkInTime);
       const checkOutTime = new Date(this.CheckInOut.checkOutTime);
@@ -126,6 +134,7 @@ export default {
       const durationInMinutes = Math.floor(durationInMillis / (1000 * 60));
       this.CheckInOut.duration = `${durationInMinutes}`;
     },
+
     sendCheckIn() {
       this.getCurrentTime(),
         this.setCheckInTime(),
@@ -141,6 +150,7 @@ export default {
           }
         });
     },
+
     sendCheckOut() {
       this.getCurrentTime(),
         this.setCheckOutTime(),
@@ -164,6 +174,7 @@ export default {
         }
       });
     },
+
     toggleCheckInOut() {
       if (this.isCheckedIn) {
         this.sendCheckOut();
@@ -172,6 +183,20 @@ export default {
       }
     },
   },
+
+  handleErrorResponse(error) {
+    console.log(error);
+    if (error.response) {
+      this.errorMsg = 'Error adding new player. Error: ' + error.response.status;
+    }
+    else if (error.request) {
+      this.errorMsg = 'Error adding new player. Error: server unavailable';
+    }
+    else {
+      this.errorMsg = 'Java Green has left you high and dry. You would be better off hiring the C# class';
+    }
+  },
+  
   computed: {
     formattedCheckInTime() {
       return this.CheckInOut.checkInTime.toLocaleString("en-US", { timeZone: "EST" });
@@ -210,34 +235,41 @@ export default {
 }
 
 .search-form {
-  align-content: center;
   margin-top: 20px;
-  display:grid;
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-row-gap: 10px;
   grid-template-areas:
     "instructions instructions instructions"
-    "user-id-label user-id-label user-id-input"
-    ". check-inout-button system-message"
+    ". user-id-label user-id-input"
+    "search-exercise-button . check-inout-button"
+    ". . system-message"
     "exercise-list exercise-list exercise-list"
-    
+
 
 }
 
-#user-id-input{
+#user-id-input {
   grid-area: user-id-input
 }
-#user-id-label{
+
+#user-id-label {
   grid-area: user-id-label
 }
-#instructions{
+
+#instructions {
   grid-area: instructions
 }
-#check-inout-button{
+
+#check-inout-button {
   grid-area: check-inout-button
 }
-.system-message{
-  grid-area: system-message
+
+.system-message {
+  grid-area: system-message;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .button.search-btn {
@@ -252,6 +284,7 @@ export default {
   transition: background-color 0.3s ease, color 0.3s ease;
   /* Added color transition */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  grid-area: search-exercise-button
 }
 
 .button.search-btn:hover {
@@ -265,7 +298,7 @@ export default {
   background-color: #2ecc71;
   /* Green color for Check In */
   color: #fff;
-  padding: 25px 50px;
+  padding: 20px 20px;
   /* Increased padding for a bigger button */
   font-size: 20px;
   /* Increased font size */
@@ -299,8 +332,11 @@ export default {
   padding: 5px;
   color: #090909;
   border-radius: 5px;
-  border-style:solid;
-  width:35%;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(66, 119, 121, 0.614);
+  width: 35%;
+  background-color: cadetblue;
 }
 
 .exercise-list-container {
