@@ -20,5 +20,8 @@ export default {
   },
   getVisitsByDayByUserId(userId, date){
     return axios.get(`/visits/${userId}/${date}`)
+  },
+  getAverageVisitDurationByUserId(userId){
+    return axios.get(`visits/${userId}/duration/average`)
   }
 }

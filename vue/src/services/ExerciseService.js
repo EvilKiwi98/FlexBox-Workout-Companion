@@ -15,5 +15,12 @@ export default {
   },
   getExerciseByDayByUserId(userId, date){
     return axios.get(`/exercise/${userId}/${date}`)
+  },
+  getMostUsedDurationEquipmentByMonth(monthNum){
+    return axios.get(`/exercise/mostUsed/duration/${monthNum}`)
+  },
+  getMostUsedRepsEquipmentByMonth(monthNum){
+    return axios.get(`/exercise/mostUsed/reps/${monthNum}`)
   }
+
 }
