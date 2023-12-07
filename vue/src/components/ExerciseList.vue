@@ -9,11 +9,9 @@
         <button @click="getAllExercises">Show All Exercises</button>
       </div>
 
-      <button @click="toggleExerciseList">
-        {{ isExerciseListCollapsed ? 'Show' : 'Hide' }} Exercise List
-      </button>
 
-      <div class="exercise-list-wrapper" v-show="!isExerciseListCollapsed">
+
+      <div class="exercise-list-wrapper">
         <ul class="exercise-list">
           <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
             <span class="exercise-name">{{ exercise.exerciseName }}</span>

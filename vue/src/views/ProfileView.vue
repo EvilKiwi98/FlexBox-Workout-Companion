@@ -1,9 +1,9 @@
 <template>
   <div class="profile-view">
-    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-    style="min-height: 600px; background-image: url('../assets/images/FitnessBackground.jpg'); background-size: cover; background-position: center top;">
-      <span class="mask bg-gradient-default opacity-8"></span>
-      <div class="container-fluid d-flex align-items-center">
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url('../assets/images/FitnessBackground.jpg'); 
+      background-size: cover; 
+      background-position: center top;">
+      <div class="container-fluid">
         <div class="row">
           <div class="col-lg-7 col-md-10">
             <h1 class="display-2 text-white">Hello</h1>
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-
 import ExerciseList from '../components/ExerciseList.vue';
 import VisitList from '../components/VisitList.vue';
 import VisitChart from '../components/VisitChart.vue';
@@ -38,20 +37,23 @@ export default {
     VisitList,
     VisitChart
   }
-
 }
 </script>
 
 <style scoped>
+body {
+  margin: 0; /* Remove default body margin */
+  background: linear-gradient(to bottom, rgba(172, 222, 255, 0.8) 33%, rgba(255, 255, 255, 0.8) 33%);
+}
+
 .profile-view {
   width: 100%;
   flex-direction: column;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  background: linear-gradient(to bottom, rgba(201, 200, 254, 0.8) 33%, rgba(255, 255, 255, 0.8) 33%);
-  background-size: cover;
-  background-position: center;
+  background-color: #fff; /* Set the background color for the bottom 2/3 of the page */
+  border-radius: 0 0 10px 10px; /* Apply border-radius only to the bottom corners */
 }
 
 .header {
