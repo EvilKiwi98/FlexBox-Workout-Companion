@@ -4,7 +4,12 @@
     <form class="exercise-form" v-on:submit.prevent="submitExercise">
       <div class="form-group">
         <label for="exerciseName">Exercise Name</label>
-        <select id="exerciseName" v-model="exercise.exerciseName" required @change="updateExerciseMode">
+        <select
+          id="exerciseName"
+          v-model="exercise.exerciseName"
+          required
+          @change="updateExerciseMode"
+        >
           <option
             v-for="exerciseOption in exerciseOptions"
             :key="exerciseOption.id"
@@ -34,7 +39,12 @@
       <div v-if="exercise.mode === 'duration'">
         <div class="form-group">
           <label for="duration">Duration (minutes)</label>
-          <input type="number" id="duration" v-model="exercise.duration" required />
+          <input
+            type="number"
+            id="duration"
+            v-model="exercise.duration"
+            required
+          />
         </div>
       </div>
 
@@ -73,9 +83,17 @@ export default {
       exerciseOptions: [
         { id: 1, name: "Bench Press", mode: "reps" },
         { id: 2, name: "Treadmill", mode: "duration" },
-        { id: 3, name: "Dumbell", mode: "reps" },
+        { id: 3, name: "Dumbells", mode: "reps" },
         { id: 4, name: "Lat Pulldown", mode: "reps" },
         { id: 5, name: "Rowing Machine", mode: "duration" },
+        { id: 6, name: "Stairmaster", mode: "duration" },
+        { id: 7, name: "Squats", mode: "reps" },
+        { id: 8, name: "Russian Twist", mode: "duration" },
+        { id: 9, name: "Leg Machine", mode: "reps" },
+        { id: 10, name: "Pec Machine", mode: "reps" },
+        { id: 11, name: "Dips", mode: "reps" },
+        { id: 12, name: "Abdominal Crunch", mode: "reps" },
+        { id: 13, name: "Elliptical Machine", mode: "duration" },
       ],
     };
   },
@@ -144,7 +162,7 @@ export default {
 
 <style scoped>
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   background-color: #f0f0f0;
   margin: 0;
   padding: 0;
@@ -198,7 +216,7 @@ select {
 }
 
 button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: #fff;
   padding: 10px 15px;
   border: none;
