@@ -11,6 +11,7 @@
       <span v-if="$store.state.token !== ''" class="nav-links-container">
         <router-link v-bind:to="{ name: 'profile'}" class="nav-link">Profile</router-link>
         <router-link v-bind:to="{ name: 'employee'}" class="nav-link">Employee Services</router-link>
+        <router-link v-bind:to="{ name: 'tutorial'}" class="nav-link">Equipment Tutorials</router-link>
       </span>
     </div>
 

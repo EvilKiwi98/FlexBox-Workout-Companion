@@ -8,6 +8,7 @@ import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import EmployeeView from '../views/EmployeeView.vue';
+import TutorialView from '../views/TutorialView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -30,6 +31,14 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfileView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/tutorial',
+    name: 'tutorial',
+    component: TutorialView,
     meta: {
       requiresAuth: true
     }
