@@ -6,16 +6,19 @@
       </btn>
     </div>
 
-    <div class="searchForm" v-show="showEmployeeForm">
-      <label for="userIdInput">Enter User Id:</label>
-      <input type="number" id="userIdInput" v-model="userId" min=0 />
+    <div class="search-form" v-show="showEmployeeForm">
+      <p id="instructions"> Placeholder Instructions</p>
+      <label for="userIdInput" id="user-id-label">Enter User Id:</label>
+      <input type="number" id="user-id-input" v-model="userId" min=0 />
       <btn class="button search-btn" v-on:click="employeeGetExerciseByUserId(userId)">
         Search all exercises
       </btn>
+      <div id="check-inout-button">
       <button @click="toggleCheckInOut" :class="{ 'check-btn-in': !isCheckedIn, 'check-btn-out': isCheckedIn }">
         {{ checkInOutLabel }}
       </button>
-      <span>
+    </div>
+      <span class="system-message" v-show="showMessage">
         <p v-show="isCheckedIn" class="status-message">User checked in</p>
         <p v-show="!isCheckedIn" class="status-message">User checked out</p>
       </span>
@@ -47,6 +50,7 @@ export default {
       totalVisitDuration: "",
       exercises: [],
       showEmployeeForm: false,
+      showMessage: true,
       userId: null,
       exercise: {
         exerciseName: "",
@@ -76,6 +80,13 @@ export default {
     toggleEmployeeForm() {
       this.showEmployeeForm = !this.showEmployeeForm;
     },
+
+    switchMessage() {
+      setTimeout(() => {
+        this.showMessage = false;
+      }, 5000);
+    },
+
     employeeGetExerciseByUserId(userId) {
       ExerciseService.getExerciseByUserId(userId).then((response) => {
         this.isLoading = false;
@@ -125,6 +136,8 @@ export default {
             console.log(response.data);
             this.CheckInOut.userVisitId = response.data.userVisitId;
             this.isCheckedIn = true;
+            this.showMessage = true;
+            this.switchMessage();
           }
         });
     },
@@ -139,6 +152,8 @@ export default {
           //we are successful
           console.log(response.data);
           this.isCheckedIn = false;
+          this.showMessage = true;
+          this.switchMessage();
           this.CheckInOut.checkOutTime = new Date();
           this.checkOutTime = this.CheckInOut.checkOutTime.toLocaleString(
             "en-US",
@@ -168,6 +183,7 @@ export default {
       return this.isCheckedIn ? "Check Out" : "Check In";
     },
   },
+
 };
 </script>
 
@@ -193,9 +209,35 @@ export default {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.searchForm {
+.search-form {
   align-content: center;
   margin-top: 20px;
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-row-gap: 10px;
+  grid-template-areas:
+    "instructions instructions instructions"
+    "user-id-label user-id-label user-id-input"
+    ". check-inout-button system-message"
+    "exercise-list exercise-list exercise-list"
+    
+
+}
+
+#user-id-input{
+  grid-area: user-id-input
+}
+#user-id-label{
+  grid-area: user-id-label
+}
+#instructions{
+  grid-area: instructions
+}
+#check-inout-button{
+  grid-area: check-inout-button
+}
+.system-message{
+  grid-area: system-message
 }
 
 .button.search-btn {
@@ -217,29 +259,37 @@ export default {
   /* Light grey on hover */
 }
 
+
 .check-btn-in,
 .check-btn-out {
-  background-color: #2ecc71; /* Green color for Check In */
+  background-color: #2ecc71;
+  /* Green color for Check In */
   color: #fff;
-  padding: 25px 50px; /* Increased padding for a bigger button */
-  font-size: 20px; /* Increased font size */
+  padding: 25px 50px;
+  /* Increased padding for a bigger button */
+  font-size: 20px;
+  /* Increased font size */
   cursor: pointer;
   border: none;
   border-radius: 12px;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box shadow for a modern look */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  /* Subtle box shadow for a modern look */
 }
 
 .check-btn-in:hover {
-  background-color: #27ae60; /* Darker green on hover */
+  background-color: #27ae60;
+  /* Darker green on hover */
 }
 
 .check-btn-out {
-  background-color: #e74c3c; /* Red color for Check Out */
+  background-color: #e74c3c;
+  /* Red color for Check Out */
 }
 
 .check-btn-out:hover {
-  background-color: #c0392b; /* Darker red on hover */
+  background-color: #c0392b;
+  /* Darker red on hover */
 }
 
 .status-message {
@@ -249,10 +299,13 @@ export default {
   padding: 5px;
   color: #090909;
   border-radius: 5px;
+  border-style:solid;
+  width:35%;
 }
 
 .exercise-list-container {
   margin-top: 20px;
+  grid-area: exercise-list;
 }
 
 .exercise-list {
@@ -303,5 +356,4 @@ export default {
 .exercise-date {
   color: #777;
 }
-
 </style>

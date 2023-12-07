@@ -1,8 +1,6 @@
 <template>
-  <div class="userUtilContainer">
+  <div class="utilContainer">
     <employee-user-util/>
-  </div>
-  <div class="equipmentUtilContainer" >
     <equipment-search-util/>
   </div>
 </template>
@@ -23,4 +21,11 @@ export default {
 </script>
 
 <style scoped>
+
+.utilContainer{
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-column-gap: 50px;
+
+}
 </style>

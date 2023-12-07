@@ -5,7 +5,7 @@
     </btn>
 
     <div class="outputContainer" v-show="showEquipmentSearch">
-      <div id="inputBox">
+      <div id="input-box">
         <label for="monthNumInput">Enter Month Number:</label>
         <input type="number" class="monthNumInput" v-model="monthNum" min=0 max=12 />
       </div>
@@ -13,14 +13,14 @@
         <button v-on:click="getMostUsedDurationEquipmentByMonth(monthNum)" class="searchButton"> Show month's equipment metrics (duration) </button>
         <button v-on:click="getMostUsedRepsEquipmentByMonth(monthNum)" class="searchButton"> Show month's equipment metrics (repetition) </button>
       </span>
-      <div id="outputList">
-        <ul class="equipment-list" v-if="showDurationEquipment">
+      <div id="output-list">
+        <ul id="equipment-list-duration" class="equipment-list" v-show="showDurationEquipment">
           <li v-for="equipment in equipmentList" :key="equipment.id" class="equipment-item">
             <span class="equipment-name">Name: {{ equipment.exerciseName }}</span>
             <span class="equipment-usage">Last month time usage: {{ equipment.duration }}</span>
           </li>
         </ul>
-        <ul class="equipment-list" v-if="showRepsEquipment">
+        <ul id="equipment-list-reps" class="equipment-list" v-show="showRepsEquipment">
           <li v-for="equipment in equipmentList" :key="equipment.id" class="equipment-item">
             <span class="equipment-name">Name: {{ equipment.exerciseName }}</span> 
             <span class="equipment-usage">Last month rep usage: {{ equipment.reps }}</span>
@@ -48,9 +48,13 @@ export default {
     }
   },
   methods: {
-    // TOGGLE WHOLE THING METHOD
+    // TOGGLE METHODS
     toggleEquipmentSearch() {
       this.showEquipmentSearch = !this.showEquipmentSearch
+    },
+    toggleShowAllEquipment(){
+      this.showDurationEquipment = true;
+      this.showRepsEquipment = true;
     },
     // METHOD FOR GETTING USAGE METRICS BY MONTH (DURATION)
     getMostUsedDurationEquipmentByMonth(monthNum) {
@@ -99,19 +103,52 @@ export default {
   margin-top: 20px;
 }
 
+#input-box{
+  grid-area: input-box;
+}
+
+.employeeInput{
+  grid-area: employee-input;
+}
+
 .outputContainer{
   margin-top:20px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-row-gap:20px;
+  grid-template-areas:
+
+    "input-box input-box"
+    "employee-input employee-input"
+    "output-list output-list"
+
+
 }
 
 .monthNumInput{
   width:40px;
 }
 
-#outputList{
-  width: 70%;
-  align-content: center;
+#output-list{
+  grid-area: output-list;
+  display: flex;
+  justify-content: center;
+
 }
 
+.equipment-list{
+  grid-area: equipment-list
+}
+
+#equipment-list-duration{
+  list-style:none;
+  grid-area: list-duration;
+}
+
+#equipment-list-reps{
+  list-style:none;
+  grid-area: list-rep;
+}
 .searchButton {
   margin-bottom: 20px;
   background-color: #fff;
@@ -141,8 +178,6 @@ export default {
 
 .equipment-list {
   list-style: none;
-  padding: 0;
-  align-content: center;
 }
 
 .equipment-item {
