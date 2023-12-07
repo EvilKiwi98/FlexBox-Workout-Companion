@@ -2,7 +2,7 @@
   <div class="home">
     <h1>Home</h1>
     <p class="subtitle">You must be authenticated to see this</p>
-    <LiteYouTubeEmbed videoId="_PALjGstyFM"/>
+    
 
     <div class="content">
       <check-in-out class="dashboard-section" />
@@ -13,12 +13,12 @@
 <script>
 import CheckInOut from '../components/CheckInOut.vue';
 import ExerciseLog from '../components/ExerciseLog.vue';
-import LiteYouTubeEmbed from '../components/LiteYouTubeEmbed.vue';
+
 export default {
   components: {
     CheckInOut,
     ExerciseLog,
-    LiteYouTubeEmbed
+    
   },
   methods: {
     setCheckInOutTime() {

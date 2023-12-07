@@ -1,15 +1,9 @@
 <template>
 
 <!--ADD THE FOLLOWING TO THE TEMPLATE TAG WHERE COMPONENT IS IMPORTED 
-   <template>
-
-    <LiteYouTubeEmbedComponent video-id="dQw4w9WgXcQ" video-title="Rick Astley - Never Gonna Give You Up" />
-    <LiteYouTubeEmbedComponent video-id="another-video-id" video-title="Another Video Title" />
-    <div class="content">
-      <check-in-out class="dashboard-section" />
-      <exercise-log class="dashboard-section" />
-    </div>
-  </div>
+   
+   <LiteYouTubeEmbed videoId="_PALjGstyFM"/>
+   
 </template> -->
 
     <div>
