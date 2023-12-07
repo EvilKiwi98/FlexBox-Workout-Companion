@@ -8,7 +8,7 @@
 
     <div class="searchForm" v-show="showEmployeeForm">
       <label for="userIdInput">Enter User Id:</label>
-      <input type="number" id="userIdInput" v-model="userId" />
+      <input type="number" id="userIdInput" v-model="userId" min=0 />
       <btn class="button search-btn" v-on:click="employeeGetExerciseByUserId(userId)">
         Search all exercises
       </btn>

@@ -7,7 +7,7 @@
     <div class="outputContainer" v-show="showEquipmentSearch">
       <div id="inputBox">
         <label for="monthNumInput">Enter Month Number:</label>
-        <input type="number" class="monthNumInput" v-model="monthNum" />
+        <input type="number" class="monthNumInput" v-model="monthNum" min=0 max=12 />
       </div>
       <span class="employeeInput">
         <button v-on:click="getMostUsedDurationEquipmentByMonth(monthNum)" class="searchButton"> Show month's equipment metrics (duration) </button>
