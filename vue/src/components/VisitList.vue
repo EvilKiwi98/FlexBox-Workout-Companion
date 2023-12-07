@@ -106,9 +106,11 @@ export default {
 </script>
 
 <style scoped>
-.visit-list {
-  list-style: none;
-  padding: 0;
+.visit-info {
+  width: 100%; /* Full width for Visit List when it's below Exercise List */
+  box-sizing: border-box;
+  padding: 0; /* Remove padding for full width */
+  margin-top: 20px; /* Add margin to separate Visit List from Exercise List */
 }
 
 .visit-item {

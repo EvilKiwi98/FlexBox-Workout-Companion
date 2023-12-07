@@ -8,29 +8,37 @@
         <button @click="getExerciseByDayByUserId">Filter</button>
         <button @click="getAllExercises">Show All Exercises</button>
       </div>
-      <ul class="exercise-list">
-        <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
-          <span class="exercise-name">{{ exercise.exerciseName }}</span>
-          <span class="exercise-sets">Sets: {{ exercise.sets }}</span>
-          <span v-show="exercise.mode === 'reps'" class="exercise-reps">Reps: {{ exercise.reps }}</span>
-          <span v-show="exercise.mode === 'duration'" class="exercise-duration">Duration: {{ exercise.duration }}
-            mins</span>
-          <span class="exercise-weight">Weight: {{ exercise.weight }} lbs</span>
-          <span class="exercise-date">Date: {{ formatDate(exercise.date) }}</span>
-        </li>
-        <!-- Display a message if no exercises are available -->
-        <li v-if="exercises.length === 0" class="no-exercises-message">
-          No exercises available for the selected date.
-        </li>
-      </ul>
+
+      <button @click="toggleExerciseList">
+        {{ isExerciseListCollapsed ? 'Show' : 'Hide' }} Exercise List
+      </button>
+
+      <div class="exercise-list-wrapper" v-show="!isExerciseListCollapsed">
+        <ul class="exercise-list">
+          <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
+            <span class="exercise-name">{{ exercise.exerciseName }}</span>
+            <span class="exercise-sets">Sets: {{ exercise.sets }}</span>
+            <span v-show="exercise.mode === 'reps'" class="exercise-reps">Reps: {{ exercise.reps }}</span>
+            <span v-show="exercise.mode === 'duration'" class="exercise-duration">Duration: {{ exercise.duration }} mins</span>
+            <span class="exercise-weight">Weight: {{ exercise.weight }} lbs</span>
+            <span class="exercise-date">Date: {{ formatDate(exercise.date) }}</span>
+          </li>
+          <!-- Display a message if no exercises are available -->
+          <li v-if="exercises.length === 0" class="no-exercises-message">
+            No exercises available for the selected date.
+          </li>
+        </ul>
+      </div>
     </div>
 
     <!-- Total Visit Time Container -->
     <div class="visit-info">
-      <h2>Your total visit time:</h2>
-      <p class="total-time">
-        {{ formatDuration(totalVisitDuration) }} ({{ totalVisitDuration }} minutes)
-      </p>
+      <div class="total-visit-time">
+        <h2>Your total visit time:</h2>
+        <p class="total-time">
+          {{ formatDuration(totalVisitDuration) }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -150,24 +158,30 @@ export default {
 }
 
 .visit-info {
-  width: 25%;
-  padding: 15px;
-  margin-left: auto;
+  width: 33.33%; /* 1/3 of the width */
+  float: left;
+  box-sizing: border-box;
+  padding-left: 10px; /* Adjust spacing between Exercise List and Visit List */
+}
+
+.total-visit-time {
   background-color: #3498db;
   color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
   text-align: center;
-  overflow: hidden;
-}
-
-.total-time {
-  font-size: 20px;
-  margin-top: 10px;
 }
 
 .exercise-list-container {
-  width: 70%;
+  width: 66.67%; /* 2/3 of the width */
+  float: left;
+  box-sizing: border-box;
+  padding-right: 10px; /* Adjust spacing between Exercise List and Visit List */
+}
+
+.exercise-list-wrapper {
+  margin-top: 10px; /* Adjust as needed */
 }
 
 .exercise-list {
