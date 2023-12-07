@@ -16,5 +16,7 @@ public interface ExerciseDao {
 
     List<Exercise> getMostUsedDurationEquipmentByMonth(int monthNum);
 
+    List<Exercise> getMostUsedRepsEquipmentByMonth(int monthNum);
+
     // public Exercise getEquipmentById();
 }

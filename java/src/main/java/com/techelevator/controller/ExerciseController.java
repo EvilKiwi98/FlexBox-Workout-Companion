@@ -34,5 +34,9 @@ public class ExerciseController {
     public List<Exercise> getMostUsedDurationEquipmentByMonth (@PathVariable int monthNum){
         return exerciseDao.getMostUsedDurationEquipmentByMonth(monthNum);
     }
+    @RequestMapping(path ="/exercise/mostUsed/reps/{monthNum}", method = RequestMethod.GET)
+    public List<Exercise> getMostUsedRepsEquipmentByMonth (@PathVariable int monthNum){
+        return exerciseDao.getMostUsedRepsEquipmentByMonth(monthNum);
+    }
 
 }

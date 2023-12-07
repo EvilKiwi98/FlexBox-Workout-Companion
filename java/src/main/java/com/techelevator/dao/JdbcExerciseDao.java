@@ -55,19 +55,33 @@ public class JdbcExerciseDao implements ExerciseDao{
         String sql = "SELECT exercise_name, SUM(duration) AS total_duration FROM exercise\n" +
                 "WHERE mode = 'duration' AND EXTRACT(MONTH FROM date) = ?\n" +
                 "GROUP BY exercise_name ORDER BY total_duration DESC;";
-
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, monthNum);
-
         while (results.next()) {
             Exercise exercise = new Exercise();
             exercise.setExerciseName(results.getString("exercise_name"));
-            exercise.setDuration(results.getInt("total_duration")); // Assuming total_duration is an integer
+            exercise.setDuration(results.getInt("total_duration"));
+            exerciseList.add(exercise);
+        }
+        return exerciseList;
+    }
+    @Override
+    public List<Exercise> getMostUsedRepsEquipmentByMonth(int monthNum){
+    List<Exercise> exerciseList = new ArrayList<>();
+    String sql = "SELECT exercise_name, SUM(reps * sets) AS total_reps\n" +
+            "FROM exercise\n" +
+            "WHERE mode = 'reps' AND EXTRACT(MONTH FROM date) = ?\n" +
+            "GROUP BY exercise_name\n" +
+            "ORDER BY total_reps DESC";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, monthNum);
+        while (results.next()) {
+            Exercise exercise = new Exercise();
+            exercise.setExerciseName(results.getString("exercise_name"));
+            exercise.setReps(results.getInt("total_reps"));
 
             exerciseList.add(exercise);
         }
-
         return exerciseList;
-    }
+}
 
     public Exercise mapToRowSet(SqlRowSet results){
         Exercise exercise = new Exercise();
