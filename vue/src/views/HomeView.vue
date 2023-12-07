@@ -3,11 +3,16 @@
     <h1>Home</h1>
     <p class="subtitle">You must be authenticated to see this</p>
     <div class="content">
-      <check-in-out class="dashboard-section" />
-      <exercise-log class="dashboard-section" />
+      <div class="check-in-out-container dashboard-container">
+        <check-in-out class="dashboard-section" />
+      </div>
+      <div class="exercise-log-container dashboard-container">
+        <exercise-log class="dashboard-section" />
+      </div>
     </div>
   </div>
 </template>
+
 <script>
 import CheckInOut from '../components/CheckInOut.vue';
 import ExerciseLog from '../components/ExerciseLog.vue'
@@ -26,30 +31,43 @@ export default {
 <style scoped>
 .home {
   text-align: center;
-  margin: 50px auto;
+  margin: 50px 0;
   padding: 30px;
-  max-width: 800px;
+  width: 100vw;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #f4f4f4;
+  position: relative;
 }
 
-h1 {
-  color: #3498db;
-  font-size: 32px;
-  margin-bottom: 10px;
+.home:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 50%;
+  background-color: #eec0a0;
+  z-index: -1; /* Set a lower z-index to place it behind content */
 }
 
+h1,
 .subtitle {
-  color: #555;
-  font-size: 18px;
-  margin-bottom: 20px;
+  color: #000000;
+  z-index: 1; /* Set a higher z-index to place it in front of the background */
 }
 
 .content {
   display: flex;
-  justify-content: space-around;
-  align-items: stretch;
+  flex-direction: column;
+  align-items: center;
   margin-top: 20px;
+  z-index: 1;
+}
+
+.dashboard-container {
+  flex-grow: 1;
+  margin: 0 10px;
+  position: relative;
+  z-index: 2; /* Set a higher z-index to place it in front of the background */
 }
 
 .dashboard-section {
@@ -58,8 +76,6 @@ h1 {
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  flex-grow: 1;
-  margin: 0 10px;
 }
 
 .dashboard-section h2 {
