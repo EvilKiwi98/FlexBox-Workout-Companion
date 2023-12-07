@@ -94,6 +94,9 @@ export default {
         { id: 11, name: "Dips", mode: "reps" },
         { id: 12, name: "Abdominal Crunch", mode: "reps" },
         { id: 13, name: "Elliptical Machine", mode: "duration" },
+        { id: 14, name: "Deadlift", mode: "reps"},
+        { id: 15, name: "Planks", mode: "reps"},
+        { id: 16, name: "Assault Bike", mode: "duration"},
       ],
     };
   },

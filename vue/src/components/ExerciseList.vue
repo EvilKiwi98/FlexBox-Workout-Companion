@@ -56,11 +56,6 @@ export default {
         date: "",
         mode: "", // Added property for reps or duration choice
       },
-      exerciseOptions: [
-        { id: 1, name: "Bench press", mode: "reps" },
-        { id: 2, name: "Treadmill", mode: "duration" },
-        { id: 3, name: "Exercise 3" },
-      ],
       selectedDate: null,
     };
   },
