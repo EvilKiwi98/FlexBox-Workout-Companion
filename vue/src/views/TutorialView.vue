@@ -1,25 +1,117 @@
 <template>
     <div class="profile-view">
-      <LiteYouTubeEmbed :videoId="currentVideoId" />
+      <h1 class="exercise-bar">{{ currentExerciseName }}</h1>
+      <LiteYouTubeEmbed :videoId="currentVideoId" class="video-container" />
   
       <div class="video-buttons">
-        <button @click="changeVideo('qthXlEbdGEc')">Lat Pulldown</button>
-        <button @click="changeVideo('z5u8DDnaZSg')">Bench Press</button>
-        <button @click="changeVideo('yINN07eVVyg')">Dumbbell</button>
-        <button @click="changeVideo('t7ylA_jv9Yg')">Fly</button>
-        <button @click="changeVideo('nzK3Vd0q0Ew')">Squats</button>
-        <button @click="changeVideo('XIm_DQ_K5hU')">Leg Extension Machine</button>
-        <button @click="changeVideo('lcAI2vqZXcM')">Dips</button>
-        <button @click="changeVideo('W9hTmXgdJcw')">Stairmaster</button>
-        <button @click="changeVideo('t5CXJA8ZTY4')">Treadmill (Walking)</button>
-        <button @click="changeVideo('IqgIv2LPTiE')">Assault Bike</button>
-        <button @click="changeVideo('_PALjGstyFM')">Seated Cable Row</button>
-        <button @click="changeVideo('0W6nKe6GL9k')">Deadlift</button>
-        <button @click="changeVideo('curSJrn6X0o')">Elliptical</button>
-        <button @click="changeVideo('g-bPs3dX7MM')">Planks</button>
+        <button class="toggle-btn" @click="changeVideo('qthXlEbdGEc', 'Lat Pulldown')">
+          <div class="button-icon-container">
+            <img src="../assets/lat.png" alt="lat Image" class="button-icon" />
+          </div>
+          <div class="button-text">Lat Pulldown</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('z5u8DDnaZSg', 'Bench Press')">
+          <div class="button-icon-container">
+            <img src="../assets/benchpress.png" alt="benchpress Image" class="button-icon" />
+          </div>
+          <div class="button-text">Bench Press</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('yINN07eVVyg', 'Dumbbell')">
+          <div class="button-icon-container">
+            <img src="../assets/Dumbbell.png" alt="Dumbbell Image" class="button-icon" />
+          </div>
+          <div class="button-text">Dumbbell</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('t7ylA_jv9Yg', 'Fly')">
+          <div class="button-icon-container">
+            <img src="../assets/fly.png" alt="fly Image" class="button-icon" />
+          </div>
+          <div class="button-text">Fly</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('nzK3Vd0q0Ew', 'Squats')">
+          <div class="button-icon-container">
+            <img src="../assets/squat.png" alt="squat Image" class="button-icon" />
+          </div>
+          <div class="button-text">Squats</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('XIm_DQ_K5hU', 'Leg Extension Machine')">
+          <div class="button-icon-container">
+            <img src="../assets/legExtension.png" alt="leg extension Image" class="button-icon" />
+          </div>
+          <div class="button-text">Leg Extension Machine</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('lcAI2vqZXcM', 'Dips')">
+          <div class="button-icon-container">
+            <img src="../assets/dips.png" alt="dip Image" class="button-icon" />
+          </div>
+          <div class="button-text">Dips</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('W9hTmXgdJcw', 'Stairmaster')">
+          <div class="button-icon-container">
+            <img src="../assets/stairmaster.png" alt="stairmaster Image" class="button-icon" />
+          </div>
+          <div class="button-text">Stairmaster</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('t5CXJA8ZTY4', 'Treadmill')">
+          <div class="button-icon-container">
+            <img src="../assets/Treadmill.png" alt="Treadmill Image" class="button-icon" />
+          </div>
+          <div class="button-text">Treadmill</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('IqgIv2LPTiE', 'Assault Bike')">
+          <div class="button-icon-container">
+            <img src="../assets/bike.png" alt="bike Image" class="button-icon" />
+          </div>
+          <div class="button-text">Assault Bike</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('_PALjGstyFM', 'Seated Cable Row')">
+          <div class="button-icon-container">
+            <img src="../assets/rowing.png" alt="rowing Image" class="button-icon" />
+          </div>
+          <div class="button-text">Seated Cable Row</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('0W6nKe6GL9k', 'Deadlift')">
+          <div class="button-icon-container">
+            <img src="../assets/deadlift.png" alt="deadlift Image" class="button-icon" />
+          </div>
+          <div class="button-text">Deadlift</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('curSJrn6X0o', 'Elliptical')">
+          <div class="button-icon-container">
+            <img src="../assets/Elliptical.png" alt="Elliptical Image" class="button-icon" />
+          </div>
+          <div class="button-text">Elliptical</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('g-bPs3dX7MM', 'Planks')">
+          <div class="button-icon-container">
+            <img src="../assets/plank.png" alt="plank Image" class="button-icon" />
+          </div>
+          <div class="button-text">Planks</div>
+        </button>
+  
+        <button class="toggle-btn" @click="changeVideo('cLSO6DjOsi8', 'Pushups')">
+          <div class="button-icon-container">
+            <img src="../assets/pushup.png" alt="pushup Image" class="button-icon" />
+          </div>
+          <div class="button-text">Pushups</div>
+        </button>
       </div>
     </div>
   </template>
+  
   
   <script>
   import LiteYouTubeEmbed from '../components/LiteYouTubeEmbed.vue';
@@ -27,18 +119,20 @@
   
   export default {
     components: {
-      LiteYouTubeEmbed
+      LiteYouTubeEmbed,
     },
     data() {
       return {
-        currentVideoId: 'curSJrn6X0o' // Default video ID
+        currentVideoId: 'qthXlEbdGEc', // Default video ID
+        currentExerciseName: 'Lat Pulldown', // Default exercise name
       };
     },
     methods: {
-      changeVideo(videoId) {
+      changeVideo(videoId, exerciseName) {
         this.currentVideoId = videoId;
-      }
-    }
+        this.currentExerciseName = exerciseName;
+      },
+    },
   };
   </script>
   
@@ -47,13 +141,70 @@
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    text-align: center;
+    /* Center the content horizontally */
+  }
+  
+  .exercise-bar {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    /* Increased padding for a slightly rounded appearance */
+    margin-bottom: 20px;
+    /* Add space below the exercise bar */
+    border-radius: 5px;
+    /* Added border-radius for rounded corners */
+    display: inline-block;
+    /* Make it an inline-block to fit the content width */
+  }
+  
+  .video-container {
+    border: 4px solid #0246d0;
+    /* Increased border size around the video */
+    border-radius: 8px;
+    /* Added border-radius for rounded corners */
   }
   
   .video-buttons {
     margin-top: 20px;
+    display: flex;
+    /* Use flexbox to align buttons */
+    justify-content: center;
+    /* Center the buttons horizontally */
+    flex-wrap: wrap;
+    /* Allow buttons to wrap to the next line if needed */
   }
   
-  .video-buttons button {
+  .toggle-btn {
+    background-color: #3498db;
+    color: #fff;
+    padding: 20px;
+    flex: 0 0 calc(33.33% - 20px);
+    /* Set a fixed width for each button (adjust as needed) */
+    margin: 0 10px 10px 0;
+    /* Add margin between and below the buttons */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the content horizontally */
+    text-align: center;
+  }
+  
+  .button-icon-container {
+    margin-bottom: 10px; /* Adjust as needed to control the space between icon and text */
+  }
+  
+  .button-icon {
+    width: auto; /* Set a fixed width */
+    height: 60px; /* Set a fixed height */
     margin-right: 10px;
+  }
+  
+  .toggle-btn:hover {
+    background-color: #2980b9;
   }
   </style>
