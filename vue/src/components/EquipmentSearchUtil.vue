@@ -1,8 +1,8 @@
 <template>
   <div class="main">
-    <btn class="button toggle-btn" v-on:click="toggleEquipmentSearch">
+    <button class="button toggle-btn" v-on:click="toggleEquipmentSearch">
       {{ showEquipmentSearch ? 'Hide Equipment Search' : 'Show Equipment Search' }}
-    </btn>
+    </button>
 
     <div class="outputContainer" v-show="showEquipmentSearch">
       <div id="input-box">

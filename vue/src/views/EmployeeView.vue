@@ -1,8 +1,10 @@
 <template>
+  <div class = "body">
   <div class="utilContainer">
     <employee-user-util/>
     <equipment-search-util/>
   </div>
+</div>
 </template>
 
 <script>
@@ -27,5 +29,11 @@ export default {
   grid-template-columns: 50% 50%;
   grid-column-gap: 50px;
 
+}
+.body{
+  background-color:lightgrey;
+  border-style:solid;
+  border-color:lightgray;
+  border-radius:8px;
 }
 </style>
