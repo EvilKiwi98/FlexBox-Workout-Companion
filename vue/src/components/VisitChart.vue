@@ -26,7 +26,7 @@ export default {
         labels: [],
         datasets: [
           {
-            label: 'Visits',
+            label: 'Minutes',
             backgroundColor: '#3498db',
             data: [],
           },
