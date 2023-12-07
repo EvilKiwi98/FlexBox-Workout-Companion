@@ -89,7 +89,7 @@ export default {
         { id: 6, name: "Stairmaster", mode: "duration" },
         { id: 7, name: "Squats", mode: "reps" },
         { id: 8, name: "Russian Twist", mode: "duration" },
-        { id: 9, name: "Leg Machine", mode: "reps" },
+        { id: 9, name: "Leg Press Machine", mode: "reps" },
         { id: 10, name: "Fly", mode: "reps" },
         { id: 11, name: "Dips", mode: "reps" },
         { id: 12, name: "Abdominal Crunch", mode: "reps" },
@@ -97,6 +97,8 @@ export default {
         { id: 14, name: "Deadlift", mode: "reps"},
         { id: 15, name: "Planks", mode: "duration"},
         { id: 16, name: "Assault Bike", mode: "duration"},
+        { id: 17, name: "Push Ups", mode: "reps"},
+        { id: 18, name: "Pulley", mode: "reps"},
       ],
     };
   },
