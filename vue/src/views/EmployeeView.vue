@@ -1,25 +1,26 @@
 <template>
-  <div>
+  <div class="userUtilContainer">
     <employee-user-util/>
-    <exercise-search-util/>
+  </div>
+  <div class="equipmentUtilContainer" >
+    <equipment-search-util/>
   </div>
 </template>
 
 <script>
 import EmployeeUserUtil from '../components/EmployeeUserUtil.vue';
-import ExerciseSearchUtil from '../components/ExerciseSearchUtil.vue';
+import EquipmentSearchUtil from '../components/EquipmentSearchUtil.vue';
 
 export default {
   data() {
     return {};
   },
-  components:{
+  components: {
     EmployeeUserUtil,
-    ExerciseSearchUtil
+    EquipmentSearchUtil
   }
 };
 </script>
 
 <style scoped>
-
 </style>
