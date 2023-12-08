@@ -1,6 +1,6 @@
 <template>
   <div class="profile-view">
-    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url('../assets/images/FitnessBackground.jpg'); 
+    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url('@/assets/images/FitnessBackground.jpg'); 
       background-size: cover; 
       background-position: center top;">
       <div class="container-fluid">
