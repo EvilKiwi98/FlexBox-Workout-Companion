@@ -108,6 +108,24 @@
           </div>
           <div class="button-text">Pushups</div>
         </button>
+        <button class="toggle-btn" @click="changeVideo('I_LbV5DNr54', 'Pulley')">
+          <div class="button-icon-container">
+            <img src="../assets/pulley.png" alt="pulley Image" class="button-icon" />
+          </div>
+          <div class="button-text">Pulley</div>
+        </button>
+        <button class="toggle-btn" @click="changeVideo('oq--8TSF7LQ', 'Twist')">
+          <div class="button-icon-container">
+            <img src="../assets/twist.png" alt="twist Image" class="button-icon" />
+          </div>
+          <div class="button-text">Twists</div>
+        </button>
+        <button class="toggle-btn" @click="changeVideo('7T0ZUEt1m8s', 'Crunch')">
+          <div class="button-icon-container">
+            <img src="../assets/crunch.png" alt="crunch Image" class="button-icon" />
+          </div>
+          <div class="button-text">Crunch Machine</div>
+        </button>
       </div>
     </div>
   </template>
@@ -180,9 +198,9 @@
     color: #fff;
     padding: 20px;
     flex: 0 0 calc(33.33% - 20px);
-    /* Set a fixed width for each button (adjust as needed) */
-    margin: 0 10px 10px 0;
-    /* Add margin between and below the buttons */
+
+    margin: 0 10px 20px 10px;
+    
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -190,21 +208,27 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center the content horizontally */
+    align-items: center; 
     text-align: center;
   }
   
   .button-icon-container {
-    margin-bottom: 10px; /* Adjust as needed to control the space between icon and text */
+    margin-bottom: 10px; 
   }
   
   .button-icon {
-    width: auto; /* Set a fixed width */
-    height: 60px; /* Set a fixed height */
+    width: auto; 
+    height: 60px; 
     margin-right: 10px;
   }
   
   .toggle-btn:hover {
     background-color: #2980b9;
   }
+  @media screen and (max-width: 600px) {
+  .toggle-btn {
+    flex-basis: calc(33.33% - 20px);
+    /* Adjust the width for three buttons per row in mobile view */
+  }
+}
   </style>
