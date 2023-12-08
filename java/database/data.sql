@@ -77,16 +77,23 @@ INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight
 
 INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Treadmill', 1, '2023-12-07', 1, 0, 45, 0, 'duration');
 INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Leg Press Machine', 1, '2023-12-07', 3, 10, 0, 65, 'reps');
-INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Squats', 1, '2023-12-07', 3, 10, 0, 0, 'reps');
-INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Dumbbells', 1, '2023-12-07', 1, 0, 0, 0, 'reps');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Squats', 1, '2023-12-07', 3, 10, 0, 95, 'reps');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Elliptical Machine', 1, '2023-12-07', 1, 0, 24, 0, 'duration');
 
-INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Stairmaster', 1, '2023-12-09', 1, 0, 35, 0, 'duration');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Treadmill', 1, '2023-12-09', 1, 0, 60, 0, 'duration');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Dumbbells', 1, '2023-12-09', 3, 10, 0, 25, 'reps');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Pull Ups', 1, '2023-12-09', 3, 15, 0, 0, 'reps');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Rowing Machine', 1, '2023-12-09', 3, 0, 48, 0, 'duration');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Abdominal Crunch', 1, '2023-12-09', 3, 10, 0, 25, 'reps');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Bench Press', 1, '2023-12-09', 3, 10, 0, 95, 'reps');
 
-INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Stairmaster', 1, '2023-12-12', 1, 0, 35, 0, 'duration');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Treadmill', 1, '2023-12-12', 1, 0, 25, 0, 'duration');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Fly', 1, '2023-12-12', 3, 10, 0, 73, 'reps');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Dumbbells', 1, '2023-12-12', 3, 10, 0, 20, 'duration');
 
-INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Stairmaster', 1, '2023-12-13', 1, 0, 35, 0, 'duration');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Stairmaster', 1, '2023-12-13', 1, 0, 0, 0, 'duration');
 
-INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Stairmaster', 1, '2023-12-14', 1, 0, 35, 0, 'duration');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Stairmaster', 1, '2023-12-14', 1, 0, 0, 0, 'duration');
 
 --Employee Logged Workout
 INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Treadmill', 3, '2023-11-27', 1, 0, 45, 0, 'duration');
