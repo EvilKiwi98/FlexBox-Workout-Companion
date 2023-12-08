@@ -1,20 +1,13 @@
 <template>
   <div>
     <h1>Log Your Exercise</h1>
+    <p class = status-message  v-show="showStatusMessage"> {{ statusMessage }} </p>
+    <p class = error-message v-show="showErrorMessage"> {{ errorMessage }} </p>
     <form class="exercise-form" v-on:submit.prevent="submitExercise">
       <div class="form-group">
         <label for="exerciseName">Exercise Name</label>
-        <select
-          id="exerciseName"
-          v-model="exercise.exerciseName"
-          required
-          @change="updateExerciseMode"
-        >
-          <option
-            v-for="exerciseOption in exerciseOptions"
-            :key="exerciseOption.id"
-            :value="exerciseOption.name"
-          >
+        <select id="exerciseName" v-model="exercise.exerciseName" required @change="updateExerciseMode">
+          <option v-for="exerciseOption in exerciseOptions" :key="exerciseOption.id" :value="exerciseOption.name">
             {{ exerciseOption.name }}
           </option>
         </select>
@@ -22,29 +15,24 @@
 
       <div class="form-group">
         <label for="sets">Sets</label>
-        <input type="number" id="sets" v-model="exercise.sets" required />
+        <input type="number" id="sets" v-model="exercise.sets"  required />
       </div>
 
       <div v-if="exercise.mode === 'reps'">
         <div class="form-group">
           <label for="reps">Reps</label>
-          <input type="number" id="reps" v-model="exercise.reps" required />
+          <input type="number" id="reps" v-model="exercise.reps" min=0 required />
         </div>
         <div class="form-group">
           <label for="weight">Weight</label>
-          <input type="number" id="weight" v-model="exercise.weight" required />
+          <input type="number" id="weight" v-model="exercise.weight" min="0" required />
         </div>
       </div>
 
       <div v-if="exercise.mode === 'duration'">
         <div class="form-group">
           <label for="duration">Duration (minutes)</label>
-          <input
-            type="number"
-            id="duration"
-            v-model="exercise.duration"
-            required
-          />
+          <input type="number" id="duration" v-model="exercise.duration" min=0 required />
         </div>
       </div>
 
@@ -66,6 +54,10 @@ export default {
   data() {
     return {
       totalVisitDuration: "",
+      statusMessage: "",
+      errorMessage: "",
+      showStatusMessage: false,
+      showErrorMessage: false,
       exercises: [],
       showEmployeeForm: false,
       userId: null,
@@ -94,35 +86,68 @@ export default {
         { id: 11, name: "Dips", mode: "reps" },
         { id: 12, name: "Abdominal Crunch", mode: "reps" },
         { id: 13, name: "Elliptical Machine", mode: "duration" },
-        { id: 14, name: "Deadlift", mode: "reps"},
-        { id: 15, name: "Planks", mode: "duration"},
-        { id: 16, name: "Assault Bike", mode: "duration"},
-        { id: 17, name: "Push Ups", mode: "reps"},
-        { id: 18, name: "Pulley", mode: "reps"},
+        { id: 14, name: "Deadlift", mode: "reps" },
+        { id: 15, name: "Planks", mode: "duration" },
+        { id: 16, name: "Assault Bike", mode: "duration" },
+        { id: 17, name: "Push Ups", mode: "reps" },
+        { id: 18, name: "Pulley", mode: "reps" },
       ],
     };
   },
   mounted() {
     this.getExerciseByUserId();
   },
+
   methods: {
     submitExercise() {
-      this.setUserId();
-      if (this.exercise.mode === "reps") {
-        this.exercise.duration = null; // Reset duration if reps mode is selected
-      } else if (this.exercise.mode === "duration") {
-        this.exercise.reps = null; // Reset reps if duration mode is selected
-      }
-      ExerciseService.addExercise(this.exercise).then((response) => {
-        if (response.status === 200) {
-          console.log(response.data);
+        this.setUserId();
+        if (this.exercise.mode === "reps") {
+          this.exercise.duration = null; // Reset duration if reps mode is selected
+        } else if (this.exercise.mode === "duration") {
+          this.exercise.reps = null; // Reset reps if duration mode is selected
         }
-        this.exercise = {};
-      });
+        ExerciseService.addExercise(this.exercise)
+        .then((response) => {
+          if (response.status === 200) {
+            this.statusMessage = "Exercise Logged, Keep at it!"
+            this.showStatusMessage = true;
+            this.exercise = {};
+            this.switchMessage();
+          }
+        }
+        ).catch(error => {
+          this.handleErrorResponse(error)
+        })
+
     },
+
+    handleErrorResponse(error) {
+         console.log(error);
+         this.showErrorMessage = true;
+         this.switchMessage();
+         if (error.response) {
+             this.errorMessage = 'Woe, error be upon ye';
+         }
+         else if(error.request) {
+             this.errorMessage = 'Woe, error be upon ye';
+         }
+         else {
+             this.errorMessage = 'Woe, error be upon ye';
+         }
+         
+    },
+
     setUserId() {
       this.exercise.userId = this.$store.getters.getUserId;
     },
+
+    switchMessage() {
+      setTimeout(() => {
+        this.showErrorMessage = false;
+        this.showStatusMessage = false;
+      }, 5000);
+    },
+
     getExerciseByUserId() {
       ExerciseService.getExerciseByUserId(this.$store.getters.getUserId).then(
         (response) => {
@@ -143,6 +168,7 @@ export default {
       const options = { year: "numeric", month: "short", day: "numeric" };
       return new Date(date).toLocaleDateString("en-US", options);
     },
+
     getTotalVisitDurationByUserId() {
       ExerciseService.getTotalVisitDurationByUserId(
         this.$store.getters.getUserId
@@ -152,6 +178,7 @@ export default {
         }
       });
     },
+
     updateExerciseMode() {
       const selectedExercise = this.exerciseOptions.find(
         (option) => option.name === this.exercise.exerciseName
@@ -171,6 +198,19 @@ body {
   background-color: #f0f0f0;
   margin: 0;
   padding: 0;
+}
+
+.error-message{
+  text-emphasis: 5px;
+  color:red;
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+}
+
+.status-message{
+  color:black;
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
 }
 
 .container {
@@ -213,7 +253,8 @@ select {
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  box-sizing: border-box; /* Ensures padding and border are included in the width */
+  box-sizing: border-box;
+  /* Ensures padding and border are included in the width */
 }
 
 select {

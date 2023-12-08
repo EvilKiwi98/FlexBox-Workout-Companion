@@ -113,6 +113,6 @@ INSERT INTO equipment (equipment_id, equipment_name) VALUES (14, 'Deadlift');
 INSERT INTO equipment (equipment_id, equipment_name) VALUES (15, 'Planks');
 INSERT INTO equipment (equipment_id, equipment_name) VALUES (16, 'Assault Bike');
 INSERT INTO equipment (equipment_id, equipment_name) VALUES (17, 'Push Ups');
-INSERT INTO equipment (equipment_id, equipment_name) VALUES (18, 'Pulley')
+INSERT INTO equipment (equipment_id, equipment_name) VALUES (18, 'Pulley');
 
 COMMIT TRANSACTION;
