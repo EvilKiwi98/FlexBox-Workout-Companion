@@ -201,10 +201,9 @@ body {
 }
 
 .error-message{
-  text-emphasis: 5px;
   color:red;
-  font-family: "Arial", sans-serif;
   font-weight: bold;
+  font-size: 16px;
 }
 
 .status-message{

@@ -371,7 +371,8 @@ export default {
 }
 
 .error-message {
-  color: red;
+  color:red;
+  font-weight: bold;
   font-size: 16px;
   grid-area: error-message;
 }
