@@ -116,7 +116,7 @@ INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight
 
 INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Treadmill', 1, '2023-12-13', 1, 0, 60, 0, 'duration');
 INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Planks', 1, '2023-12-13', 3, 0, 6, 0, 'duration');
-INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Twist', 1, '2023-12-13', 3, 0, 5, 0, 'duration');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Russian Twist', 1, '2023-12-13', 3, 0, 5, 0, 'duration');
 INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Lat Pulldown', 1, '2023-12-13', 3, 10, 0, 50, 'reps');
 INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Stairmaster', 1, '2023-12-13', 1, 0, 20, 0, 'duration');
 
@@ -248,6 +248,13 @@ INSERT INTO equipment (equipment_id, equipment_name) VALUES (18, 'Pulley');
 
 --Listed Events
 INSERT INTO schedule (event_name, event_description, event_date, event_start_time, event_duration) VALUES ('Fitness Fusion Challenge', 'Experience a unique blend of workouts that combine elements of cardio, strength training, and flexibility exercises.', '2023-12-20', '10:00:00',90);
+<<<<<<< HEAD
 INSERT INTO schedule (event_name, event_description, event_date, event_start_time, event_duration) VALUES ('Dumbbell Debugging Basics', 'In Dumbbell Debugging, you''ll lift weights while debugging your code – because sometimes, the best way to find a bug is by getting a little ''lifting'' done!', '2023-12-16', '17:00:00', 45);
+=======
+INSERT INTO schedule (event_name, event_description, event_date, event_start_time, event_duration)
+VALUES ('Dumbbell Debugging Basics', 'In Dumbbell Debugging, you''ll lift weights while debugging your code – because sometimes, the best way to find a bug is by getting a little ''lifting'' done!', '2023-12-16', '17:00:00', 45);
+INSERT INTO schedule (event_name, event_description, event_date, event_start_time, event_duration)
+VALUES ('Ctrl+Alt+Defeat Cardio Circuit', 'Sweating out bugs and boosting endorphins – join us and reboot your body.', '2023-12-19', '14:00:00', 60);
+>>>>>>> 794f796f374af1248e64c075c224e3f0ed9f3106
 
 COMMIT TRANSACTION;

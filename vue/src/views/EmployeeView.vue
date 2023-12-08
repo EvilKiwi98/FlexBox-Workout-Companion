@@ -29,6 +29,7 @@ export default {
   grid-template-columns: 50% 50%;
   grid-column-gap: 50px;
 
+
 }
 .body{
   font-family: 'Exo 2', sans-serif;

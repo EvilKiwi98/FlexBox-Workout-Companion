@@ -68,13 +68,14 @@ export default {
 
 .content {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-areas: 
-    "checkIn checkIn . events"
-    "logExercise logExercise . events";
+    "checkIn checkIn events"
+    "logExercise logExercise events";
   grid-gap: 20px;
   align-items: center;
   margin-top: 20px;
+  
 }
 
 .check-in-out-container {

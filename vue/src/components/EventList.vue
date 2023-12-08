@@ -11,8 +11,10 @@
         </ul>
     </div>
 </template>
+
 <script>
 import EventService from '../services/EventService'
+
 export default {
     data() {
         return {
@@ -20,7 +22,7 @@ export default {
         };
     },
     methods: {
-        // Format date as per your requirement
+      
         getEvents() {
             this.isLoading = true;
             EventService.getEventList().then(
@@ -36,9 +38,12 @@ export default {
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             return new Date(date).toLocaleDateString('en-US', options);
         },
-        formatTime(startTime){
-            const formattedTime = startTime.split(':').slice(0, 2).join(':');
-            return formattedTime;
+        formatTime(startTime) {
+            const [hours, minutes] = startTime.split(':').map(Number);
+            const period = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12; // Convert to 12-hour format
+
+            return `${formattedHours}:${String(minutes).padStart(2, '0')} ${period}`;
         },
         // Calculate end time based on start time and duration
         calculateEndTime(startTime, duration) {
@@ -55,11 +60,12 @@ export default {
             const totalMinutes = hours * 60 + minutes + duration;
 
             // Calculate the end time in hours and minutes
-            const endHours = Math.floor(totalMinutes / 60);
+            const endHours = Math.floor(totalMinutes / 60) % 12 || 12; // Convert to 12-hour format
             const endMinutes = totalMinutes % 60;
+            const period = Math.floor(totalMinutes / 60) < 12 ? 'AM' : 'PM';
 
             // Format the end time as HH:MM with leading zeros
-            return `${String(endHours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')}`;
+            return `${String(endHours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')} ${period}`;
         }
     },
     mounted() {
@@ -68,13 +74,10 @@ export default {
     }
 };
 </script>
-<style scoped>
-/* Add your styling here if needed */
-.upcoming-events {
-    /* Your styles for the sidebar component */
-}
 
-/* Additional styling for list items, etc. */
+<style scoped>
+
+
 .upcoming-events ul {
     list-style-type: none;
     padding: 0;

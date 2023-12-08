@@ -22,7 +22,7 @@ public class JdbcEventDao implements EventDao {
     public List<Event> getUpcomingEventsList() {
         List<Event> eventList = new ArrayList<>();
         String sql = "SELECT event_name, event_description, event_date, event_start_time, event_duration\n" +
-                "FROM schedule WHERE event_date >= CURRENT_DATE;";
+                "FROM schedule WHERE event_date >= CURRENT_DATE ORDER BY event_date;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while (results.next()) {
             Event event = mapToRowSet(results);
