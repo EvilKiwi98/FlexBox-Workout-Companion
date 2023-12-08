@@ -11,6 +11,7 @@
             {{ exerciseOption.name }}
           </option>
         </select>
+        
       </div>
 
       <div class="form-group">
@@ -43,6 +44,8 @@
 
       <button type="submit">Submit</button>
     </form>
+    <ExerciseButtons :mode="'select'" :selectExercise="selectExercise" />
+
   </div>
 </template>
 
