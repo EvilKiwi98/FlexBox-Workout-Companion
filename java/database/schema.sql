@@ -44,4 +44,12 @@ CREATE TABLE exercise_equipment (
     FOREIGN KEY (equipment_id) REFERENCES equipment(equipment_id)
 );
 
+CREATE TABLE schedule (
+    event_name varchar(50),
+    description varchar(300),
+    date DATE,
+    event_start_time TIME,
+    duration INTEGER
+);
+
 COMMIT TRANSACTION;
