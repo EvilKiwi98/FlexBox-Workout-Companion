@@ -251,9 +251,11 @@ export default {
 
 #searchButton {
   margin-bottom: 20px;
+  font-family: 'Exo 2', sans-serif;
 }
 
 .toggle-btn {
+  font-family: 'Exo 2', sans-serif;
   background-color: #3498db;
   color: #fff;
   padding: 10px 20px;
@@ -304,6 +306,7 @@ export default {
 }
 
 .button.search-btn {
+  font-family: 'Exo 2', sans-serif;
   background-color: #fff;
   color: #333;
   /* Set text color to a dark color */
@@ -330,6 +333,7 @@ export default {
 
 .check-btn-in,
 .check-btn-out {
+  font-family: 'Exo 2', sans-serif;
   background-color: #2ecc71;
   /* Green color for Check In */
   color: #fff;

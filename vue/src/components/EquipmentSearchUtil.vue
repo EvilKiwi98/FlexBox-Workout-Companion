@@ -223,6 +223,7 @@ export default {
 }
 
 .toggle-btn {
+  font-family: 'Exo 2', sans-serif;
   background-color: #3498db;
   color: #fff;
   padding: 10px 20px;

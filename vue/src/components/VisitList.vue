@@ -144,6 +144,7 @@ export default {
 }
 
 .button {
+  font-family: 'Exo 2', sans-serif;
   border: none;
   border-radius: 4px;
   padding: 8px 16px;
