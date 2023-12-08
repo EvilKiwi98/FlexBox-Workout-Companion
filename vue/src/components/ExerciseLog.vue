@@ -126,10 +126,10 @@ export default {
          this.showErrorMessage = true;
          this.switchMessage();
          if (error.response) {
-             this.errorMessage = 'Woe, error be upon ye';
+             this.errorMessage = 'Error adding new exercise. Error: ' + error.response.status;
          }
          else if(error.request) {
-             this.errorMessage = 'Woe, error be upon ye';
+             this.errorMessage = 'Error adding new exercise. Error: server unavailable';
          }
          else {
              this.errorMessage = 'Woe, error be upon ye';

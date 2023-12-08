@@ -47,11 +47,11 @@ export default {
 </script>
 
 <style scoped>
+
 body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas: 
-  "header header header header"
   "visitTime visitTime visitTime visitTime"
   "exerciseList exerciseList . visitList"
   "chart chart chart chart";
@@ -70,7 +70,6 @@ body {
 }
 
 .header {
-  grid-area: header;
   min-height: 600px;
   display: flex;
   align-items: center;

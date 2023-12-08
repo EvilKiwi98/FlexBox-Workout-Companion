@@ -7,8 +7,9 @@
     </div>
 
     <div class="search-form" v-show="showEmployeeForm">
-      <p id="instructions"> Placeholder Instructions</p>
 
+      <p id="instructions"> Placeholder Instructions</p>
+      <span v-show="showErrorMessage" class="error-message"> {{ errorMessage }}</span>
       <label for="userIdInput" id="user-id-label">Enter User Id:</label>
       <input type="number" id="user-id-input" v-model="userId" min=0 />
       <button class="button search-btn" v-on:click="employeeGetExerciseByUserId(userId)">
@@ -49,9 +50,11 @@ export default {
   data() {
     return {
       totalVisitDuration: "",
+      errorMessage: "AA",
       exercises: [],
       showEmployeeForm: false,
       showMessage: false,
+      showErrorMessage: false,
       userId: null,
       exercise: {
         exerciseName: "",
@@ -85,14 +88,24 @@ export default {
     switchMessage() {
       setTimeout(() => {
         this.showMessage = false;
+        this.showErrorMessage = false;
       }, 5000);
     },
 
     employeeGetExerciseByUserId(userId) {
-      ExerciseService.getExerciseByUserId(userId).then((response) => {
-        this.isLoading = false;
-        this.exercises = response.data;
-      });
+      if (this.userId <= 0) {
+        this.errorMessage = "Please enter a valid User ID to search."
+        this.showErrorMessage = true;
+        this.switchMessage();
+      } else {
+        ExerciseService.getExerciseByUserId(userId)
+          .then((response) => {
+            this.isLoading = false;
+            this.exercises = response.data;
+          }).catch(error => {
+            this.handleErrorResponse(error);
+          });
+      }
     },
 
     formatDate(date) {
@@ -127,6 +140,12 @@ export default {
       this.CheckInOut.userId = this.userId;
     },
 
+    checkUserId() {
+      if (this.userId <= 0) {
+        this.errorMessage = "Please enter a valid User ID to search."
+      }
+    },
+
     calculateDuration() {
       const checkInTime = new Date(this.CheckInOut.checkInTime);
       const checkOutTime = new Date(this.CheckInOut.checkOutTime);
@@ -136,19 +155,28 @@ export default {
     },
 
     sendCheckIn() {
-      this.getCurrentTime(),
-        this.setCheckInTime(),
-        this.setUserId(),
-        CheckInOutService.checkIn(this.CheckInOut).then((response) => {
-          if (response.status === 200) {
-            //we are successful
-            console.log(response.data);
-            this.CheckInOut.userVisitId = response.data.userVisitId;
-            this.isCheckedIn = true;
-            this.showMessage = true;
-            this.switchMessage();
-          }
-        });
+      if (this.userId <= 0) {
+        this.errorMessage = "Please enter a valid User ID to search."
+        this.showErrorMessage = true;
+        this.switchMessage();
+      } else {
+        this.getCurrentTime(),
+          this.setCheckInTime(),
+          this.setUserId(),
+          CheckInOutService.checkIn(this.CheckInOut)
+            .then((response) => {
+              if (response.status === 200) {
+                //we are successful
+                console.log(response.data);
+                this.CheckInOut.userVisitId = response.data.userVisitId;
+                this.isCheckedIn = true;
+                this.showMessage = true;
+                this.switchMessage();
+              }
+            }).catch(error => {
+              this.handleErrorResponse(error);
+            });
+      }
     },
 
     sendCheckOut() {
@@ -175,6 +203,22 @@ export default {
       });
     },
 
+    handleErrorResponse(error) {
+      console.log(error);
+      this.showErrorMessage = true;
+      this.switchMessage();
+      if (error.response) {
+        this.errorMessage = 'Error: ' + error.response.status;
+      }
+      else if (error.request) {
+        this.errorMessage = 'Error: server unavailable';
+      }
+      else {
+        this.errorMessage = 'Woe, error be upon ye';
+      }
+
+    },
+
     toggleCheckInOut() {
       if (this.isCheckedIn) {
         this.sendCheckOut();
@@ -184,19 +228,6 @@ export default {
     },
   },
 
-  handleErrorResponse(error) {
-    console.log(error);
-    if (error.response) {
-      this.errorMsg = 'Error adding new player. Error: ' + error.response.status;
-    }
-    else if (error.request) {
-      this.errorMsg = 'Error adding new player. Error: server unavailable';
-    }
-    else {
-      this.errorMsg = 'Java Green has left you high and dry. You would be better off hiring the C# class';
-    }
-  },
-  
   computed: {
     formattedCheckInTime() {
       return this.CheckInOut.checkInTime.toLocaleString("en-US", { timeZone: "EST" });
@@ -243,7 +274,7 @@ export default {
     "instructions instructions instructions"
     ". user-id-label user-id-input"
     "search-exercise-button . check-inout-button"
-    ". . system-message"
+    ". error-message system-message"
     "exercise-list exercise-list exercise-list"
 
 
@@ -337,6 +368,12 @@ export default {
   border-color: rgba(66, 119, 121, 0.614);
   width: 35%;
   background-color: cadetblue;
+}
+
+.error-message {
+  color: red;
+  font-size: 16px;
+  grid-area: error-message;
 }
 
 .exercise-list-container {
