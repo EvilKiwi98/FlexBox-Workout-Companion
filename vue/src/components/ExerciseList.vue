@@ -4,14 +4,18 @@
       <h1>Exercise List</h1>
       <div class="exercise-filter">
         <label for="filterDate">Filter Exercises by Date</label>
-        <input type="date" id="filterDate" v-model="selectedDate" required />
-        <button @click="getExerciseByDayByUserId">Filter</button>
-        <button @click="getAllExercises">Show All Exercises</button>
+        <input type="date" id="filterDate" v-model="selectedDate" ref="filterDateInput" required />
+        <button class="button" @click="getExerciseByDayByUserId">Filter</button>
+        <button class="button" @click="toggleExerciseList">
+          {{ showExerciseList ? 'Hide' : 'Show' }} All Exercises
+        </button>
       </div>
 
+      
+      
 
-
-      <div class="exercise-list-wrapper">
+      <div class="exercise-list-wrapper" v-show="showExerciseList">
+        
         <ul class="exercise-list">
           <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
             <span class="exercise-name">{{ exercise.exerciseName }}</span>
@@ -38,6 +42,8 @@ export default {
   data() {
     return {
       exercises: [],
+      showExerciseList: false,
+      selectedDate: '',
       userId: null,
       date: null,
       exercise: {
@@ -133,6 +139,11 @@ export default {
         }
       );
     },
+    toggleExerciseList() {
+      this.showExerciseList = !this.showExerciseList;
+      this.$refs.filterDateInput.value = '';
+      this.selectedDate = '';
+    },
   },
 };
 </script>
@@ -159,7 +170,16 @@ export default {
   list-style: none;
   padding: 0;
 }
-
+.button {
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  margin: 8px;
+  cursor: pointer;
+  background-color: #3498db;
+  color: #fff;
+  font-size: 14px;
+}
 .exercise-item {
   border: 1px solid #ddd;
   border-radius: 8px;
