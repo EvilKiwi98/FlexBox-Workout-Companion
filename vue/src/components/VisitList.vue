@@ -64,6 +64,7 @@ export default {
       );
     },
     getVisitsByMonthByUserId(monthNum) {
+      
       this.isLoading = true;
       CheckInOutService.getVisitsByMonthByUserId(this.$store.getters.getUserId, monthNum).then(
         (response) => {
