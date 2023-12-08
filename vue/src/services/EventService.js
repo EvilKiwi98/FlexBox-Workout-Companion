@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default {
 
-  addEventList() {
-    return axios.post('/events')
+  getEventList() {
+    return axios.get('/events')
   },
 }
