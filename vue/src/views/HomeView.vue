@@ -2,7 +2,7 @@
   <div class="home">
     <h1>Home</h1>
     <p class="subtitle">You must be authenticated to see this</p>
-    
+
 
     <div class="content">
       <div class="check-in-out-container dashboard-container">
@@ -11,6 +11,8 @@
       <div class="exercise-log-container dashboard-container">
         <exercise-log class="dashboard-section" />
       </div>
+      
+      
     </div>
   </div>
 </template>
@@ -24,6 +26,7 @@ export default {
     CheckInOut,
     ExerciseLog,
     
+
   },
   methods: {
     setCheckInOutTime() {
@@ -50,13 +53,15 @@ export default {
   right: 0;
   bottom: 50%;
   background-color: #eec0a0;
-  z-index: -1; /* Set a lower z-index to place it behind content */
+  z-index: -1;
+  /* Set a lower z-index to place it behind content */
 }
 
 h1,
 .subtitle {
   color: #000000;
-  z-index: 1; /* Set a higher z-index to place it in front of the background */
+  z-index: 1;
+  /* Set a higher z-index to place it in front of the background */
 }
 
 .content {
@@ -71,7 +76,8 @@ h1,
   flex-grow: 1;
   margin: 0 10px;
   position: relative;
-  z-index: 2; /* Set a higher z-index to place it in front of the background */
+  z-index: 2;
+  /* Set a higher z-index to place it in front of the background */
 }
 
 .dashboard-section {
@@ -86,5 +92,4 @@ h1,
   color: #3498db;
   font-size: 24px;
   margin-bottom: 15px;
-}
-</style>
+}</style>
