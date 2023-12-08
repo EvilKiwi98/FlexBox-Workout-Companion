@@ -156,6 +156,7 @@
   
   <style scoped>
   .profile-view {
+    font-family: 'Exo 2', sans-serif;
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
@@ -194,6 +195,7 @@
   }
   
   .toggle-btn {
+    font-family: 'Exo 2', sans-serif;
     background-color: #3498db;
     color: #fff;
     padding: 20px;
@@ -213,6 +215,7 @@
   }
   
   .button-icon-container {
+    font-family: 'Exo 2', sans-serif;
     margin-bottom: 10px; 
   }
   

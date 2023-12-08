@@ -7,6 +7,8 @@
 
         <!-- Main navigation bar -->
         <div id="nav">
+            <img src="@/assets/Flex_Box_Logo.png" alt="Logo" class="logo"/>
+
             <router-link v-bind:to="{ name: 'home' }" class="nav-link">Home</router-link>
             <span v-if="$store.state.token !== ''" class="nav-links-container">
                 <router-link v-bind:to="{ name: 'profile' }" class="nav-link">Profile</router-link>
@@ -25,7 +27,7 @@ export default {
 
 <style scoped>
 #capstone-app {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Exo 2', sans-serif;
     margin: 20px;
 }
 
@@ -58,6 +60,10 @@ export default {
     /* Center items vertically */
 }
 
+.logo {
+    max-height: 170px; /* Adjust the max height of the logo as needed */
+    margin-right: 20px; /* Adjust the margin as needed */
+}
 .nav-links-container {
     display: flex;
     justify-content: space-around;
@@ -67,7 +73,7 @@ export default {
 .nav-link {
     color: #000000;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     padding: 5px 10px;
     border-radius: 8px;
