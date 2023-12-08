@@ -1,28 +1,23 @@
 <template>
   <div>
     <h1>Log Your Exercise</h1>
-    <p class = status-message  v-show="showStatusMessage"> {{ statusMessage }} </p>
-    <p class = error-message v-show="showErrorMessage"> {{ errorMessage }} </p>
+    <p class="status-message" v-show="showStatusMessage">{{ statusMessage }}</p>
+    <p class="error-message" v-show="showErrorMessage">{{ errorMessage }}</p>
     <form class="exercise-form" v-on:submit.prevent="submitExercise">
-      <div class="form-group">
-        <label for="exerciseName">Exercise Name</label>
-        <select id="exerciseName" v-model="exercise.exerciseName" required @change="updateExerciseMode">
-          <option v-for="exerciseOption in exerciseOptions" :key="exerciseOption.id" :value="exerciseOption.name">
-            {{ exerciseOption.name }}
-          </option>
-        </select>
-        
+      <div class="exercise-buttons">
+        <!-- ExerciseButtons component will handle the buttons -->
+        <ExerciseButtons :mode="'select'" :selectExercise="selectExercise" />
       </div>
 
       <div class="form-group">
         <label for="sets">Sets</label>
-        <input type="number" id="sets" v-model="exercise.sets"  required />
+        <input type="number" id="sets" v-model="exercise.sets" required />
       </div>
 
       <div v-if="exercise.mode === 'reps'">
         <div class="form-group">
           <label for="reps">Reps</label>
-          <input type="number" id="reps" v-model="exercise.reps" min=0 required />
+          <input type="number" id="reps" v-model="exercise.reps" min="0" required />
         </div>
         <div class="form-group">
           <label for="weight">Weight</label>
@@ -33,7 +28,7 @@
       <div v-if="exercise.mode === 'duration'">
         <div class="form-group">
           <label for="duration">Duration (minutes)</label>
-          <input type="number" id="duration" v-model="exercise.duration" min=0 required />
+          <input type="number" id="duration" v-model="exercise.duration" min="0" required />
         </div>
       </div>
 
@@ -44,16 +39,19 @@
 
       <button type="submit">Submit</button>
     </form>
-    <ExerciseButtons :mode="'select'" :selectExercise="selectExercise" />
-
   </div>
 </template>
 
 
 <script>
 import ExerciseService from "../services/ExerciseService.js";
+import ExerciseButtons from '../components/ExerciseButtons.vue';
+
 
 export default {
+  components: {
+    ExerciseButtons
+  },
   data() {
     return {
       totalVisitDuration: "",
@@ -84,11 +82,11 @@ export default {
         { id: 6, name: "Stairmaster", mode: "duration" },
         { id: 7, name: "Squats", mode: "reps" },
         { id: 8, name: "Russian Twist", mode: "duration" },
-        { id: 9, name: "Leg Press Machine", mode: "reps" },
+        { id: 9, name: "Leg Extension Machine", mode: "reps" },
         { id: 10, name: "Fly", mode: "reps" },
         { id: 11, name: "Dips", mode: "reps" },
         { id: 12, name: "Abdominal Crunch", mode: "reps" },
-        { id: 13, name: "Elliptical Machine", mode: "duration" },
+        { id: 13, name: "Elliptical", mode: "duration" },
         { id: 14, name: "Deadlift", mode: "reps" },
         { id: 15, name: "Planks", mode: "duration" },
         { id: 16, name: "Assault Bike", mode: "duration" },
@@ -122,6 +120,11 @@ export default {
           this.handleErrorResponse(error)
         })
 
+    },
+    selectExercise(exerciseOption) {
+      // Handle the selected exercise logic
+      this.exercise.exerciseName = exerciseOption.name;
+      this.updateExerciseMode();
     },
 
     handleErrorResponse(error) {
