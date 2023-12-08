@@ -190,6 +190,7 @@ div {
 }
 
 .button-container {
+  font-family: 'Exo 2', sans-serif;
   margin-top: 20px;
   display: flex;
   flex-direction: row;
@@ -197,6 +198,7 @@ div {
 }
 
 button {
+  font-family: 'Exo 2', sans-serif;
   margin: 5px;
   padding: 10px;
   font-size: 16px;

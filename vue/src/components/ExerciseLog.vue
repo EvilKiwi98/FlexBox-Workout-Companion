@@ -261,6 +261,7 @@ select {
 }
 
 button {
+  font-family: 'Exo 2', sans-serif;
   background-color: #4caf50;
   color: #fff;
   padding: 10px 15px;

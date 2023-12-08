@@ -25,6 +25,7 @@ export default {
 <style scoped>
 
 .utilContainer{
+  font-family: 'Exo 2', sans-serif;
   display: grid;
   grid-template-columns: 50% 50%;
   grid-column-gap: 50px;

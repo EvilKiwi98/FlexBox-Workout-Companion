@@ -115,6 +115,7 @@ export default {
 <style scoped>
 .check-btn-in,
 .check-btn-out {
+  font-family: 'Exo 2', sans-serif;
   background-color: #2ecc71; /* Green color for Check In */
   color: #fff;
   padding: 25px 50px; /* Increased padding for a bigger button */
