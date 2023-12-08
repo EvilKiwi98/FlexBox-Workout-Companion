@@ -6,15 +6,13 @@
                 <h3>{{ event.eventName }}</h3>
                 <p>{{ event.description }}</p>
                 <p>Date: {{ formatDate(event.date) }}</p>
-                <p>Time: {{ event.startTime }} - {{ calculateEndTime(event.startTime, event.duration) }}</p>
+                <p>Time: {{ formatTime(event.startTime) }} - {{ calculateEndTime(event.startTime, event.eventDuration) }}</p>
             </li>
         </ul>
     </div>
 </template>
-  
 <script>
 import EventService from '../services/EventService'
-
 export default {
     data() {
         return {
@@ -38,18 +36,29 @@ export default {
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             return new Date(date).toLocaleDateString('en-US', options);
         },
-
+        formatTime(startTime){
+            const formattedTime = startTime.split(':').slice(0, 2).join(':');
+            return formattedTime;
+        },
         // Calculate end time based on start time and duration
         calculateEndTime(startTime, duration) {
             if (!startTime || isNaN(duration)) {
                 return ''; // Return an empty string or a default value if the input is not valid
             }
 
-            const [hours, minutes] = startTime.split(':').map(Number);
+            // Trim startTime to exclude seconds
+            const trimmedStartTime = startTime.split(':').slice(0, 2).join(':');
+
+            const [hours, minutes] = trimmedStartTime.split(':').map(Number);
+
+            // Calculate the total duration in minutes
             const totalMinutes = hours * 60 + minutes + duration;
+
+            // Calculate the end time in hours and minutes
             const endHours = Math.floor(totalMinutes / 60);
             const endMinutes = totalMinutes % 60;
 
+            // Format the end time as HH:MM with leading zeros
             return `${String(endHours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')}`;
         }
     },
@@ -59,7 +68,6 @@ export default {
     }
 };
 </script>
-  
 <style scoped>
 /* Add your styling here if needed */
 .upcoming-events {
@@ -78,4 +86,3 @@ export default {
     /* Example border for separation */
 }
 </style>
-  

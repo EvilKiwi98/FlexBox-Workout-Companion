@@ -202,7 +202,8 @@ INSERT INTO equipment (equipment_id, equipment_name) VALUES (16, 'Assault Bike')
 INSERT INTO equipment (equipment_id, equipment_name) VALUES (17, 'Push Ups');
 INSERT INTO equipment (equipment_id, equipment_name) VALUES (18, 'Pulley');
 
-INSERT INTO schedule (event_name, event_description, event_date, event_start_time, event_duration) VALUES ('Fitness Fusion Challenge', 'Experience a unique blend of workouts that combine elements of cardio, strength training, and flexibility exercises.', '2023-12-26', '10:00:00',5);
-
+INSERT INTO schedule (event_name, event_description, event_date, event_start_time, event_duration) VALUES ('Fitness Fusion Challenge', 'Experience a unique blend of workouts that combine elements of cardio, strength training, and flexibility exercises.', '2023-12-20', '10:00:00',90);
+INSERT INTO schedule (event_name, event_description, event_date, event_start_time, event_duration)
+VALUES ('Dumbbell Debugging Basics', 'In Dumbbell Debugging, you''ll lift weights while debugging your code – because sometimes, the best way to find a bug is by getting a little ''lifting'' done!', '2023-12-16', '17:00:00', 45);
 
 COMMIT TRANSACTION;
