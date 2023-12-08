@@ -24,12 +24,16 @@ export default {
 </script>
 
 <style scoped>
+body, html {
+  margin: 0; /* Remove default margin */
+}
+
 .logo-container {
   text-align: center;
   margin-top: 10px; /* Adjust the margin as needed */
 }
 
 .logo {
-  max-width: 100%; /* Ensure the logo doesn't exceed its natural size */
+  max-width: 200px; /* Ensure the logo doesn't exceed its natural size */
 }
 </style>
