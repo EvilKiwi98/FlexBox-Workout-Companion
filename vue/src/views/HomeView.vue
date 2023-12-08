@@ -11,6 +11,9 @@
       <div class="exercise-log-container dashboard-container">
         <exercise-log class="dashboard-section" />
       </div>
+      <div>
+        <event-list class="dashboard-section" />
+      </div>
       
       
     </div>
@@ -20,11 +23,13 @@
 <script>
 import CheckInOut from '../components/CheckInOut.vue';
 import ExerciseLog from '../components/ExerciseLog.vue';
+import EventList from '../components/EventList.vue';
 
 export default {
   components: {
     CheckInOut,
     ExerciseLog,
+    EventList,
     
 
   },
