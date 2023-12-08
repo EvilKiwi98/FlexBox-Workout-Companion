@@ -58,6 +58,7 @@ body {
 }
 
 .profile-view {
+  font-family: 'Exo 2', sans-serif;
   width: 100%;
   flex-direction: column;
   max-width: 1200px;
