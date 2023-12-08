@@ -150,6 +150,7 @@ export default {
   grid-area: list-rep;
 }
 .searchButton {
+  font-family: 'Exo 2', sans-serif;
   margin-bottom: 20px;
   background-color: #fff;
   color: #333;

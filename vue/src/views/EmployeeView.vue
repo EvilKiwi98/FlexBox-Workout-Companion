@@ -31,6 +31,7 @@ export default {
 
 }
 .body{
+  font-family: 'Exo 2', sans-serif;
   background-color:lightgrey;
   border-style:solid;
   border-color:lightgray;

@@ -2,7 +2,7 @@
     <the-header/>
     <!-- Router view for the main content -->
     <div class="logo-container">
-      <img src="../assets/Flex_Box_Logo.png" alt="Logo" class="logo"/>
+      <img src="@/assets/Flex_Box_Logo.png" alt="Logo" class="logo"/>
     </div>
     <router-view />
     <the-footer/>
