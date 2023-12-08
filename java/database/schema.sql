@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, user_visits, exercise, equipment, exercise_details, exercise_equipment CASCADE;
+DROP TABLE IF EXISTS users, user_visits, exercise, equipment, exercise_details, exercise_equipment, schedule CASCADE;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -46,10 +46,10 @@ CREATE TABLE exercise_equipment (
 
 CREATE TABLE schedule (
     event_name varchar(50),
-    description varchar(300),
-    date DATE,
+    event_description varchar(300),
+    event_date DATE,
     event_start_time TIME,
-    duration INTEGER
+    event_duration INTEGER
 );
 
 COMMIT TRANSACTION;
