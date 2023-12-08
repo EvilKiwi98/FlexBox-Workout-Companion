@@ -28,16 +28,6 @@
         </ul>
       </div>
     </div>
-
-    <!-- Total Visit Time Container -->
-    <div class="visit-info">
-      <div class="total-visit-time">
-        <h2>Your total visit time:</h2>
-        <p class="total-time">
-          {{ formatDuration(totalVisitDuration) }}
-        </p>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -47,7 +37,6 @@ import ExerciseService from "../services/ExerciseService";
 export default {
   data() {
     return {
-      totalVisitDuration: 0,
       exercises: [],
       userId: null,
       date: null,
@@ -153,22 +142,6 @@ export default {
   display: flex;
   max-width: 1200px;
   margin: 20px auto;
-}
-
-.visit-info {
-  width: 33.33%; /* 1/3 of the width */
-  float: left;
-  box-sizing: border-box;
-  padding-left: 10px; /* Adjust spacing between Exercise List and Visit List */
-}
-
-.total-visit-time {
-  background-color: #3498db;
-  color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  text-align: center;
 }
 
 .exercise-list-container {

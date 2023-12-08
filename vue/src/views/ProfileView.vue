@@ -12,16 +12,20 @@
         </div>
       </div>
     </div>
-    <div class="main-container">
+
+    <div class="grid-container">
+      <div class="total-visit-container">
+        <total-visit-time></total-visit-time>
+      </div>
       <div class="exercise-container">
         <exercise-list />
       </div>
       <div class="visit-container">
         <visit-list></visit-list>
       </div>
-    </div>
-    <div class="chart-container">
-      <visit-chart></visit-chart>
+      <div class="chart-container">
+        <visit-chart></visit-chart>
+      </div>
     </div>
   </div>
 </template>
@@ -30,20 +34,27 @@
 import ExerciseList from '../components/ExerciseList.vue';
 import VisitList from '../components/VisitList.vue';
 import VisitChart from '../components/VisitChart.vue';
+import TotalVisitTime from '../components/TotalVisitTime.vue';
 
 export default {
   components: {
     ExerciseList,
     VisitList,
-    VisitChart
+    VisitChart,
+    TotalVisitTime
   }
 }
 </script>
 
 <style scoped>
 body {
-  margin: 0; /* Remove default body margin */
-  background: linear-gradient(to bottom, rgba(172, 222, 255, 0.8) 33%, rgba(255, 255, 255, 0.8) 33%);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: 
+  "header header header header"
+  "visitTime visitTime visitTime visitTime"
+  "exerciseList exerciseList . visitList"
+  "chart chart chart chart";
 }
 
 .profile-view {
@@ -52,11 +63,14 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #fff; /* Set the background color for the bottom 2/3 of the page */
-  border-radius: 0 0 10px 10px; /* Apply border-radius only to the bottom corners */
+  background-color: #fff;
+  /* Set the background color for the bottom 2/3 of the page */
+  border-radius: 0 0 10px 10px;
+  /* Apply border-radius only to the bottom corners */
 }
 
 .header {
+  grid-area: header;
   min-height: 600px;
   display: flex;
   align-items: center;
@@ -69,7 +83,21 @@ body {
   flex-wrap: wrap;
 }
 
+.total-visit-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Add margin to separate from the containers below */
+}
+
+.main-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .exercise-container {
+  grid-area: exerciseList;
   flex: 2;
   margin-right: 20px;
   padding: 20px;
@@ -79,8 +107,8 @@ body {
 }
 
 .visit-container {
+  grid-area: visitList;
   flex: 1;
-  margin-left: 20px;
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
@@ -88,12 +116,17 @@ body {
 }
 
 .chart-container {
+  grid-area: chart;
   width: 100%;
-  margin-top: 20px;
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px; /* Add margin to separate from the containers above */
+}
+
+.total-visit-container {
+  grid-area: visitTime;
 }
 
 .visit-chart {
