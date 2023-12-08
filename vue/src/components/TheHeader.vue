@@ -83,8 +83,6 @@ export default {
 .nav-link:hover{
     transition: transform 0.3s ease;
     transform: scale(1.08);
-    /* box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19); */
-
 }
 
 .logout-link {
