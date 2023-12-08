@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, user_visits, exercise, equipment, exercise_details, exercise_equipment, schedule CASCADE;
+DROP TABLE IF EXISTS users, user_visits, exercise, equipment, exercise_equipment, schedule CASCADE;
 
 CREATE TABLE users (
 	user_id SERIAL,
