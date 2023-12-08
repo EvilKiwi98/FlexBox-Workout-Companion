@@ -33,9 +33,10 @@ export default {
 }
 .body{
   font-family: 'Exo 2', sans-serif;
-  background-color:lightgrey;
+  background-color: #a7d6ef;
   border-style:solid;
-  border-color:lightgray;
+  border-color: #a7d6ef;
   border-radius:8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 </style>

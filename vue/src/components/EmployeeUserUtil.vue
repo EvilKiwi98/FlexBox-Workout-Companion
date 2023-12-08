@@ -315,12 +315,16 @@ export default {
   transition: background-color 0.3s ease, color 0.3s ease;
   /* Added color transition */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
   grid-area: search-exercise-button
 }
 
 .button.search-btn:hover {
   background-color: #f0f0f0;
-  /* Light grey on hover */
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  transform: scale(1.02);
+
 }
 
 
