@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <p id="instructions"> Search the User Id of a specific user. Search all exercises will return all of that users listed exercises. You can also check the user in and out.</p>
     <div id="searchButton">
       <button class="button toggle-btn" v-on:click="toggleEmployeeForm">
         {{ showEmployeeForm ? 'Hide Employee Search' : 'Show Employee Search' }}
@@ -8,10 +9,12 @@
 
     <div class="search-form" v-show="showEmployeeForm">
 
-      <p id="instructions"> Placeholder Instructions</p>
+      
       <span v-show="showErrorMessage" class="error-message"> {{ errorMessage }}</span>
+      <div class="input-box">
       <label for="userIdInput" id="user-id-label">Enter User Id:</label>
       <input type="number" id="user-id-input" v-model="userId" min=0 />
+      </div>
       <button class="button search-btn" v-on:click="employeeGetExerciseByUserId(userId)">
         Search all exercises
       </button>
@@ -247,11 +250,16 @@ export default {
 .main {
   text-align: center;
   margin-top: 20px;
+  background-color: #a7d6ef;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  border-radius:10px;
+
 }
 
 #searchButton {
   margin-bottom: 20px;
   font-family: 'Exo 2', sans-serif;
+  
 }
 
 .toggle-btn {
@@ -274,7 +282,7 @@ export default {
   grid-row-gap: 10px;
   grid-template-areas:
     "instructions instructions instructions"
-    ". user-id-label user-id-input"
+    ". input-box ."
     "search-exercise-button . check-inout-button"
     ". error-message system-message"
     "exercise-list exercise-list exercise-list"
@@ -283,7 +291,11 @@ export default {
 }
 
 #user-id-input {
-  grid-area: user-id-input
+  grid-area: user-id-input;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100px;
+  text-align:center;
+  border-radius:5px;
 }
 
 #user-id-label {
@@ -291,7 +303,8 @@ export default {
 }
 
 #instructions {
-  grid-area: instructions
+  grid-area: instructions;
+  margin: 10px 10px 10px 10px;
 }
 
 #check-inout-button {
@@ -352,6 +365,10 @@ export default {
 .check-btn-in:hover {
   background-color: #27ae60;
   /* Darker green on hover */
+}
+
+.input-box {
+  grid-area: input-box;
 }
 
 .check-btn-out {

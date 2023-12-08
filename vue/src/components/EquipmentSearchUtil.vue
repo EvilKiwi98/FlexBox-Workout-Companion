@@ -1,9 +1,11 @@
 <template>
   <div class="main">
+    <p id="instructions"> Search database for usage metrics by specified month. You can search by either machines that measure in repetitions or duration (time used)</p>
     <button class="toggle-btn" v-on:click="toggleEquipmentSearch">
       {{ showEquipmentSearch ? 'Hide Equipment Search' : 'Show Equipment Search' }}
     </button>
 
+    
     <div class="outputContainer" v-show="showEquipmentSearch">
       <div id="input-box">
         <label for="monthNumInput">Enter Month Number:</label>
@@ -149,6 +151,10 @@ export default {
 .main {
   text-align: center;
   margin-top: 20px;
+  background-color: #a7d6ef;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  border-radius:10px;
+
 }
 
 #input-box {
@@ -176,6 +182,8 @@ export default {
 
 .monthNumInput {
   width: 40px;
+  text-align:center;
+  border-radius:5px;
 }
 
 #output-list {
@@ -212,6 +220,8 @@ export default {
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
   transition: transform 0.3s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
 
 }
 
@@ -282,5 +292,9 @@ export default {
   font-weight: bold;
   font-size: 16px;
   grid-area: error-message;
+}
+#instructions {
+  grid-area: instructions;
+  margin: 10px 10px 10px 10px;
 }
 </style>
