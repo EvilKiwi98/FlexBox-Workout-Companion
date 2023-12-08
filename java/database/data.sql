@@ -116,7 +116,7 @@ INSERT INTO equipment (equipment_id, equipment_name) VALUES (17, 'Push Ups');
 INSERT INTO equipment (equipment_id, equipment_name) VALUES (18, 'Pulley');
 
 
---Events
+--Listed Events
 INSERT INTO schedule (event_name, description, date, event_start_time, duration) VALUES ('Fitness Fusion Challenge', 'Experience a unique blend of workouts that combine elements of cardio, strength training, and flexibility exercises.', '2023-12-26', '10:00:00',5);
 
 COMMIT TRANSACTION;
