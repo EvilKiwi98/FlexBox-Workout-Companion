@@ -76,8 +76,8 @@ INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight
 INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Treadmill', 1, '2023-12-05', 1, 0, 25, 0, 'duration');
 
 INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Treadmill', 1, '2023-12-07', 1, 0, 45, 0, 'duration');
-INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Leg Press Machine', 1, '2023-12-07', 3, 10, 0, , 'reps');
-INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Dumbbells', 1, '2023-12-07', 1, 0, 0,50, 'reps');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Leg Press Machine', 1, '2023-12-07', 3, 10, 0, 65, 'reps');
+INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Squats', 1, '2023-12-07', 3, 10, 0, 0, 'reps');
 INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Dumbbells', 1, '2023-12-07', 1, 0, 0, 0, 'reps');
 
 INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Stairmaster', 1, '2023-12-09', 1, 0, 35, 0, 'duration');
@@ -114,5 +114,8 @@ INSERT INTO equipment (equipment_id, equipment_name) VALUES (15, 'Planks');
 INSERT INTO equipment (equipment_id, equipment_name) VALUES (16, 'Assault Bike');
 INSERT INTO equipment (equipment_id, equipment_name) VALUES (17, 'Push Ups');
 INSERT INTO equipment (equipment_id, equipment_name) VALUES (18, 'Pulley');
+
+INSERT INTO schedule (event_name, event_description, event_date, event_start_time, event_duration) VALUES ('Fitness Fusion Challenge', 'Experience a unique blend of workouts that combine elements of cardio, strength training, and flexibility exercises.', '2023-12-26', '10:00:00',5);
+
 
 COMMIT TRANSACTION;
