@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <button class="button toggle-btn" v-on:click="toggleEquipmentSearch">
+    <button class="toggle-btn" v-on:click="toggleEquipmentSearch">
       {{ showEquipmentSearch ? 'Hide Equipment Search' : 'Show Equipment Search' }}
     </button>
 
@@ -211,8 +211,15 @@ export default {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
-  /* Added color transition */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
+}
+
+.searchButton:hover{
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  background-color: #f0f0f0;
+  transform: scale(1.02);
+
 }
 
 .toggle-btn {

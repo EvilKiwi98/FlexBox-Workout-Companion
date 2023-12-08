@@ -10,22 +10,19 @@
           {{ showExerciseList ? 'Hide' : 'Show' }} All Exercises
         </button>
       </div>
+      <div class="exercise-list-wrapper" v-if="showExerciseList">
 
-      
-      
-
-      <div class="exercise-list-wrapper" v-show="showExerciseList">
-        
         <ul class="exercise-list">
           <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
             <span class="exercise-name">{{ exercise.exerciseName }}</span>
             <span class="exercise-sets">Sets: {{ exercise.sets }}</span>
             <span v-show="exercise.mode === 'reps'" class="exercise-reps">Reps: {{ exercise.reps }}</span>
-            <span v-show="exercise.mode === 'duration'" class="exercise-duration">Duration: {{ exercise.duration }} mins</span>
+            <span v-show="exercise.mode === 'duration'" class="exercise-duration">Duration: {{ exercise.duration }}
+              mins</span>
             <span class="exercise-weight">Weight: {{ exercise.weight }} lbs</span>
             <span class="exercise-date">Date: {{ formatDate(exercise.date) }}</span>
           </li>
-          <!-- Display a message if no exercises are available -->
+
           <li v-if="exercises.length === 0" class="no-exercises-message">
             No exercises available for the selected date.
           </li>
@@ -57,7 +54,7 @@ export default {
         date: "",
         mode: "", // Added property for reps or duration choice
       },
-      selectedDate: null,
+
     };
   },
   mounted() {
@@ -141,8 +138,12 @@ export default {
     },
     toggleExerciseList() {
       this.showExerciseList = !this.showExerciseList;
-      this.$refs.filterDateInput.value = '';
       this.selectedDate = '';
+      this.$refs.filterDateInput.value = '';
+      if (!this.showExerciseList) {
+      // Call getExerciseByDayByUserId when hiding the list
+      this.getExerciseByUserId();
+    }
     },
   },
 };
@@ -156,20 +157,24 @@ export default {
 }
 
 .exercise-list-container {
-  width: 66.67%; /* 2/3 of the width */
+  width: 66.67%;
+  /* 2/3 of the width */
   float: left;
   box-sizing: border-box;
-  padding-right: 10px; /* Adjust spacing between Exercise List and Visit List */
+  padding-right: 10px;
+  /* Adjust spacing between Exercise List and Visit List */
 }
 
 .exercise-list-wrapper {
-  margin-top: 10px; /* Adjust as needed */
+  margin-top: 10px;
+  /* Adjust as needed */
 }
 
 .exercise-list {
   list-style: none;
   padding: 0;
 }
+
 .button {
   border: none;
   border-radius: 4px;
@@ -180,6 +185,7 @@ export default {
   color: #fff;
   font-size: 14px;
 }
+
 .exercise-item {
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -224,5 +230,4 @@ export default {
   font-style: italic;
   color: #777;
   margin-top: 10px;
-}
-</style>
+}</style>
