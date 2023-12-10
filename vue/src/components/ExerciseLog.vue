@@ -9,32 +9,40 @@
         <ExerciseButtons :mode="'select'" :selectExercise="selectExercise" />
       </div>
 
-      <div class="form-group">
-        <label for="sets">Sets</label>
-        <input type="number" id="sets" v-model="exercise.sets" required />
+      <div class="input-container">
+        <div class="form-group">
+          <label for="sets">Sets</label>
+          <input type="number" id="sets" v-model="exercise.sets" required />
+        </div>
       </div>
 
       <div v-if="exercise.mode === 'reps'">
-        <div class="form-group">
-          <label for="reps">Reps</label>
-          <input type="number" id="reps" v-model="exercise.reps" min="0" required />
-        </div>
-        <div class="form-group">
-          <label for="weight">Weight</label>
-          <input type="number" id="weight" v-model="exercise.weight" min="0" required />
+        <div class="input-container">
+          <div class="form-group">
+            <label for="reps">Reps</label>
+            <input type="number" id="reps" v-model="exercise.reps" min="0" required />
+          </div>
+          <div class="form-group">
+            <label for="weight">Weight</label>
+            <input type="number" id="weight" v-model="exercise.weight" min="0" required />
+          </div>
         </div>
       </div>
 
       <div v-if="exercise.mode === 'duration'">
-        <div class="form-group">
-          <label for="duration">Duration (minutes)</label>
-          <input type="number" id="duration" v-model="exercise.duration" min="0" required />
+        <div class="input-container">
+          <div class="form-group">
+            <label for="duration">Duration (minutes)</label>
+            <input type="number" id="duration" v-model="exercise.duration" min="0" required />
+          </div>
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="date">Date</label>
-        <input type="date" id="date" v-model="exercise.date" required />
+      <div class="input-container">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="date" id="date" v-model="exercise.date" required />
+        </div>
       </div>
 
       <button type="submit">Submit</button>
@@ -233,7 +241,7 @@ body {
 }
 
 .exercise-form {
-  max-width: 400px;
+  max-width: 700px; /* Adjust the max-width to make the form wider */
   margin: auto;
   padding: 20px;
   background-color: #fff;
@@ -249,17 +257,24 @@ body {
 label {
   display: block;
   margin-bottom: 5px;
+  font-size: 20px;
   font-weight: bold;
+  text-align: left; /* Align the labels to the left */
 }
 
-input,
-select {
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container input,
+.input-container select {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-sizing: border-box;
-  /* Ensures padding and border are included in the width */
+  margin-top: 5px; /* Add some top margin to the inputs for spacing */
 }
 
 select {

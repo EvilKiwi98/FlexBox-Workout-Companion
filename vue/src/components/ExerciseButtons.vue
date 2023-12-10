@@ -4,11 +4,11 @@
     <button class="exercise-button"
       v-for="exerciseOption in exerciseOptions"
       :key="exerciseOption.id"
-      @click="selectExercise(exerciseOption)"
+      @click="handleButtonClick(exerciseOption)"
     >
       <!-- Adjust the image source path to match your actual file names -->
       <img
-      :src="`/assets/${exerciseOption.name.toLowerCase().replace(/\s+/g, '')}.png`"
+        :src="`/assets/${exerciseOption.name.toLowerCase().replace(/\s+/g, '')}.png`"
         alt="Exercise Image"
         class="button-icon"
       />
@@ -16,6 +16,7 @@
     </button>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -57,12 +58,12 @@ export default {
 </script>
 
 <style scoped>
-/* Add styles if needed */
+  /* Add styles if needed */
 
   .exercise-buttons {
     display: flex;
-    justify-content: space-between;  /* Adjust this based on your layout preference */
     flex-wrap: wrap;
+    justify-content: space-around;  /* Center the columns */
     margin-bottom: 20px;
   }
 
@@ -70,6 +71,7 @@ export default {
     font-family: 'Exo 2', sans-serif;
     background-color: #3498db;
     color: #fff;
+    width: 100px; /* Set the fixed width for each button */
     padding: 10px 15px;
     margin: 0 10px 10px 0;
     border: none;
@@ -79,8 +81,14 @@ export default {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   }
 
+  .button-icon {
+    width: 100%; /* Set the image to take up 100% of the button's width */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Preserve aspect ratio and cover the entire container */
+    margin-bottom: 8px; /* Adjust as needed for spacing */
+  }
+
   .exercise-button:hover {
     background-color: #2980b9;
   }
 </style>
-

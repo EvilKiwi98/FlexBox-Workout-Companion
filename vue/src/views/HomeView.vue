@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Welcome to FlexBox</h1>
+    <h1 class="welcome-header">Welcome to FlexBox</h1>
 
     <div class="content">
       <div class="dashboard-section check-in-out-container">
@@ -37,10 +37,9 @@ export default {
 </script>
 
 <style scoped>
-
 @font-face {
   font-family: 'Exo 2';
-  src: url('@/fonts/Exo2-VariableFont_wght.ttf') format('truetype'); /* Adjust the path and format as needed */
+  src: url('@/fonts/Exo2-VariableFont_wght.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -50,7 +49,7 @@ export default {
   text-align: center;
   margin: 50px 0;
   padding: 30px;
-  width: 100vw;
+  width: 100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   position: relative;
 }
@@ -66,16 +65,18 @@ export default {
   z-index: -1;
 }
 
+.welcome-header {
+  font-size: 50px; /* Adjust the font size as needed */
+  color: #333; /* Change the color as needed */
+}
+
 .content {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-areas: 
-    "checkIn checkIn events"
-    "logExercise logExercise events";
+  grid-template-areas: "checkIn checkIn events" "logExercise logExercise events";
   grid-gap: 20px;
   align-items: center;
   margin-top: 20px;
-  
 }
 
 .check-in-out-container {
