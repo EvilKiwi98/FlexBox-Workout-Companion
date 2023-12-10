@@ -6,7 +6,7 @@
       <div class="video-buttons">
         <button class="toggle-btn" @click="changeVideo('qthXlEbdGEc', 'Lat Pulldown')">
           <div class="button-icon-container">
-            <img src="../assets/lat.png" alt="lat Image" class="button-icon" />
+            <img src="../assets/latpulldown.png" alt="lat Image" class="button-icon" />
           </div>
           <div class="button-text">Lat Pulldown</div>
         </button>
@@ -20,7 +20,7 @@
   
         <button class="toggle-btn" @click="changeVideo('yINN07eVVyg', 'Dumbbell')">
           <div class="button-icon-container">
-            <img src="../assets/Dumbbell.png" alt="Dumbbell Image" class="button-icon" />
+            <img src="../assets/Dumbells.png" alt="Dumbbell Image" class="button-icon" />
           </div>
           <div class="button-text">Dumbbell</div>
         </button>
@@ -34,14 +34,14 @@
   
         <button class="toggle-btn" @click="changeVideo('nzK3Vd0q0Ew', 'Squats')">
           <div class="button-icon-container">
-            <img src="../assets/squat.png" alt="squat Image" class="button-icon" />
+            <img src="../assets/squats.png" alt="squat Image" class="button-icon" />
           </div>
           <div class="button-text">Squats</div>
         </button>
   
         <button class="toggle-btn" @click="changeVideo('XIm_DQ_K5hU', 'Leg Extension Machine')">
           <div class="button-icon-container">
-            <img src="../assets/legExtension.png" alt="leg extension Image" class="button-icon" />
+            <img src="../assets/legExtensionmachine.png" alt="leg extension Image" class="button-icon" />
           </div>
           <div class="button-text">Leg Extension Machine</div>
         </button>
@@ -69,14 +69,14 @@
   
         <button class="toggle-btn" @click="changeVideo('IqgIv2LPTiE', 'Assault Bike')">
           <div class="button-icon-container">
-            <img src="../assets/bike.png" alt="bike Image" class="button-icon" />
+            <img src="../assets/assaultbike.png" alt="bike Image" class="button-icon" />
           </div>
           <div class="button-text">Assault Bike</div>
         </button>
   
         <button class="toggle-btn" @click="changeVideo('_PALjGstyFM', 'Seated Cable Row')">
           <div class="button-icon-container">
-            <img src="../assets/rowing.png" alt="rowing Image" class="button-icon" />
+            <img src="../assets/rowingmachine.png" alt="rowing Image" class="button-icon" />
           </div>
           <div class="button-text">Seated Cable Row</div>
         </button>
@@ -97,14 +97,14 @@
   
         <button class="toggle-btn" @click="changeVideo('g-bPs3dX7MM', 'Planks')">
           <div class="button-icon-container">
-            <img src="../assets/plank.png" alt="plank Image" class="button-icon" />
+            <img src="../assets/planks.png" alt="plank Image" class="button-icon" />
           </div>
           <div class="button-text">Planks</div>
         </button>
   
         <button class="toggle-btn" @click="changeVideo('cLSO6DjOsi8', 'Pushups')">
           <div class="button-icon-container">
-            <img src="../assets/pushup.png" alt="pushup Image" class="button-icon" />
+            <img src="../assets/pushups.png" alt="pushup Image" class="button-icon" />
           </div>
           <div class="button-text">Pushups</div>
         </button>
@@ -116,13 +116,13 @@
         </button>
         <button class="toggle-btn" @click="changeVideo('oq--8TSF7LQ', 'Twist')">
           <div class="button-icon-container">
-            <img src="../assets/twist.png" alt="twist Image" class="button-icon" />
+            <img src="../assets/russiantwist.png" alt="twist Image" class="button-icon" />
           </div>
           <div class="button-text">Twists</div>
         </button>
         <button class="toggle-btn" @click="changeVideo('7T0ZUEt1m8s', 'Crunch')">
           <div class="button-icon-container">
-            <img src="../assets/crunch.png" alt="crunch Image" class="button-icon" />
+            <img src="../assets/abdominalcrunch.png" alt="crunch Image" class="button-icon" />
           </div>
           <div class="button-text">Crunch Machine</div>
         </button>

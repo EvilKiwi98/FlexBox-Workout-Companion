@@ -1,4 +1,4 @@
-<!-- ExerciseButtons.vue -->
+
 <template>
   <div class="exercise-buttons">
     <button class="exercise-button"
@@ -6,7 +6,7 @@
       :key="exerciseOption.id"
       @click="selectExercise(exerciseOption)"
     >
-      <!-- Adjust the image source path to match your actual file names -->
+      
       <img
       :src="`/assets/${exerciseOption.name.toLowerCase().replace(/\s+/g, '')}.png`"
         alt="Exercise Image"
@@ -57,11 +57,8 @@ export default {
 </script>
 
 <style scoped>
-/* Add styles if needed */
-
   .exercise-buttons {
     display: flex;
-    justify-content: space-between;  /* Adjust this based on your layout preference */
     flex-wrap: wrap;
     margin-bottom: 20px;
   }
@@ -77,10 +74,28 @@ export default {
     cursor: pointer;
     transition: background-color 0.3s ease;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(33.33% - 10px); /* Adjust the margin based on your preference */
+    flex-basis: calc(33.33% - 10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 120px; /* Set a fixed height for the buttons */
+  }
+
+  .button-text {
+    max-height: 40px; /* Adjust the max-height based on your preference */
+    overflow: hidden;
+  }
+
+  .button-icon {
+    max-width: 100%;
+    max-height: 60%; /* Adjust the max-height based on your preference */
+    object-fit: contain; /* Preserve aspect ratio while fitting within the specified dimensions */
+    margin-bottom: 8px; /* Adjust this margin based on your preference */
   }
 
   .exercise-button:hover {
     background-color: #2980b9;
   }
 </style>
-
