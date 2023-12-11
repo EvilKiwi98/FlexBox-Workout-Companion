@@ -1,6 +1,8 @@
 <template>
   <div class="main">
-    <p id="instructions">Search the User Id of a specific user. Search all exercises will return all of that user's listed exercises. You can also check the user in and out.</p>
+    <p id="instructions"> Search database for usage metrics by specified month. You can search by either machines that
+      measure in repetitions or duration (time used)</p>
+
     <div id="searchButton">
       <button class="button toggle-btn" v-on:click="toggleEquipmentSearch">
         {{ showEquipmentSearch ? 'Hide Equipment Search' : 'Show Equipment Search' }}
