@@ -11,6 +11,12 @@
           </div>
         </div>
       </div>
+      <div class="profile-container">
+      <h1>User Profile</h1>
+      <div class="profile-details">
+        <profile></profile> 
+      </div>
+    </div>
     </div>
 
     <div class="grid-container">
@@ -35,6 +41,7 @@ import ExerciseList from '../components/ExerciseList.vue';
 import VisitList from '../components/VisitList.vue';
 import VisitChart from '../components/VisitChart.vue';
 import TotalVisitTime from '../components/TotalVisitTime.vue';
+import Profile from '../components/Profile.vue';
 
 export default {
   components: {
@@ -42,6 +49,7 @@ export default {
     VisitList,
     VisitChart,
     TotalVisitTime,
+    Profile
   }
 }
 </script>
