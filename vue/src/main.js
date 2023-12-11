@@ -30,3 +30,26 @@ app.use(store);
 app.use(router);
 app.mount('#app');
 
+// const createScannerElements = () => {
+//   const appDiv = document.getElementById('app');
+
+//   const scannerContainer = document.createElement('div');
+//   scannerContainer.id = 'scanner-container';
+
+//   const video = document.createElement('video');
+//   video.id = 'scanner';
+//   video.width = '100%';
+//   video.height = '100%';
+//   video.autoplay = true;
+
+//   scannerContainer.appendChild(video);
+//   appDiv.appendChild(scannerContainer);
+
+//   const resultDiv = document.createElement('div');
+//   resultDiv.id = 'result';
+//   appDiv.appendChild(resultDiv);
+// };
+
+// const initializeScanner = () => {
+
+// }
