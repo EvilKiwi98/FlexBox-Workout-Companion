@@ -1,5 +1,4 @@
 <template>
-    <button v-on:click="toggleCamera"> Show Camera </button>
     <div class="main">
         <h1 class="header">Placeholder instructions</h1>
 

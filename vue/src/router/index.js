@@ -10,6 +10,7 @@ import ProfileView from '../views/ProfileView.vue';
 import EmployeeView from '../views/EmployeeView.vue';
 import TutorialView from '../views/TutorialView.vue';
 import QRScanner from '../components/QRScanner.vue';
+import CameraView from '../views/CameraView.vue'
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -83,7 +84,16 @@ const routes = [
     meta: {
       requiresAuth: true
     }
-  }
+  },
+  {
+    path: "/camera",
+    name: "camera",
+    component: CameraView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+
 ];
 
 // Create the router

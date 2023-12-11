@@ -134,18 +134,46 @@ export default {
 }
 
 #searchButton {
+  font-family: 'Exo 2', sans-serif;
   margin-bottom: 20px;
 }
 
 .toggle-btn {
+  font-family: 'Exo 2', sans-serif;
   background-color: #3498db;
   color: #fff;
-  padding: 10px 20px;
+  padding: 12px 24px; /* Increase padding for a more comfortable button */
   margin: 5px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Add this style for the white background of the chart */
+.output-chart {
+  background-color: #fff;
+  padding: 20px; /* Add padding if needed */
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Style enhancements for search buttons */
+.button.search-btn {
+  font-family: 'Exo 2', sans-serif;
+  background-color: #3498db;
+  color: #fff;
+  padding: 12px 24px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button.search-btn:hover {
+  background-color: #267bb5; /* Darker blue on hover */
 }
 </style>
