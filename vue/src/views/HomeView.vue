@@ -109,4 +109,5 @@ export default {
   font-size: 24px;
   margin-bottom: 15px;
 }
+
 </style>

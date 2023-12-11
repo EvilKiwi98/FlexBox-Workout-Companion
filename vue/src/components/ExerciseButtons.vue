@@ -4,7 +4,7 @@
     <button class="exercise-button"
       v-for="exerciseOption in exerciseOptions"
       :key="exerciseOption.id"
-      @click="selectExercise(exerciseOption)"
+      @click="handleButtonClick(exerciseOption)"
     >
       
       <img
@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       exerciseOptions: [
-        { id: 1, name: "Bench Press", mode: "reps" },
+        { id: 1, name: "Bench Press", mode: "reps", videoId: 'z5u8DDnaZSg' },
         { id: 2, name: "Treadmill", mode: "duration" },
         { id: 3, name: "Dumbells", mode: "reps" },
         { id: 4, name: "Lat Pulldown", mode: "reps" },
@@ -50,13 +50,17 @@ export default {
         this.selectExercise(exerciseOption);
       } else if (this.mode === 'play') {
         this.playVideo(exerciseOption.videoId, exerciseOption.name);
+      } else if (this.mode === 'changeVideo') {
+        this.changeVideo(exerciseOption.videoId, exerciseOption.name);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
+  @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap');
+
   .exercise-buttons {
     display: flex;
     flex-wrap: wrap;
@@ -86,6 +90,7 @@ export default {
   .button-text {
     max-height: 40px; /* Adjust the max-height based on your preference */
     overflow: hidden;
+    font-family: 'Exo 2', sans-serif;
   }
 
   .button-icon {
@@ -97,5 +102,21 @@ export default {
 
   .exercise-button:hover {
     background-color: #2980b9;
+  }
+  @media screen and (max-width: 400px) {
+    .exercise-button {
+      width: calc(30% - 10px); /* Adjust the margin based on your preference */
+      flex-basis: calc(30% - 10px);
+    }
+  }
+/* add to home view */
+  @media screen and (max-width: 400px) {
+    .content {
+      grid-template-columns: 1fr;
+      grid-template-areas: 
+        "checkIn"
+        "logExercise"
+        "events";
+    }
   }
 </style>
