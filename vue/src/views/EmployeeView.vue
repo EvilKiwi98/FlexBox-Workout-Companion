@@ -23,17 +23,14 @@ export default {
 </script>
 
 <style scoped>
-
-.utilContainer{
+.utilContainer {
   font-family: 'Exo 2', sans-serif;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-rows: auto auto; /* Adjusted grid-template-rows */
   grid-column-gap: 50px;
-
-
 }
-.body{
-  font-family: 'Exo 2', sans-serif;
 
+.body {
+  font-family: 'Exo 2', sans-serif;
 }
 </style>
