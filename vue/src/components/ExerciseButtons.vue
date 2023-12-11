@@ -24,23 +24,23 @@ export default {
     return {
       exerciseOptions: [
         { id: 1, name: "Bench Press", mode: "reps", videoId: 'z5u8DDnaZSg' },
-        { id: 2, name: "Treadmill", mode: "duration" },
-        { id: 3, name: "Dumbells", mode: "reps" },
-        { id: 4, name: "Lat Pulldown", mode: "reps" },
-        { id: 5, name: "Rowing Machine", mode: "duration" },
-        { id: 6, name: "Stairmaster", mode: "duration" },
-        { id: 7, name: "Squats", mode: "reps" },
-        { id: 8, name: "Russian Twist", mode: "duration" },
-        { id: 9, name: "Leg Extension Machine", mode: "reps" },
-        { id: 10, name: "Fly", mode: "reps" },
-        { id: 11, name: "Dips", mode: "reps" },
-        { id: 12, name: "Abdominal Crunch", mode: "reps" },
-        { id: 13, name: "Elliptical", mode: "duration" },
-        { id: 14, name: "Deadlift", mode: "reps" },
-        { id: 15, name: "Planks", mode: "duration" },
-        { id: 16, name: "Assault Bike", mode: "duration" },
-        { id: 17, name: "Push Ups", mode: "reps" },
-        { id: 18, name: "Pulley", mode: "reps" },
+        { id: 2, name: "Treadmill", mode: "duration", videoId: 't5CXJA8ZTY4' },
+        { id: 3, name: "Dumbells", mode: "reps", videoId: 'yINN07eVVyg' },
+        { id: 4, name: "Lat Pulldown", mode: "reps", videoId: 'qthXlEbdGEc' },
+        { id: 5, name: "Rowing Machine", mode: "duration", videoId: '_PALjGstyFM' },
+        { id: 6, name: "Stairmaster", mode: "duration", videoId: 'W9hTmXgdJcw' },
+        { id: 7, name: "Squats", mode: "reps", videoId: 'nzK3Vd0q0Ew' },
+        { id: 8, name: "Russian Twist", mode: "duration", videoId: 'oq--8TSF7LQ' },
+        { id: 9, name: "Leg Extension Machine", mode: "reps", videoId: 'XIm_DQ_K5hU' },
+        { id: 10, name: "Fly", mode: "reps", videoId: 't7ylA_jv9Yg' },
+        { id: 11, name: "Dips", mode: "reps", videoId: 'lcAI2vqZXcM' },
+        { id: 12, name: "Abdominal Crunch", mode: "reps", videoId:'7T0ZUEt1m8s' },
+        { id: 13, name: "Elliptical", mode: "duration", videoId: 'curSJrn6X0o' },
+        { id: 14, name: "Deadlift", mode: "reps", videoId: '0W6nKe6GL9k' },
+        { id: 15, name: "Planks", mode: "duration", videoId: 'g-bPs3dX7MM' },
+        { id: 16, name: "Assault Bike", mode: "duration", videoId: 'IqgIv2LPTiE' },
+        { id: 17, name: "Push Ups", mode: "reps", videoId: 'cLSO6DjOsi8' },
+        { id: 18, name: "Pulley", mode: "reps", videoId: 'I_LbV5DNr54' },
       ],
     };
   },
@@ -109,14 +109,5 @@ export default {
       flex-basis: calc(30% - 10px);
     }
   }
-/* add to home view */
-  /* @media screen and (max-width: 400px) {
-    .content {
-      grid-template-columns: 1fr;
-      grid-template-areas: 
-        "checkIn"
-        "logExercise"
-        "events";
-    }
-  } */
+
 </style>

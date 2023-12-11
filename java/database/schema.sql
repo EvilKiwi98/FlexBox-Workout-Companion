@@ -9,6 +9,14 @@ CREATE TABLE users (
 	role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 	);
+CREATE TABLE profiles (
+    profile_id SERIAL,
+    user_id INT REFERENCES users(user_id),
+    profile_picture_url varchar(255),
+    email varchar(255),
+    CONSTRAINT PK_profile PRIMARY KEY (profile_id),
+    CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
 
 CREATE TABLE user_visits (
         user_visit_id SERIAL PRIMARY KEY,
