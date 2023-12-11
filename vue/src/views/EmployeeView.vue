@@ -27,7 +27,7 @@ export default {
   font-family: 'Exo 2', sans-serif;
   display: grid;
   grid-template-rows: auto auto; /* Adjusted grid-template-rows */
-  grid-column-gap: 50px;
+  grid-row-gap: 20px; /* Changed to grid-row-gap for better spacing */
 }
 
 .body {

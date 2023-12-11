@@ -27,9 +27,9 @@
       <div class="exercise-container">
         <exercise-list />
       </div>
-      <div class="visit-container">
+      <!-- <div class="visit-container">
         <visit-list></visit-list>
-      </div>
+      </div> -->
       <div class="chart-container">
         <visit-chart></visit-chart>
       </div>
@@ -39,7 +39,7 @@
 
 <script>
 import ExerciseList from '../components/ExerciseList.vue';
-import VisitList from '../components/VisitList.vue';
+// import VisitList from '../components/VisitList.vue';
 import VisitChart from '../components/VisitChart.vue';
 import TotalVisitTime from '../components/TotalVisitTime.vue';
 import Profile from '../components/Profile.vue';
@@ -47,7 +47,7 @@ import Profile from '../components/Profile.vue';
 export default {
   components: {
     ExerciseList,
-    VisitList,
+    // VisitList,
     VisitChart,
     TotalVisitTime,
     Profile

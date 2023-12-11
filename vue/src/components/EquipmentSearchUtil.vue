@@ -2,13 +2,11 @@
   <div class="main">
     <p id="instructions"> Search database for usage metrics by specified month. You can search by either machines that
       measure in repetitions or duration (time used)</p>
-
     <div id="searchButton">
       <button class="button toggle-btn" v-on:click="toggleEquipmentSearch">
         {{ showEquipmentSearch ? 'Hide Equipment Search' : 'Show Equipment Search' }}
       </button>
     </div>
-
     <div class="search-form" v-show="showEquipmentSearch">
       <span v-show="showErrorMessage" class="error-message">{{ errorMessage }}</span>
       <div class="input-box">
@@ -30,15 +28,11 @@
     </div>
   </div>
 </template>
-
-
 <script>
 import { Bar } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import ExerciseService from '../services/ExerciseService';
-
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
-
 export default {
   name: 'EquipmentUsageChart',
   components: { Bar },
@@ -54,7 +48,7 @@ export default {
         datasets: [
           {
             label: 'Metric',
-            backgroundColor: '#3498db',
+            backgroundColor: '#3498DB',
             data: [],
           },
         ],
@@ -84,13 +78,10 @@ export default {
           metricType === 'duration'
             ? await ExerciseService.getMostUsedDurationEquipmentByMonth(this.monthNum)
             : await ExerciseService.getMostUsedRepsEquipmentByMonth(this.monthNum);
-
         const visits = response.data;
-
         const filteredVisits = visits.filter(visit =>
           metricType === 'duration' ? visit.mode === 'duration' : visit.mode === 'reps'
         );
-
         const metricData = {};
         filteredVisits.forEach(visit => {
           if (!metricData[visit.exerciseName]) {
@@ -99,12 +90,10 @@ export default {
           metricData[visit.exerciseName].total += metricType === 'duration' ? visit.duration : visit.reps;
           metricData[visit.exerciseName].count += 1;
         });
-
         const finalMetricData = Object.keys(metricData).map(equipmentName => {
           const averageMetric = metricData[equipmentName].total / metricData[equipmentName].count;
           return { label: equipmentName, data: averageMetric.toFixed(2) };
         });
-
         this.chartData.labels = finalMetricData.map(item => item.label);
         this.chartData.datasets[0].data = finalMetricData.map(item => item.data);
         this.showChart = true;
@@ -124,45 +113,25 @@ export default {
 };
 </script>
 
+
 <style scoped>
 .main {
   text-align: center;
   margin-top: 20px;
-  background-color: #a7d6ef;
+  background-color: #A7D6EF;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center items horizontally */
 }
-
 #searchButton {
   font-family: 'Exo 2', sans-serif;
   margin-bottom: 20px;
 }
-
 .toggle-btn {
   font-family: 'Exo 2', sans-serif;
-  background-color: #3498db;
-  color: #fff;
-  padding: 12px 24px; /* Increase padding for a more comfortable button */
-  margin: 5px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Add this style for the white background of the chart */
-.output-chart {
-  background-color: #fff;
-  padding: 20px; /* Add padding if needed */
-  border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Style enhancements for search buttons */
-.button.search-btn {
-  font-family: 'Exo 2', sans-serif;
-  background-color: #3498db;
+  background-color: #3498DB;
   color: #fff;
   padding: 12px 24px;
   margin: 5px;
@@ -172,8 +141,30 @@ export default {
   transition: background-color 0.3s ease;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
-
+/* Add this style for the white background of the chart */
+.output-chart {
+  background-color: #fff;
+  padding: 30px; /* Increase padding */
+  border-radius: 15px; /* Increase border-radius for a more rounded appearance */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* Adjust box-shadow */
+  margin-top: 30px; /* Increase top margin */
+  width: 100%; /* Increase width on both sides */
+  margin: 0 -30px; /* Compensate for the added width on both sides */
+}
+/* Style enhancements for search buttons */
+.button.search-btn {
+  font-family: 'Exo 2', sans-serif;
+  background-color: #3498DB;
+  color: #fff;
+  padding: 12px 24px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
 .button.search-btn:hover {
-  background-color: #267bb5; /* Darker blue on hover */
+  background-color: #267BB5;
 }
 </style>
