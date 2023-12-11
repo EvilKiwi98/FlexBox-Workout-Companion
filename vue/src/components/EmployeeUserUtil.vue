@@ -253,7 +253,9 @@ export default {
   background-color: #a7d6ef;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   border-radius:10px;
-
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center;
 }
 
 #searchButton {
