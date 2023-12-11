@@ -1,12 +1,17 @@
 import axios from 'axios';
 
-export default {
+const baseUrl = '/profile'; // Adjust this based on your API endpoint
 
-  createProfile(newProfile) {
-    return axios.post('/profile', newProfile)
+export default {
+  createProfile(userId, email, profilePicBase64) {
+    return axios.post(`${baseUrl}/createProfile`, {
+      userId,
+      email,
+      profilePicBase64,
+    });
   },
 
   getProfileByUserId(userId) {
-    return axios.get(`/profile/${userId}`)
+    return axios.get(`${baseUrl}/${userId}`);
   },
-}
+};

@@ -13,6 +13,7 @@
     "apexcharts": "^3.44.2",
     "axios": "^0.21.4",
     "chart.js": "^4.4.1",
+    "cloudinary-core": "^2.13.0",
     "cors": "^2.8.5",
     "vue": "^3.3.4",
     "vue-apexcharts": "^1.6.2",

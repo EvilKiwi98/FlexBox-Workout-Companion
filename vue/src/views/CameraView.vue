@@ -1,13 +1,13 @@
 <template>
-      <web-cam/>
+      <aaron-cam></aaron-cam>
 </template>
 
 <script>
-import WebCam from '../components/WebCam.vue';
+import AaronCam from '../components/AaronCam.vue';
 
 export default {
     components: {
-    WebCam
+    AaronCam
   }
 }
 </script>
