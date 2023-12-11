@@ -8,15 +8,7 @@ private int profileId;
     private String username;
     private String profilePicUrl;
     private String emailAddress;
-    private static Cloudinary cloudinary;
 
-    static {
-        cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "your_cloud_name",
-                "api_key", "your_api_key",
-                "api_secret", "your_api_secret"
-        ));
-    }
     public Profile(int profileId, int userId, String username, String profilePicUrl, String emailAddress) {
         this.profileId = profileId;
         this.userId = userId;

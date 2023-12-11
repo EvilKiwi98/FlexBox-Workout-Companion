@@ -44,12 +44,6 @@ public class JdbcProfileDao implements ProfileDao {
         // Decode base64 string into a byte array
         byte[] imageBytes = Base64.getDecoder().decode(base64String);
 
-        // Upload profile picture to Cloudinary
-        String imageUrl = cloudinaryService.uploadProfilePicture(imageBytes);
-
-        // Update the profile object with the Cloudinary URL
-        profile.setProfilePicUrl(imageUrl);
-
         // Insert the profile into the database
         String sql = "INSERT into profiles (user_id, profile_picture_url, email) VALUES (?, ?, ?)";
         int profileId = jdbcTemplate.update(sql, profile.getUserId(), profile.getProfilePicUrl(), profile.getEmailAddress());

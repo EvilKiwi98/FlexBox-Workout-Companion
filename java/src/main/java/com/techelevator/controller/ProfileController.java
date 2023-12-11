@@ -17,7 +17,7 @@ public class ProfileController {
     public Profile getUserProfileByUserId(@PathVariable int userId) {
         return profileDao.getUserProfileByUserId(userId);
     }
-@RequestMapping(path = "/profile", method = RequestMethod.POST)
+@RequestMapping(path = "/profile/createProfile", method = RequestMethod.POST)
     public Profile createProfile(@RequestBody Profile profile) {
         return profileDao.createProfile(profile);
     }
