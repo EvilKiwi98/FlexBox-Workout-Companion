@@ -138,10 +138,6 @@ export default {
       this.fetchData();
     },
 
-    populateChartData() {
-      // Additional logic if needed when populating chart data
-    },
-
     getVisitsByWeekByUserId() {
       this.isLoading = true;
       CheckInOutService.getVisitsByWeekByUserId(this.$store.getters.getUserId).then(
