@@ -1,8 +1,8 @@
 <template>
-    <the-header v-show="this.$store.state.showApp" />
+    <the-header/>
     <!-- Router view for the main content -->
     <router-view/>
-    <the-footer v-show="this.$store.state.showApp"/>
+    <the-footer/>
 
 </template>
 

@@ -96,7 +96,7 @@ export default {
 }
 </script>
   
-<style>
+<style scoped>
 .main {
     display: grid;
     text-align: center;

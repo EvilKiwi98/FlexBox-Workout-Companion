@@ -11,7 +11,6 @@ import EmployeeView from '../views/EmployeeView.vue';
 import TutorialView from '../views/TutorialView.vue';
 import QRScanner from '../components/QRScanner.vue';
 import CameraView from '../views/CameraView.vue';
-import LandingView from '../views/LandingView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -24,14 +23,6 @@ import LandingView from '../views/LandingView.vue';
 const routes = [
   {
     path: '/',
-    name: 'landing',
-    component: LandingView,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/home',
     name: 'home',
     component: HomeView,
     meta: {

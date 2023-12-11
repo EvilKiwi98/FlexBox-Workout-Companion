@@ -6,7 +6,7 @@
         </div>
 
         <!-- Main navigation bar -->
-        <div id="nav">
+        <div id="nav" v-if="$store.state.token">
             <img src="@/assets/Flex_Box_Logo.png" alt="Logo" class="logo"/>
 
             <router-link v-bind:to="{ name: 'home' }" class="nav-link">Home</router-link>
