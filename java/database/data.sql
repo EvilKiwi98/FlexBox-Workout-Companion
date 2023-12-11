@@ -43,6 +43,27 @@ INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUE
 
 --3rd Member's Logged Visits
 
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-11-22 08:15:00', '2023-11-22 10:30:00', 135);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-11-23 12:30:00', '2023-11-23 15:45:00', 195);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-11-23 17:15:00', '2023-11-23 19:00:00', 105);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-11-24 10:00:00', '2023-11-24 12:15:00', 135);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-11-24 14:45:00', '2023-11-24 16:30:00', 105);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-11-24 18:00:00', '2023-11-24 19:45:00', 105);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-11-25 11:00:00', '2023-11-25 13:00:00', 120);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-11-25 15:30:00', '2023-11-25 17:00:00', 90);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-11-29 09:15:00', '2023-11-29 11:00:00', 105);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-11-29 14:00:00', '2023-11-29 15:30:00', 90);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-11-29 18:15:00', '2023-11-29 19:45:00', 90);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-12-02 10:30:00', '2023-12-02 12:00:00', 90);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-12-02 14:45:00', '2023-12-02 16:30:00', 105);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-12-02 18:30:00', '2023-12-02 20:00:00', 90);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-12-05 10:30:00', '2023-12-05 12:15:00', 105);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-12-05 14:00:00', '2023-12-05 15:30:00', 90);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-12-05 18:45:00', '2023-12-05 20:15:00', 90);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-12-10 09:45:00', '2023-12-10 11:30:00', 105);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-12-10 14:30:00', '2023-12-10 16:00:00', 90);
+INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (5, '2023-12-10 18:45:00', '2023-12-10 20:15:00', 90);
+
 --Employee Logged Visits
 INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (3, '2023-11-01 08:00:00', '2023-11-01 09:00:00', 60);
 INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (3, '2023-11-11 08:00:00', '2023-11-11 09:00:00', 60);

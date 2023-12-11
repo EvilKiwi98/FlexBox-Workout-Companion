@@ -16,9 +16,12 @@
     "cors": "^2.8.5",
     "vue": "^3.3.4",
     "vue-apexcharts": "^1.6.2",
+    "vue-camera-lib": "^1.0.4",
     "vue-chartjs": "^5.2.0",
     "vue-lite-youtube-embed": "^1.2.1",
+    "vue-qrcode-reader": "^5.4.1",
     "vue-router": "^4.2.1",
+    "vue-web-cam": "^1.9.0",
     "vue3-apexcharts": "^1.4.4",
     "vuex": "^4.1.0"
   },

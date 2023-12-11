@@ -9,6 +9,7 @@ import RegisterView from '../views/RegisterView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import EmployeeView from '../views/EmployeeView.vue';
 import TutorialView from '../views/TutorialView.vue';
+import QRScanner from '../components/QRScanner.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -73,6 +74,14 @@ const routes = [
     component: RegisterView,
     meta: {
       requiresAuth: false
+    }
+  },
+  {
+    path: "/scan",
+    name: "scan",
+    component: QRScanner,
+    meta: {
+      requiresAuth: true
     }
   }
 ];

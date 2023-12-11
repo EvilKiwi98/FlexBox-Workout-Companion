@@ -52,14 +52,15 @@ public class JdbcExerciseDao implements ExerciseDao{
     @Override
     public List<Exercise> getMostUsedDurationEquipmentByMonth(int monthNum) {
         List<Exercise> exerciseList = new ArrayList<>();
-        String sql = "SELECT exercise_name, SUM(duration) AS total_duration FROM exercise\n" +
+        String sql = "SELECT exercise_name, mode, SUM(duration) AS total_duration FROM exercise\n" +
                 "WHERE mode = 'duration' AND EXTRACT(MONTH FROM date) = ?\n" +
-                "GROUP BY exercise_name ORDER BY total_duration DESC;";
+                "GROUP BY exercise_name, mode ORDER BY total_duration DESC;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, monthNum);
         while (results.next()) {
             Exercise exercise = new Exercise();
             exercise.setExerciseName(results.getString("exercise_name"));
             exercise.setDuration(results.getInt("total_duration"));
+            exercise.setMode(results.getString("mode"));
             exerciseList.add(exercise);
         }
         return exerciseList;
@@ -67,16 +68,17 @@ public class JdbcExerciseDao implements ExerciseDao{
     @Override
     public List<Exercise> getMostUsedRepsEquipmentByMonth(int monthNum){
     List<Exercise> exerciseList = new ArrayList<>();
-    String sql = "SELECT exercise_name, SUM(reps * sets) AS total_reps\n" +
+    String sql = "SELECT exercise_name, mode, SUM(reps * sets) AS total_reps\n" +
             "FROM exercise\n" +
             "WHERE mode = 'reps' AND EXTRACT(MONTH FROM date) = ?\n" +
-            "GROUP BY exercise_name\n" +
+            "GROUP BY exercise_name, mode\n" +
             "ORDER BY total_reps DESC";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, monthNum);
         while (results.next()) {
             Exercise exercise = new Exercise();
             exercise.setExerciseName(results.getString("exercise_name"));
             exercise.setReps(results.getInt("total_reps"));
+            exercise.setMode(results.getString("mode"));
 
             exerciseList.add(exercise);
         }

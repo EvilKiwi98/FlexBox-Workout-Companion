@@ -41,7 +41,7 @@ export default {
     ExerciseList,
     VisitList,
     VisitChart,
-    TotalVisitTime
+    TotalVisitTime,
   }
 }
 </script>

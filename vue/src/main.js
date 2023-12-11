@@ -4,6 +4,8 @@ import { createStore } from './store'
 import router from './router'
 import axios from 'axios'
 import { Bar } from 'vue-chartjs'
+import VueCameraLib from 'vue-camera-lib'
+
 
 /* sets the base url for server API communication with axios */
 axios.defaults.baseURL = import.meta.env.VITE_REMOTE_API;
@@ -28,5 +30,29 @@ const store = createStore(currentToken, currentUser);
 const app = createApp(CapstoneApp);
 app.use(store);
 app.use(router);
+app.use(VueCameraLib);
 app.mount('#app');
 
+// const createScannerElements = () => {
+//   const appDiv = document.getElementById('app');
+
+//   const scannerContainer = document.createElement('div');
+//   scannerContainer.id = 'scanner-container';
+
+//   const video = document.createElement('video');
+//   video.id = 'scanner';
+//   video.width = '100%';
+//   video.height = '100%';
+//   video.autoplay = true;
+
+//   scannerContainer.appendChild(video);
+//   appDiv.appendChild(scannerContainer);
+
+//   const resultDiv = document.createElement('div');
+//   resultDiv.id = 'result';
+//   appDiv.appendChild(resultDiv);
+// };
+
+// const initializeScanner = () => {
+
+// }

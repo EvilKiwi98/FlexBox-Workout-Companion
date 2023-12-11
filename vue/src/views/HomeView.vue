@@ -12,40 +12,43 @@
       <div class="dashboard-section event-list-container">
         <event-list />
       </div>
+    <div>
+    <button @click="navigateToScan">Scan QR Code</button>
     </div>
+  </div>
   </div>
 </template>
 
 <script>
-import CheckInOut from '../components/CheckInOut.vue';
-import ExerciseLog from '../components/ExerciseLog.vue';
-import EventList from '../components/EventList.vue';
+import CheckInOut from "../components/CheckInOut.vue";
+import ExerciseLog from "../components/ExerciseLog.vue";
+import EventList from "../components/EventList.vue";
 
 export default {
   components: {
     CheckInOut,
     ExerciseLog,
     EventList,
-    
-
   },
   methods: {
-    setCheckInOutTime() {
-    }
+    setCheckInOutTime() {},
+  },
+  navigateToScan(){
+    this.$router.push({ name: 'scan' });
   }
 };
 </script>
 
 <style scoped>
 @font-face {
-  font-family: 'Exo 2';
-  src: url('@/fonts/Exo2-VariableFont_wght.ttf') format('truetype');
+  font-family: "Exo 2";
+  src: url("@/fonts/Exo2-VariableFont_wght.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 .home {
-  font-family: 'Exo 2', sans-serif;
+  font-family: "Exo 2", sans-serif;
   text-align: center;
   margin: 50px 0;
   padding: 30px;
@@ -111,12 +114,12 @@ export default {
   margin-bottom: 15px;
 }
 @media screen and (max-width: 400px) {
-    .content {
-      grid-template-columns: 1fr;
-      grid-template-areas: 
-        "checkIn"
-        "logExercise"
-        "events";
-    }
+  .content {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "checkIn"
+      "logExercise"
+      "events";
   }
+}
 </style>

@@ -1,150 +1,127 @@
 <template>
   <div class="main">
-    <p id="instructions"> Search database for usage metrics by specified month. You can search by either machines that measure in repetitions or duration (time used)</p>
-    <button class="toggle-btn" v-on:click="toggleEquipmentSearch">
-      {{ showEquipmentSearch ? 'Hide Equipment Search' : 'Show Equipment Search' }}
-    </button>
+    <p id="instructions"> Search database for usage metrics by specified month. You can search by either machines that
+      measure in repetitions or duration (time used)</p>
 
-    
-    <div class="outputContainer" v-show="showEquipmentSearch">
-      <div id="input-box">
-        <label for="monthNumInput">Enter Month Number:</label>
-        <input type="number" class="monthNumInput" v-model="monthNum" min=0 max=12 />
-      </div>
-      <span class="employeeInput">
-        <button v-on:click="getMostUsedDurationEquipmentByMonth(monthNum)" class="searchButton"> Show month's equipment
-          metrics (duration) </button>
-        <button v-on:click="getMostUsedRepsEquipmentByMonth(monthNum)" class="searchButton"> Show month's equipment
-          metrics (repetition) </button>
-      </span>
-      <span class="error-message" v-show="showErrorMessage">{{ errorMessage }}</span>
-      <div id="output-list">
-        <ul id="equipment-list-duration" class="equipment-list" v-if="showDurationEquipment">
-          <li v-for="equipment in equipmentList" :key="equipment.id" class="equipment-item">
-            <span class="equipment-name">Name: {{ equipment.exerciseName }}</span>
-            <span class="equipment-usage">Selected month time usage: {{ equipment.duration }}</span>
-          </li>
-        </ul>
-        <ul id="equipment-list-reps" class="equipment-list" v-if="showRepsEquipment">
-          <li v-for="equipment in equipmentList" :key="equipment.id" class="equipment-item">
-            <span class="equipment-name">Name: {{ equipment.exerciseName }}</span>
-            <span class="equipment-usage">Selected month rep usage: {{ equipment.reps }}</span>
-          </li>
-        </ul>
-      </div>
+    <div id="searchButton">
+      <button class="button toggle-btn" v-on:click="toggleEquipmentSearch">
+        {{ showEquipmentSearch ? 'Hide Equipment Search' : 'Show Equipment Search' }}
+      </button>
     </div>
 
+    <div class="search-form" v-show="showEquipmentSearch">
+      <span v-show="showErrorMessage" class="error-message">{{ errorMessage }}</span>
+      <div class="input-box">
+        <label for="monthNumInput">Enter Month Number:</label>
+        <input type="number" id="monthNumInput" v-model="monthNum" min="1" max="12" />
+      </div>
+      <span class="employeeInput">
+        <button v-on:click="getMostUsedDurationEquipmentByMonth" class="button search-btn">
+          Show month's equipment metrics (duration)
+        </button>
+        <button v-on:click="getMostUsedRepsEquipmentByMonth" class="button search-btn">
+          Show month's equipment metrics (repetition)
+        </button>
+      </span>
+      <div class="error-message" v-show="showErrorMessage">{{ errorMessage }}</div>
+      <div class="output-chart">
+        <Bar :data="chartData" :key="chartKey" v-if="showChart" />
+      </div>
+    </div>
   </div>
 </template>
 
+
 <script>
+import { Bar } from 'vue-chartjs';
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import ExerciseService from '../services/ExerciseService';
+
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+
 export default {
+  name: 'EquipmentUsageChart',
+  components: { Bar },
   data() {
     return {
-      monthNum: "",
-      errorMessage: "",
-
-
-      //BOOLEANS TO TOGGLE LIST VIEW OPTIONS
-      showRepsEquipment: false,
-      showDurationEquipment: true,
+      monthNum: '',
+      errorMessage: '',
       showEquipmentSearch: false,
       showErrorMessage: false,
-
-      equipmentList: [],
-    }
+      showChart: false,
+      chartData: {
+        labels: [],
+        datasets: [
+          {
+            label: 'Metric',
+            backgroundColor: '#3498db',
+            data: [],
+          },
+        ],
+      },
+      chartKey: 0,
+    };
+  },
+  computed: {
+    getExerciseName() {
+      return this.$store.getters.getExerciseName;
+    },
   },
   methods: {
-    // TOGGLE METHODS
     toggleEquipmentSearch() {
-      this.showEquipmentSearch = !this.showEquipmentSearch
+      this.showEquipmentSearch = !this.showEquipmentSearch;
+      this.resetChart();
     },
-    toggleShowAllEquipment() {
-      this.showDurationEquipment = true;
-      this.showRepsEquipment = true;
+    resetChart() {
+      this.showChart = false;
+      this.chartData.labels = [];
+      this.chartData.datasets[0].data = [];
+      this.chartKey += 1;
     },
+    async fetchData(metricType) {
+      try {
+        const response =
+          metricType === 'duration'
+            ? await ExerciseService.getMostUsedDurationEquipmentByMonth(this.monthNum)
+            : await ExerciseService.getMostUsedRepsEquipmentByMonth(this.monthNum);
 
-    // METHOD FOR GETTING USAGE METRICS BY MONTH (DURATION)
-    getMostUsedDurationEquipmentByMonth(monthNum) {
-      if (monthNum <= 0 || monthNum > 12) {
-        this.errorMessage = "Please Enter a Valid Month to Search By";
-        this.showErrorMessage = true;
-        this.switchMessage();
-      } else {
-        // CHANGE/RESET EXISTING BOOLEAN TOGGLE
-        this.showRepsEquipment = false;
-        ExerciseService.getMostUsedDurationEquipmentByMonth(monthNum)
-          .then(response => {
-            if (response.status === 200) {
-              this.equipmentList = response.data;
-              // RESET VARIABLES IF SUCCESSFUL
-              this.showDurationEquipment = true;
-            }
-            else {
-              console.log("No data found.")
-            }
-          }).catch(error => {
-            this.handleErrorResponse(error);
-          })
+        const visits = response.data;
+
+        const filteredVisits = visits.filter(visit =>
+          metricType === 'duration' ? visit.mode === 'duration' : visit.mode === 'reps'
+        );
+
+        const metricData = {};
+        filteredVisits.forEach(visit => {
+          if (!metricData[visit.exerciseName]) {
+            metricData[visit.exerciseName] = { total: 0, count: 0 };
+          }
+          metricData[visit.exerciseName].total += metricType === 'duration' ? visit.duration : visit.reps;
+          metricData[visit.exerciseName].count += 1;
+        });
+
+        const finalMetricData = Object.keys(metricData).map(equipmentName => {
+          const averageMetric = metricData[equipmentName].total / metricData[equipmentName].count;
+          return { label: equipmentName, data: averageMetric.toFixed(2) };
+        });
+
+        this.chartData.labels = finalMetricData.map(item => item.label);
+        this.chartData.datasets[0].data = finalMetricData.map(item => item.data);
+        this.showChart = true;
+      } catch (error) {
+        console.error('Error fetching equipment metrics:', error);
       }
     },
-
-    // METHOD FOR GETTING USAGE METRICS BY MONTH (REPS)
-    getMostUsedRepsEquipmentByMonth(monthNum) {
-      if (monthNum <= 0 || monthNum > 12) {
-        this.errorMessage = "Please Enter a Valid Month to Search By";
-        this.showErrorMessage = true;
-        this.switchMessage();
-      } else {
-
-        this.showDurationEquipment = false;
-        ExerciseService.getMostUsedRepsEquipmentByMonth(monthNum)
-          .then(response => {
-            if (response.status === 200) {
-              this.equipmentList = response.data;
-              // RESET MONTH NUM VARIABLE IF SUCCESSFUL?
-              this.showRepsEquipment = true;
-            }
-            else {
-              console.log("No data found.")
-            }
-          }).catch(error => {
-            this.handleErrorResponse(error);
-          })
-      }
+    getMostUsedDurationEquipmentByMonth() {
+      this.resetChart();
+      this.fetchData('duration');
     },
-
-    // UTILITY METHODS
-    // TIMER METHOD
-    switchMessage() {
-      setTimeout(() => {
-        this.showErrorMessage = false;
-      }, 5000);
+    getMostUsedRepsEquipmentByMonth() {
+      this.resetChart();
+      this.fetchData('reps');
     },
-
-    // ERROR HANDLING
-    handleErrorResponse(error) {
-      console.log(error);
-      this.showErrorMessage = true;
-      this.switchMessage();
-      if (error.response) {
-        this.errorMessage = 'Error: ' + error.response.status;
-      }
-      else if (error.request) {
-        this.errorMessage = 'Error: server unavailable';
-      }
-      else {
-        this.errorMessage = 'Woe, error be upon ye';
-      }
-
-    },
-
-
-
-  }
-}
-
+  },
+};
 </script>
 
 <style scoped>
@@ -153,87 +130,14 @@ export default {
   margin-top: 20px;
   background-color: #a7d6ef;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  border-radius:10px;
-
+  border-radius: 10px;
 }
 
-#input-box {
-  grid-area: input-box;
-}
-
-.employeeInput {
-  grid-area: employee-input;
-}
-
-.outputContainer {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-row-gap: 20px;
-  grid-template-areas:
-
-    "input-box input-box"
-    "employee-input employee-input"
-    "error-message error-message"
-    "output-list output-list"
-
-
-}
-
-.monthNumInput {
-  width: 40px;
-  text-align:center;
-  border-radius:5px;
-}
-
-#output-list {
-  grid-area: output-list;
-  /* display: flex;
-  justify-content: center; */
-}
-
-.equipment-list {
-  grid-area: equipment-list;
-  margin-left:100px;
-}
-
-#equipment-list-duration {
-  list-style: none;
-  grid-area: list-duration;
-}
-
-#equipment-list-reps {
-  list-style: none;
-  grid-area: list-rep;
-}
-
-.searchButton {
-  font-family: 'Exo 2', sans-serif;
+#searchButton {
   margin-bottom: 20px;
-  background-color: #fff;
-  color: #333;
-  /* Set text color to a dark color */
-  padding: 10px 20px;
-  margin: 5px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  transition: transform 0.3s ease;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-
-
-}
-
-.searchButton:hover{
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-  background-color: #f0f0f0;
-  transform: scale(1.02);
-
 }
 
 .toggle-btn {
-  font-family: 'Exo 2', sans-serif;
   background-color: #3498db;
   color: #fff;
   padding: 10px 20px;
@@ -243,58 +147,5 @@ export default {
   cursor: pointer;
   transition: background-color 0.3s ease;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.equipment-list {
-  list-style: none;
-}
-
-.equipment-item {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  width: 50%;
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  grid-row-gap: 10px;
-  grid-template-areas:
-    "equipment-name equipment-name"
-    "equipment-usage equipment-usage"
-}
-
-.equipment-item:hover {
-  transform: scale(1.02);
-
-}
-
-.equipment-name {
-  font-size: 15px;
-  font-weight: bold;
-  color: #333;
-  margin-right: 10px;
-  grid-area: equipment-name;
-}
-
-.equipment-usage {
-  font-size: 15px;
-  font-weight: bold;
-  color: #333;
-  margin-left: 10px;
-  grid-area: equipment-usage;
-}
-
-.error-message {
-  color: red;
-  font-weight: bold;
-  font-size: 16px;
-  grid-area: error-message;
-}
-#instructions {
-  grid-area: instructions;
-  margin: 10px 10px 10px 10px;
 }
 </style>
