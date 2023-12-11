@@ -1,16 +1,24 @@
 <template>
     <div class="main">
         <h1 class="header">Placeholder instructions</h1>
-
-        <WebCamUI @photoTaken="photoTaken" />
-
-        <h3 class="sub-header">Last photo</h3>
-        <img :src="imageSrc" class="image" v-if="imageSrc" />
-        <div class="message" v-else>Click on Take a photo first</div>
-
-        <div class="button-container" v-if="imageSrc">
-            <button @click="download" type="button" class="download-button">Download image</button>
+        <div id="camera-container">
+            <WebCam @photoTaken="photoTaken" @init="webcamInit" ref="webcam"
+                :constraints="{ video: { width: { ideal: 1080 }, height: { ideal: 1350 } }, facingMode: 'environment' }"
+                id="camera" />
+            <select @change="setCamera" v-model="deviceId">
+                <option value="">-</option>
+                <option v-for="camera in cameras" v-bind:key="camera.id" :value="camera.deviceId">{{ camera.label }}
+                </option>
+            </select>
+            <button v-on:click="takePhoto"> Take Photo!</button>
         </div>
+
+        <div id="taken-photo-container" v-if="imageSrc">
+            <span id="confirm-message">Do you want this to be your profile picture?</span>
+            <button v-on:click="download" id="download-button"> Aye. </button>
+            <img :src="imageSrc" class="taken-image" />
+        </div>
+
     </div>
 </template>
   
@@ -18,38 +26,112 @@
 import { ref } from 'vue';
 
 export default {
-    // VARIABLES
-    showCamera:true,
-
-    //INITIALIZES THE imageSrc VARIABLE AS REACTIVE, TIED TO THE photoTaken METHOD
     setup() {
         const imageSrc = ref(null);
         return {
             imageSrc,
         };
     },
-
+    data() {
+        return {
+            cameras: [],
+            deviceId: '',
+        }
+    },
     methods: {
-        photoTaken(data) {
-            this.imageSrc = data.image_data_url;
-            console.log(data);
+        photoTaken(PhotoTaken) {
+            this.imageSrc = PhotoTaken.image_data_url
+            console.log(PhotoTaken)
+        },
+        loadCameras() {
+            this.$refs.webcam.loadCameras()
+            this.cameras = this.$refs.webcam.cameras;
+        },
+        webcamInit(deviceId) {
+            this.deviceId = deviceId
+            this.$emit('init', this.deviceId)
+        },
+        setCamera() {
+            this.$refs.webcam.changeCamera(this.deviceId === '' ? null : this.deviceId)
+        },
+        takePhoto() {
+            // Call the takePhoto method from the WebCam component
+            this.$refs.webcam.takePhoto();
+        },
+        photoTakenEvent({ blob, image_data_url }) {
+            this.$emit('photoTaken', { blob, image_data_url })
         },
         download() {
             if (!this.imageSrc) {
-                return;
+                return
             }
             const a = document.createElement("a");
             a.href = this.imageSrc;
             a.download = "vue-camera-lib.jpg";
             a.click();
         },
-        // TOGGLE CAMERA METHOD
-        toggleCamera(){
-            this.showCamera = !this.showCamera
+    },
+    // load cameras
+    mounted() {
+        this.cameras = this.$refs.webcam.cameras;
+        if (this.cameras.length === 0) {
+            // if no camera found, we will try to refresh cameras list each second until there is some camera
+            let reloadCamInterval = setInterval(() => {
+                this.loadCameras()
+                if (this.cameras.length > 0) {
+                    clearInterval(reloadCamInterval)
+                }
+            }, 1000);
         }
     },
-};
+}
 </script>
   
 <style>
+.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+        ". header ."
+        ". camera-container ."
+        ". tp-container ."
+
+
+}
+
+#camera-container {
+    width: 540px;
+    height: 675px;
+    grid-area: camera-container;
+}
+
+#taken-photo-container {
+    width: 540px;
+    height: 675px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "confirmation download"
+        "taken-image taken-image";
+    grid-area: tp-container
+}
+
+#confirm-message{
+    grid-area: confirmation
+}
+
+#download-button{
+    grid-area: download
+}
+
+.taken-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    grid-area: taken-image
+}
+
+.header {
+    grid-area: header;
+}
 </style>
