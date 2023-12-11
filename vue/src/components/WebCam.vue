@@ -1,6 +1,9 @@
 <template>
     <div class="main">
-        <h1 class="header">Placeholder instructions</h1>
+        <span class="header">
+            <h1>Select the camera you want to use, and take a picture you wish to set as your profile image.</h1>
+            <p> Your image should be a portrait style shot, i.e shoulders and up. Make sure to smile! </p>
+        </span>
         <div id="camera-container">
             <WebCam @photoTaken="photoTaken" @init="webcamInit" ref="webcam"
                 :constraints="{ video: { width: { ideal: 1080 }, height: { ideal: 1350 } }, facingMode: 'environment' }"
@@ -90,6 +93,9 @@ export default {
 <style>
 .main {
     display: grid;
+    text-align: center;
+    background-color: #a7d6ef;
+    font-family: "Exo 2", sans-serif;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
         ". header ."
@@ -108,19 +114,21 @@ export default {
 #taken-photo-container {
     width: 540px;
     height: 675px;
-    display:grid;
+    display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: 
+    grid-column-gap:5px;
+    grid-row-gap:5px;
+    grid-template-areas:
         "confirmation download"
         "taken-image taken-image";
     grid-area: tp-container
 }
 
-#confirm-message{
+#confirm-message {
     grid-area: confirmation
 }
 
-#download-button{
+#download-button {
     grid-area: download
 }
 
