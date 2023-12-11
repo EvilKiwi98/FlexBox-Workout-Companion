@@ -1,17 +1,23 @@
 package com.techelevator.dao;
 
+import com.techelevator.controller.CloudinaryService;
 import com.techelevator.model.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+import java.util.Base64;
+
 
 @Component
 public class JdbcProfileDao implements ProfileDao {
     private final JdbcTemplate jdbcTemplate;
+    private final CloudinaryService cloudinaryService;
 
-    public JdbcProfileDao(JdbcTemplate jdbcTemplate) {
+    public JdbcProfileDao(JdbcTemplate jdbcTemplate, CloudinaryService cloudinaryService) {
         this.jdbcTemplate = jdbcTemplate;
+        this.cloudinaryService = cloudinaryService;
+
     }
 
     @Override
@@ -29,14 +35,23 @@ public class JdbcProfileDao implements ProfileDao {
         return profile;
     }
 
+
     @Override
     public Profile createProfile(Profile profile) {
-            String sql = "INSERT into profiles (user_id, profile_picture_url, email) VALUES (1, 'C:\\Users\\Student\\Pictures\\Gym Icons', 'test@gmail.com')";
-            int profileId = jdbcTemplate.queryForObject(sql, int.class, profile.getUserId(), profile.getUsername(), profile.getProfilePicUrl(), profile.getEmailAddress());
-            profile.setProfileId(profileId);
-            return profile;
-        }
+        // Extract base64 part from data URL
+        String base64String = profile.getProfilePicUrl().split(",")[1];
+
+        // Decode base64 string into a byte array
+        byte[] imageBytes = Base64.getDecoder().decode(base64String);
+
+        // Insert the profile into the database
+        String sql = "INSERT into profiles (user_id, profile_picture_url, email) VALUES (?, ?, ?)";
+        int profileId = jdbcTemplate.update(sql, profile.getUserId(), profile.getProfilePicUrl(), profile.getEmailAddress());
+
+        profile.setProfileId(profileId);
+        return profile;
     }
+}
 
 
 

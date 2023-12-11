@@ -1,4 +1,6 @@
 package com.techelevator.model;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 
 public class Profile {
 private int profileId;
