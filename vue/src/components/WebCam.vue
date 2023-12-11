@@ -8,17 +8,20 @@
             <WebCam @photoTaken="photoTaken" @init="webcamInit" ref="webcam"
                 :constraints="{ video: { width: { ideal: 1080 }, height: { ideal: 1350 } }, facingMode: 'environment' }"
                 id="camera" />
-            <select @change="setCamera" v-model="deviceId">
+            <select @change="setCamera" v-model="deviceId" id="device">
                 <option value="">-</option>
                 <option v-for="camera in cameras" v-bind:key="camera.id" :value="camera.deviceId">{{ camera.label }}
                 </option>
             </select>
-            <button v-on:click="takePhoto"> Take Photo!</button>
+            <button v-on:click="takePhoto" id="take-photo-button"> Take Photo!</button>
         </div>
 
         <div id="taken-photo-container" v-if="imageSrc">
             <span id="confirm-message">Do you want this to be your profile picture?</span>
-            <button v-on:click="download" id="download-button"> Aye. </button>
+            <span id="confirm-selection">
+                <button v-on:click="download" id="yes-button"> Yes </button>
+                <button v-on:click="resetImage" id="no-button"> No (retake) </button>
+            </span>
             <img :src="imageSrc" class="taken-image" />
         </div>
 
@@ -73,6 +76,9 @@ export default {
             a.download = "vue-camera-lib.jpg";
             a.click();
         },
+        resetImage(){
+            this.imageSrc = "";
+        }
     },
     // load cameras
     mounted() {
@@ -97,12 +103,12 @@ export default {
     background-color: #a7d6ef;
     font-family: "Exo 2", sans-serif;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
     grid-template-areas:
         ". header ."
         ". camera-container ."
         ". tp-container ."
-
-
 }
 
 #camera-container {
@@ -111,15 +117,39 @@ export default {
     grid-area: camera-container;
 }
 
+#camera {
+    grid-area: camera;
+    object-fit: cover;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+#take-photo-button {
+    grid-area: take-photo;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    margin: 5px;
+}
+#take-photo-button:hover{
+    cursor:pointer;
+    transition: transform 0.3s ease;
+    transform: scale(1.08);
+}
+
+#device {
+    grid-area: device;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    margin: 5px;
+}
+
 #taken-photo-container {
     width: 540px;
     height: 675px;
     display: grid;
+    align-content: center;
     grid-template-columns: 1fr 1fr;
-    grid-column-gap:5px;
-    grid-row-gap:5px;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
     grid-template-areas:
-        "confirmation download"
+        "confirmation confirm-selection"
         "taken-image taken-image";
     grid-area: tp-container
 }
@@ -128,15 +158,51 @@ export default {
     grid-area: confirmation
 }
 
-#download-button {
-    grid-area: download
+#confirm-selection{
+    text-align: center;
+    display:flex;
+    column-gap:5px;
+    grid-area: confirm-selection
+}
+
+#yes-button {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    width: 50px;
+    height: 40px;
+    margin:8px;
+
+}
+
+#yes-button:hover{
+    transition: transform 0.3s ease;
+    transform: scale(1.05);
+    background-color: lightgreen;
+    cursor:pointer;
+}
+
+#no-button {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    margin:8px;
+    width: 70px;
+    height: 40px;
+
+
+}
+#no-button:hover{
+    transition: transform 0.3s ease;
+    transform: scale(1.05);
+    background-color: lightcoral;
+    cursor:pointer;
 }
 
 .taken-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    grid-area: taken-image
+    grid-area: taken-image;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
 .header {
