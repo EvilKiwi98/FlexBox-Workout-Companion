@@ -110,7 +110,7 @@ export default {
     }
   }
 /* add to home view */
-  @media screen and (max-width: 400px) {
+  /* @media screen and (max-width: 400px) {
     .content {
       grid-template-columns: 1fr;
       grid-template-areas: 
@@ -118,5 +118,5 @@ export default {
         "logExercise"
         "events";
     }
-  }
+  } */
 </style>
