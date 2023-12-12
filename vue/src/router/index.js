@@ -11,6 +11,7 @@ import EmployeeView from '../views/EmployeeView.vue';
 import TutorialView from '../views/TutorialView.vue';
 import QRScanner from '../components/QRScanner.vue';
 import CameraView from '../views/CameraView.vue';
+import EmailContactView from '../views/EmailContactView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -89,6 +90,14 @@ const routes = [
     path: "/camera",
     name: "camera",
     component: CameraView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/contactForm",
+    name: "contactForm",
+    component: EmailContactView,
     meta: {
       requiresAuth: true
     }
