@@ -80,7 +80,8 @@ export default {
   margin-bottom: 1rem;
 }
 .password-confirmation{
-  text-align:left;
+  text-align:center;
+  margin-right: 63px;
   margin-bottom: 1rem;
 }
 label {
@@ -107,7 +108,7 @@ body{
   grid-area:login;
 }
 #create-account-btn{
-  margin-left:240px;
+  margin-left:340px;
   font-family: 'Exo 2', sans-serif;
     padding: 10px;
     font-size: 16px;
@@ -122,7 +123,6 @@ h1{
   text-align: center;
 } 
 #login{
-  margin-left:75px;
-  text-align: center;
+  margin-left:145px;
 }
 </style>

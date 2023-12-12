@@ -99,7 +99,7 @@ body{
 }
 
 #sign-in-btn{
-  margin-left:280px;
+  margin-left:360px;
   font-family: 'Exo 2', sans-serif;
     padding: 10px;
     font-size: 16px;
@@ -112,8 +112,7 @@ body{
 }
 
 #sign-up{
-  margin-left:98px;
-  text-align: center;
+  margin-left:165px;
 }
 label {
   margin-right: 0.5rem;
