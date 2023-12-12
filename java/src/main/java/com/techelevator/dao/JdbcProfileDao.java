@@ -1,8 +1,6 @@
 package com.techelevator.dao;
 
-import com.techelevator.controller.CloudinaryService;
 import com.techelevator.model.Profile;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -12,11 +10,11 @@ import java.util.Base64;
 @Component
 public class JdbcProfileDao implements ProfileDao {
     private final JdbcTemplate jdbcTemplate;
-    private final CloudinaryService cloudinaryService;
 
-    public JdbcProfileDao(JdbcTemplate jdbcTemplate, CloudinaryService cloudinaryService) {
+
+    public JdbcProfileDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.cloudinaryService = cloudinaryService;
+
 
     }
 
