@@ -2,9 +2,9 @@
   <div class="container">
     <form ref="form" @submit.prevent="sendEmail">
       <label>Name</label>
-      <input type="text" v-model="userName" name="user_name">
+      <input type="text" v-model="userName" name="name">
       <label>Email</label>
-      <input type="email" v-model="userEmail" name="user_email">
+      <input type="email" v-model="userEmail" name="email">
       <label>Message</label>
       <textarea v-model="message" name="message"></textarea>
       <input type="submit" value="Send">
@@ -49,6 +49,7 @@ export default {
 
 label {
   float: left;
+  font-family: 'Exo 2', sans-serif;
 }
 
 input[type=text], [type=email], textarea {
@@ -60,15 +61,17 @@ input[type=text], [type=email], textarea {
   margin-top: 6px;
   margin-bottom: 16px;
   resize: vertical;
+  font-family: 'Exo 2', sans-serif;
 }
 
 input[type=submit] {
-  background-color: #4CAF50;
+  background-color: #3498db;
   color: white;
   padding: 12px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-family: 'Exo 2', sans-serif;
 }
 
 input[type=submit]:hover {
