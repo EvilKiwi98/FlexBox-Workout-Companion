@@ -19,23 +19,51 @@
         <div id="taken-photo-container" v-if="imageSrc">
             <span id="confirm-message">Do you want this to be your profile picture?</span>
             <span id="confirm-selection">
-                <button v-on:click="download" id="yes-button"> Yes </button>
-                <button v-on:click="resetImage" id="no-button"> No (retake) </button>
+                <button v-on:click="setProfilePicture()" id="yes-button"> Yes </button>
+                <button v-on:click="resetImage()" id="no-button"> No (retake) </button>
             </span>
             <img :src="imageSrc" class="taken-image" />
+        </div>
+
+        <div id="profile-picture-container">
+            <span> Your current profile image: </span>
+            <img :src="profilePictureUrl" alt="Profile Picture" id="profile-picture" />
         </div>
 
     </div>
 </template>
   
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import ProfileService from '../services/ProfileService';
+
 
 export default {
     setup() {
         const imageSrc = ref(null);
+        const profilePictureUrl = ref(null); // Add this line
+
+        const loadProfilePicture = () => {
+            const userId = 1;
+            ProfileService.getProfilePicture(userId)
+                .then(response => {
+                    console.log(response);
+                    profilePictureUrl.value = response;
+                })
+                .catch(error => {
+                    console.error('Error fetching profile picture:', error);
+                });
+        };
+
+        onMounted(() => {
+            loadProfilePicture();
+        });
+
         return {
+            showCamera: true,
             imageSrc,
+            profilePictureUrl, // Add this line
+            loadProfilePicture,
         };
     },
     data() {
@@ -73,12 +101,26 @@ export default {
             }
             const a = document.createElement("a");
             a.href = this.imageSrc;
-            a.download = "vue-camera-lib.jpg";
+            a.download = "Flex_Box_Profile_Image.jpg";
             a.click();
         },
-        resetImage(){
+        resetImage() {
             this.imageSrc = "";
-        }
+        },
+        setProfilePicture() {
+            if (!this.imageSrc) {
+                return;
+            }
+
+            const userId = 1;
+            ProfileService.uploadProfilePicture(userId, this.imageSrc)
+                .then(response => {
+                    console.log('Profile picture set successfully');
+                })
+                .catch(error => {
+                    console.error('Error setting profile picture:', error);
+                });
+        },
     },
     // load cameras
     mounted() {
@@ -109,6 +151,7 @@ export default {
         ". header ."
         ". camera-container ."
         ". tp-container ."
+        " . profile-pic ."
 }
 
 #camera-container {
@@ -128,8 +171,9 @@ export default {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     margin: 5px;
 }
-#take-photo-button:hover{
-    cursor:pointer;
+
+#take-photo-button:hover {
+    cursor: pointer;
     transition: transform 0.3s ease;
     transform: scale(1.08);
 }
@@ -154,14 +198,29 @@ export default {
     grid-area: tp-container
 }
 
+#profile-picture-container{
+    grid-area: profile-pic;
+    width: 540px;
+    height: 675px;
+    margin-bottom: 10px;
+}
+
+#profile-picture{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    margin-top:10px;
+}
+
 #confirm-message {
     grid-area: confirmation
 }
 
-#confirm-selection{
+#confirm-selection {
     text-align: center;
-    display:flex;
-    column-gap:5px;
+    display: flex;
+    column-gap: 5px;
     grid-area: confirm-selection
 }
 
@@ -170,31 +229,32 @@ export default {
     border-radius: 6px;
     width: 50px;
     height: 40px;
-    margin:8px;
+    margin: 8px;
 
 }
 
-#yes-button:hover{
+#yes-button:hover {
     transition: transform 0.3s ease;
     transform: scale(1.05);
     background-color: lightgreen;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 #no-button {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     border-radius: 6px;
-    margin:8px;
+    margin: 8px;
     width: 70px;
     height: 40px;
 
 
 }
-#no-button:hover{
+
+#no-button:hover {
     transition: transform 0.3s ease;
     transform: scale(1.05);
     background-color: lightcoral;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .taken-image {
@@ -208,4 +268,6 @@ export default {
 .header {
     grid-area: header;
 }
+
+
 </style>
