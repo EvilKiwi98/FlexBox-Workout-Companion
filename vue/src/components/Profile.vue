@@ -13,7 +13,7 @@
   
   <script>
   import ProfileService from "../services/ProfileService";
-  /* cloudinary or firebase or just in postgres*/
+  
   export default {
     data() {
       return {

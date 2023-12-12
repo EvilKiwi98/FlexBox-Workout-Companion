@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, user_visits, exercise, equipment, exercise_equipment, schedule CASCADE;
+DROP TABLE IF EXISTS users, user_visits, exercise, equipment, exercise_equipment, schedule, images CASCADE;
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -58,6 +58,13 @@ CREATE TABLE schedule (
     event_date DATE,
     event_start_time TIME,
     event_duration INTEGER
+);
+CREATE TABLE images (
+    image_id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(user_id),
+    image_data BYTEA NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -- Add any other columns you need for your use case
 );
 
 COMMIT TRANSACTION;

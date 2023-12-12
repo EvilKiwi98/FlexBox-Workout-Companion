@@ -20,21 +20,28 @@ public class JdbcProfileDao implements ProfileDao {
 
     }
 
+    public byte[] getImageByUserId(int userId) {
+        String imageSql = "SELECT image_data FROM images WHERE user_id = ?";
+        return jdbcTemplate.queryForObject(imageSql, byte[].class, userId);
+    }
+
+
     @Override
     public Profile getUserProfileByUserId(int userId) {
         Profile profile = new Profile();
-        String sql = "SELECT users.user_id, username, profile_picture_url, email FROM users\n" +
+        String sql = "SELECT profile_id, users.user_id, username, profile_picture_url, email FROM users\n" +
                 "JOIN profiles ON users.user_id = profiles.user_id\n" +
                 "WHERE users.user_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
         if (results.next()) {
+            profile.setProfileId(results.getInt("profile_id"));
+            profile.setUserId(results.getInt("user_id"));
             profile.setUsername(results.getString("username"));
             profile.setProfilePicUrl(results.getString("profile_picture_url"));
             profile.setEmailAddress(results.getString("email"));
         }
         return profile;
     }
-
 
     @Override
     public Profile createProfile(Profile profile) {
@@ -44,14 +51,24 @@ public class JdbcProfileDao implements ProfileDao {
         // Decode base64 string into a byte array
         byte[] imageBytes = Base64.getDecoder().decode(base64String);
 
-        // Insert the profile into the database
+        // Save the image data in the database
+        saveImage(profile.getUserId(), imageBytes);
+
+        // Insert the profile into the profiles table
         String sql = "INSERT into profiles (user_id, profile_picture_url, email) VALUES (?, ?, ?)";
         int profileId = jdbcTemplate.update(sql, profile.getUserId(), profile.getProfilePicUrl(), profile.getEmailAddress());
 
         profile.setProfileId(profileId);
         return profile;
     }
-}
 
+    @Override
+    public void saveImage(int userId, byte[] imageBytes) {
+        // Insert the image data into the images table
+        String imageSql = "INSERT INTO images (user_id, image_data) VALUES (?, ?)";
+        jdbcTemplate.update(imageSql, userId, imageBytes);
+    }
+
+}
 
 
