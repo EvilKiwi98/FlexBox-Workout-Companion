@@ -35,16 +35,19 @@
   
 <script>
 import { ref, onMounted } from 'vue';
+import { useStore} from 'vuex';
 import ProfileService from '../services/ProfileService';
 
 
 export default {
     setup() {
+        const store = useStore();
         const imageSrc = ref(null);
         const profilePictureUrl = ref(null); // Add this line
 
-        const loadProfilePicture = () => {
-            const userId = 1;
+
+        const loadProfilePicture = async () => {
+            const userId = store.getters.getUserId;
             ProfileService.getProfilePicture(userId)
                 .then(response => {
                     console.log(response);
@@ -76,6 +79,9 @@ export default {
         photoTaken(PhotoTaken) {
             this.imageSrc = PhotoTaken.image_data_url
             console.log(PhotoTaken)
+        },
+        setUserId() {
+            this.userId = this.$store.getters.getUserId;
         },
         loadCameras() {
             this.$refs.webcam.loadCameras()
@@ -111,8 +117,7 @@ export default {
             if (!this.imageSrc) {
                 return;
             }
-
-            const userId = 1;
+            const userId = this.$store.getters.getUserId;
             ProfileService.uploadProfilePicture(userId, this.imageSrc)
                 .then(response => {
                     console.log('Profile picture set successfully');
@@ -124,6 +129,8 @@ export default {
     },
     // load cameras
     mounted() {
+        
+
         this.cameras = this.$refs.webcam.cameras;
         if (this.cameras.length === 0) {
             // if no camera found, we will try to refresh cameras list each second until there is some camera
@@ -134,6 +141,7 @@ export default {
                 }
             }, 1000);
         }
+
     },
 }
 </script>
@@ -198,19 +206,19 @@ export default {
     grid-area: tp-container
 }
 
-#profile-picture-container{
+#profile-picture-container {
     grid-area: profile-pic;
     width: 540px;
     height: 675px;
     margin-bottom: 10px;
 }
 
-#profile-picture{
+#profile-picture {
     width: 100%;
     height: 100%;
     object-fit: cover;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-    margin-top:10px;
+    margin-top: 10px;
 }
 
 #confirm-message {
@@ -268,6 +276,4 @@ export default {
 .header {
     grid-area: header;
 }
-
-
 </style>
