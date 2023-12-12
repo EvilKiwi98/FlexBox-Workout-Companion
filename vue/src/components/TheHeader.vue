@@ -14,6 +14,7 @@
                 <router-link v-bind:to="{ name: 'profile' }" class="nav-link">Profile</router-link>
                 <router-link v-bind:to="{ name: 'employee' }" class="nav-link">Employee Services</router-link>
                 <router-link v-bind:to="{ name: 'tutorial' }" class="nav-link">Equipment Tutorials</router-link>
+                <router-link v-bind:to="{ name: 'contactForm' }" class="nav-link">Contact Form</router-link>
             </span>
         </div>
     </div>
