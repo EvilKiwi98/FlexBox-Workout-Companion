@@ -1,4 +1,5 @@
 <template>
+  <body>
   <div id="register" class="text-center">
     <form v-on:submit.prevent="register">
       <h1>Create Account</h1>
@@ -13,14 +14,15 @@
         <label for="password">Password</label>
         <input type="password" id="password" v-model="user.password" required />
       </div>
-      <div class="form-input-group">
+      <div class="password-confirmation">
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
       </div>
-      <button type="submit">Create Account</button>
-      <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
+      <button type="submit" id="create-account-btn">Create Account</button>
+      <p><router-link id="login" v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
     </form>
   </div>
+</body>
 </template>
 
 <script>
@@ -74,9 +76,53 @@ export default {
 
 <style scoped>
 .form-input-group {
+  text-align:center;
+  margin-bottom: 1rem;
+}
+.password-confirmation{
+  text-align:left;
   margin-bottom: 1rem;
 }
 label {
   margin-right: 0.5rem;
+}
+body{
+  background-image: url(../assets/regback.jpg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  align-items: center;
+  width: 99%;
+  height: 1080px;
+}
+#register{
+  align-content:center;
+  margin-left:30%;
+  margin-right:30%;
+  font-family: 'Exo 2', sans-serif;
+  border-style:solid;
+  border-radius:8px;
+  border-width:1px;
+  background-color: rgba(237, 237, 237, 0.50);
+  background-blend-mode: lighten;
+  grid-area:login;
+}
+#create-account-btn{
+  margin-left:240px;
+  font-family: 'Exo 2', sans-serif;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+h1{
+  text-align: center;
+} 
+#login{
+  margin-left:75px;
+  text-align: center;
 }
 </style>

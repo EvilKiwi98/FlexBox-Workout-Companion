@@ -73,7 +73,6 @@ export default {
 </script>
 
 <style scoped>
-
 body{
   align-items: center;
   background-image: url(../assets/images/gym-wallpaper.jpg);
@@ -81,6 +80,7 @@ body{
   background-size:contain;
   width:99%;
   height:1080px;
+  color: black;
 }
 
 .main{
@@ -99,10 +99,21 @@ body{
 }
 
 #sign-in-btn{
-  margin-left:300px;
+  margin-left:280px;
+  font-family: 'Exo 2', sans-serif;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
+
 #sign-up{
-  margin-left:260px;
+  margin-left:98px;
+  text-align: center;
 }
 label {
   margin-right: 0.5rem;
@@ -120,4 +131,7 @@ label {
   background-blend-mode: lighten;
   grid-area:login;
 }
+h1{
+  text-align: center;
+} 
 </style>
