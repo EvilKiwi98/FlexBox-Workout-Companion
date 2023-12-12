@@ -3,9 +3,6 @@
     <h1 class="welcome-header">Welcome to FlexBox</h1>
 
     <div class="content">
-      <div class="dashboard-section check-in-out-container">
-        <check-in-out />
-      </div>
       <div class="dashboard-section exercise-log-container">
         <exercise-log />
       </div>
@@ -23,7 +20,6 @@
 </template>
 
 <script>
-import CheckInOut from "../components/CheckInOut.vue";
 import ExerciseLog from "../components/ExerciseLog.vue";
 import EventList from "../components/EventList.vue";
 import { StreamBarcodeReader } from "vue-barcode-reader";
@@ -31,7 +27,6 @@ import { StreamBarcodeReader } from "vue-barcode-reader";
 
 export default {
   components: {
-    CheckInOut,
     ExerciseLog,
     EventList,
     StreamBarcodeReader,

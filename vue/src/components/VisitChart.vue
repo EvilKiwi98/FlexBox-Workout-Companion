@@ -50,7 +50,6 @@ export default {
 
         if (Array.isArray(visits)) {
           if (this.viewMode === 'days') {
-            // Group visits by day
             const visitsByDay = visits.reduce((result, visit) => {
               const formattedDate = formatDate(visit.checkInTime);
               if (!result[formattedDate]) {
@@ -61,19 +60,16 @@ export default {
               return result;
             }, {});
 
-            // Calculate average duration for each day
             const averageDurations = Object.keys(visitsByDay).map((date) => {
               const averageDuration =
                 visitsByDay[date].totalDuration / visitsByDay[date].visitCount;
-              return averageDuration.toFixed(2); // Round to 2 decimal places
+              return averageDuration.toFixed(2);
             });
 
-            // Use formatted dates as labels
-            this.chartData.labels = Object.keys(visitsByDay);
+            this.chartData.labels = Object.keys(visitsByDay).map((date) => formatYearMonthDay(date));
             this.chartData.datasets[0].data = averageDurations;
             this.chartKey += 1;
           } else if (this.viewMode === 'weeks') {
-            // Display daily time spent for the past week
             const pastWeekDays = Array.from({ length: 7 }, (_, index) => {
               const day = new Date();
               day.setDate(day.getDate() - index);
@@ -98,13 +94,12 @@ export default {
               return averageDuration.toFixed(2);
             });
 
-            this.chartData.labels = pastWeekDays;
+            this.chartData.labels = pastWeekDays.map((date) => formatMonthDay(date));
             this.chartData.datasets[0].data = averageDurations;
             this.chartKey += 1;
           } else if (this.viewMode === 'months') {
-            // Group visits by month
             const visitsByMonth = visits.reduce((result, visit) => {
-              const formattedMonth = formatMonth(visit.checkInTime);
+              const formattedMonth = formatYearMonth(visit.checkInTime);
               if (!result[formattedMonth]) {
                 result[formattedMonth] = { totalDuration: 0, visitCount: 0 };
               }
@@ -113,15 +108,13 @@ export default {
               return result;
             }, {});
 
-            // Calculate average duration for each month
             const averageDurations = Object.keys(visitsByMonth).map((month) => {
               const averageDuration =
                 visitsByMonth[month].totalDuration / visitsByMonth[month].visitCount;
-              return averageDuration.toFixed(2); // Round to 2 decimal places
+              return averageDuration.toFixed(2);
             });
 
-            // Assuming you have a function to format the month, similar to formatWeek
-            this.chartData.labels = Object.keys(visitsByMonth).map((month) => formatMonth(month));
+            this.chartData.labels = Object.keys(visitsByMonth).map((month) => formatYearMonth(month));
             this.chartData.datasets[0].data = averageDurations;
             this.chartKey += 1;
           }
@@ -137,16 +130,8 @@ export default {
       this.viewMode = mode;
       this.fetchData();
     },
-
-    getVisitsByWeekByUserId() {
-      this.isLoading = true;
-      CheckInOutService.getVisitsByWeekByUserId(this.$store.getters.getUserId).then(
-        (response) => {
-          this.visits = response.data;
-        }
-      );
-    },
   },
+
   async mounted() {
     // Fetch data when the component is mounted
     await this.fetchData();
@@ -157,26 +142,22 @@ function formatDate(dateString) {
   const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
   return new Date(dateString).toLocaleDateString(undefined, options);
 }
-// Function to get the week number for a given date
-function getWeekNumber(date) {
-  const d = new Date(date);
-  d.setHours(0, 0, 0, 0);
-  d.setDate(d.getDate() + 4 - (d.getDay() || 7));
-  const yearStart = new Date(d.getFullYear(), 0, 1);
-  const weekNumber = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-  return weekNumber;
+
+function formatYearMonthDay(dateString) {
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
 }
 
-function formatWeek(week) {
-  return `Week ${week}`;
+function formatMonthDay(dateString) {
+  const options = { month: 'short', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
 }
 
-function formatMonth(dateString) {
+function formatYearMonth(dateString) {
   const options = { year: 'numeric', month: 'long' };
   return new Date(dateString).toLocaleDateString(undefined, options);
 }
 </script>
-
 
 <style scoped>
 div {
