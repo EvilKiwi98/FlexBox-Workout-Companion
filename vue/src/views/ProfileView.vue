@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="profile-container">
-      <h1>User Profile</h1>
+      
       <div class="profile-details">
         <profile></profile> 
       </div>

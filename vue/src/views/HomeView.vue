@@ -16,10 +16,8 @@
 
     <div class="qrcode-container">
       <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded"></StreamBarcodeReader>
-      <ImageBarcodeReader @decode="onDecode" @error="onError"></ImageBarcodeReader>
-      <!-- <div id="app">
-        <QRScanner />
-      </div> -->
+      
+    
     </div>
   </div>
 </template>
@@ -29,8 +27,7 @@ import CheckInOut from "../components/CheckInOut.vue";
 import ExerciseLog from "../components/ExerciseLog.vue";
 import EventList from "../components/EventList.vue";
 import { StreamBarcodeReader } from "vue-barcode-reader";
-import { ImageBarcodeReader } from "vue-barcode-reader";
-// import QRScanner from "../components/QRScanner.vue";
+
 
 export default {
   components: {
@@ -39,7 +36,7 @@ export default {
     EventList,
     StreamBarcodeReader,
     
-    // QRScanner
+   
   },
   data() {
     return {
@@ -51,11 +48,7 @@ export default {
     navigateToScan() {
       this.$router.push({ name: 'scan' });
     },
-    // onDetect(result) {
-      
-    //   console.log(result);
-    //   this.decodedResult = result;
-    // },
+  
     onDecode(result) { 
       console.log(result);
       this.decodedResult = result;

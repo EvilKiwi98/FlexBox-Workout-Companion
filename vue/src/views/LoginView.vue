@@ -1,12 +1,9 @@
 <template>
   <body>
   <div class="main">
-    <span id="launch-button">
-      <button v-on:click="this.toggleLogin()"> Get Started! </button>
-    </span>
     <div id="login">
       <form v-on:submit.prevent="login">
-        <h1>Please Sign In</h1>
+        <h1>Welcome to FlexBox! Please Sign In</h1>
         <div role="alert" v-if="invalidCredentials">
           Invalid username and password!
         </div>
@@ -14,16 +11,16 @@
           Thank you for registering, please sign in.
         </div>
         <div class="form-input-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" v-model="user.username" required autofocus />
+          <label for="username">Username: </label>
+          <input type="text" id="username" class="input-box" v-model="user.username" required autofocus />
         </div>
         <div class="form-input-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" v-model="user.password" required />
+          <label for="password">Password: </label>
+          <input type="password" id="password" class="input-box" v-model="user.password" required />
         </div>
-        <button type="submit">Sign in</button>
+        <button type="submit" id="sign-in-btn">Sign in!</button>
         <p>
-          <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
+          <router-link id="sign-up" v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
         </p>
       </form>
     </div>
@@ -82,32 +79,45 @@ body{
   background-image: url(../assets/images/gym-wallpaper.jpg);
   background-repeat:no-repeat;
   background-size:contain;
-  width:1060px;
-  height:706px;
+  width:99%;
+  height:1080px;
 }
 
 .main{
-  display:grid;
-  width:1060px;
-  height:706px;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-areas:
-    ". . launch-button login"
-    ". . . .";
-}
-
-#launch-button{
-  grid-area:launch-button
+  width:99%;
+  height:1080px;
 }
 .form-input-group {
+  text-align:center;
   margin-bottom: 1rem;
 }
 
+.input-box{
+  border-style:solid;
+  border-width:2px;
+  border-radius:5px;
+}
+
+#sign-in-btn{
+  margin-left:300px;
+}
+#sign-up{
+  margin-left:260px;
+}
 label {
   margin-right: 0.5rem;
 }
 
 #login{
-  grid-area:login
+  align-content:center;
+  margin-left:30%;
+  margin-right:30%;
+  font-family: 'Exo 2', sans-serif;
+  border-style:solid;
+  border-radius:8px;
+  border-width:1px;
+  background-color: rgba(237, 237, 237, 0.50);
+  background-blend-mode: lighten;
+  grid-area:login;
 }
 </style>

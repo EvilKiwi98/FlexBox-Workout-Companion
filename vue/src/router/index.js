@@ -9,7 +9,6 @@ import RegisterView from '../views/RegisterView.vue';
 import ProfileView from '../views/ProfileView.vue';
 import EmployeeView from '../views/EmployeeView.vue';
 import TutorialView from '../views/TutorialView.vue';
-import QRScanner from '../components/QRScanner.vue';
 import CameraView from '../views/CameraView.vue';
 import EmailContactView from '../views/EmailContactView.vue';
 
@@ -76,14 +75,6 @@ const routes = [
     component: RegisterView,
     meta: {
       requiresAuth: false
-    }
-  },
-  {
-    path: "/scan",
-    name: "scan",
-    component: QRScanner,
-    meta: {
-      requiresAuth: true
     }
   },
   {
