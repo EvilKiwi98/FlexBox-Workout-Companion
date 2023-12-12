@@ -23,6 +23,7 @@
     "emailjs-com": "^3.2.0",
     "vue": "^3.3.4",
     "vue-apexcharts": "^1.6.2",
+    "vue-barcode-reader": "^1.0.3",
     "vue-camera-lib": "^1.0.4",
     "vue-chartjs": "^5.2.0",
     "vue-lite-youtube-embed": "^1.2.1",
