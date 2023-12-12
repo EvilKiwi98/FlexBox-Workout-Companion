@@ -16,13 +16,17 @@
                 <router-link v-bind:to="{ name: 'tutorial' }" class="nav-link">Equipment Tutorials</router-link>
                 <router-link v-bind:to="{ name: 'contactForm' }" class="nav-link">Contact Form</router-link>
             </span>
+            <check-in-out/>
         </div>
     </div>
 </template>
 
 <script>
+import CheckInOut from '../components/CheckInOut.vue';
 export default {
-
+    components:{
+        CheckInOut
+    }
 }
 </script>
 

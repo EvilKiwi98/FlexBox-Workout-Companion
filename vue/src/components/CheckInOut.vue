@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="main">
     <button
       @click="toggleCheckInOut"
       :class="{ 'check-btn-in': !isCheckedIn, 'check-btn-out': isCheckedIn }"
     >
       {{ checkInOutLabel }}
     </button>
-    <div v-if="isCheckedIn" class="status-message success">
+    <div v-if="isCheckedIn" class="status-message success" id="checked-in">
       <i class="fas fa-check-circle"></i>
       <span class="check-time"
         >Checked in at:
@@ -15,7 +15,7 @@
         }}</span
       >
     </div>
-    <div v-if="!isCheckedIn" class="status-message">
+    <div v-if="!isCheckedIn" class="status-message" id="duration">
       <i class="fas fa-info-circle"></i> Checked out at: {{ checkOutTime }}
       <span>Duration: {{ visitDuration }} {{ visitDuration === 1 ? 'minute' : 'minutes' }}</span>
     </div>
@@ -113,6 +113,25 @@ export default {
 
 
 <style scoped>
+.main{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-column-gap:5px;
+  grid-row-gap:5px;
+  grid-template-areas:
+  "button checked-in"
+  "button duration";
+  width:30%;
+
+}
+
+#checked-in{
+  grid-area:"checked-in"
+}
+#duration{
+  grid-area:"duration"
+}
+
 .check-btn-in,
 .check-btn-out {
   font-family: 'Exo 2', sans-serif;
@@ -125,6 +144,7 @@ export default {
   border-radius: 12px;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box shadow for a modern look */
+  grid-area: "button";
 }
 
 .check-btn-in:hover {
