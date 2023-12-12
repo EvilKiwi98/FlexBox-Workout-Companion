@@ -16,12 +16,14 @@ export default {
   uploadProfilePicture(userId, imageDataUrl) {
     const base64String = imageDataUrl.split(",")[1];
     return axios.post(`/profile/uploadPicture/${userId}`, { base64String })
-      .then(response => response.data)
-      .catch(error => {
-        console.error('Error uploading profile picture:', error);
-        throw error;
-      });
   },
+
+  updateProfilePicture(userId, imageDataUrl) {
+    const base64String = imageDataUrl.split(",")[1];
+    return axios.put(`/profile/updatePicture/${userId}`, { base64String })
+  },
+
+
   getProfilePicture(userId) {
     return axios.get(`/profile/getPicture/${userId}`, { responseType: 'arraybuffer' })
       .then(response => { 

@@ -9,5 +9,6 @@ public interface ProfileDao {
 
     Profile createProfile(Profile profile);
     void saveImage(int userId, byte[] imageBytes);
+    void updateImage(byte[] imageBytes, int userId);
     byte[] getImageByUserId(int userId);
 }
