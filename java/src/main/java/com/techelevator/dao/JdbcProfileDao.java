@@ -11,6 +11,7 @@ import java.util.Base64;
 public class JdbcProfileDao implements ProfileDao {
     private final JdbcTemplate jdbcTemplate;
 
+
     public JdbcProfileDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
 
@@ -63,6 +64,13 @@ public class JdbcProfileDao implements ProfileDao {
         // Insert the image data into the images table
         String imageSql = "INSERT INTO images (user_id, image_data) VALUES (?, ?)";
         jdbcTemplate.update(imageSql, userId, imageBytes);
+    }
+
+    @Override
+    public void updateImage(byte[] imageBytes, int userId) {
+        // Insert the image data into the images table
+        String imageSql = "UPDATE images SET image_data = ? WHERE user_id = ?";
+        jdbcTemplate.update(imageSql, imageBytes, userId);
     }
 
 }

@@ -117,6 +117,7 @@ export default {
             if (!this.imageSrc) {
                 return;
             }
+            if (this.profilePictureUrl === null){
             const userId = this.$store.getters.getUserId;
             ProfileService.uploadProfilePicture(userId, this.imageSrc)
                 .then(response => {
@@ -125,6 +126,16 @@ export default {
                 .catch(error => {
                     console.error('Error setting profile picture:', error);
                 });
+            } else {
+                const userId = this.$store.getters.getUserId;
+                ProfileService.updateProfilePicture(userId, this.imageSrc)
+                .then(response => {
+                    console.log('profile updated');
+                })
+                .catch(error => {
+                    console.log(error.status)
+                });
+            }
         },
     },
     // load cameras
