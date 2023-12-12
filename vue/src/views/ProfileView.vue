@@ -1,23 +1,22 @@
 <template>
   <div class="profile-view">
-    <router-link v-bind:to="{ name : 'camera'}">Camera Placeholder Link</router-link>
+
     <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url('@/assets/images/FitnessBackground.jpg'); 
       background-size: cover; 
       background-position: center top;">
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-7 col-md-10">
-            <h1 class="display-2 text-white">Hello</h1>
-            <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made </p>
+
           </div>
         </div>
       </div>
       <div class="profile-container">
-      
-      <div class="profile-details">
-        <profile></profile> 
+
+        <div class="profile-details">
+          <profile></profile>
+        </div>
       </div>
-    </div>
     </div>
 
     <div class="grid-container">
@@ -56,14 +55,13 @@ export default {
 </script>
 
 <style scoped>
-
 body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-areas: 
-  "visitTime visitTime visitTime visitTime"
-  "exerciseList exerciseList . visitList"
-  "chart chart chart chart";
+  grid-template-areas:
+    "visitTime visitTime visitTime visitTime"
+    "exerciseList exerciseList . visitList"
+    "chart chart chart chart";
 }
 
 .profile-view {
@@ -97,7 +95,8 @@ body {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px; /* Add margin to separate from the containers below */
+  margin-bottom: 20px;
+  /* Add margin to separate from the containers below */
 }
 
 .main-container {
@@ -131,7 +130,8 @@ body {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px; /* Add margin to separate from the containers above */
+  margin-top: 20px;
+  /* Add margin to separate from the containers above */
 }
 
 .total-visit-container {
@@ -156,4 +156,26 @@ body {
   padding-right: 15px;
   padding-left: 15px;
 }
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.total-visit-container,
+.exercise-container,
+.chart-container {
+  width: 100%; /* Full width by default */
+  margin-bottom: 20px; /* Adjust as needed */
+}
+
+.total-visit-container {
+  flex: 1; /* Adjust the flex factor as needed */
+}
+
+.exercise-container,
+.chart-container {
+  flex: 1; /* Adjust the flex factor as needed */
+  margin-left: 20px; /* Add margin to separate containers */
+}
+
 </style>

@@ -8,6 +8,7 @@
           <div class="profile-details">
             <span class="profile-username">Username: {{ profile.username }}</span>
             <span class="profile-email">Email Address: {{ profile.emailAddress }}</span>
+            <router-link v-bind:to="{ name : 'camera'}">Update Your Profile Pic</router-link>
           </div>
         </div>
       </div>
@@ -66,6 +67,7 @@ export default {
 }
 
 .profile-container {
+  
   width: 100%; /* Adjust the width as needed */
   box-sizing: border-box;
   padding-right: 10px;
