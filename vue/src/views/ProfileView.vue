@@ -1,44 +1,37 @@
 <template>
   <div class="profile-view">
 
-    <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url('@/assets/images/FitnessBackground.jpg'); 
+    <!-- <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url('@/assets/images/FitnessBackground.jpg'); 
       background-size: cover; 
       background-position: center top;">
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-7 col-md-10">
-
+           
           </div>
         </div>
       </div>
-      <div class="profile-container">
+    </div> -->
+  </div>
 
-        <div class="profile-details">
-          <profile></profile>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid-container">
-      <div class="total-visit-container">
+  <div class="grid-container">
+    <div class="total-visit-container">
+      <div class="profile-and-visit">
+        <profile></profile>
         <total-visit-time></total-visit-time>
       </div>
-      <div class="exercise-container">
-        <exercise-list />
-      </div>
-      <!-- <div class="visit-container">
-        <visit-list></visit-list>
-      </div> -->
-      <div class="chart-container">
-        <visit-chart></visit-chart>
-      </div>
+    </div>
+    <div class="exercise-container">
+      <exercise-list />
+    </div>
+    <div class="chart-container">
+      <visit-chart></visit-chart>
     </div>
   </div>
 </template>
 
 <script>
 import ExerciseList from '../components/ExerciseList.vue';
-// import VisitList from '../components/VisitList.vue';
 import VisitChart from '../components/VisitChart.vue';
 import TotalVisitTime from '../components/TotalVisitTime.vue';
 import Profile from '../components/Profile.vue';
@@ -46,7 +39,6 @@ import Profile from '../components/Profile.vue';
 export default {
   components: {
     ExerciseList,
-    // VisitList,
     VisitChart,
     TotalVisitTime,
     Profile
@@ -57,11 +49,6 @@ export default {
 <style scoped>
 body {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-areas:
-    "visitTime visitTime visitTime visitTime"
-    "exerciseList exerciseList . visitList"
-    "chart chart chart chart";
 }
 
 .profile-view {
@@ -72,9 +59,7 @@ body {
   margin: 0 auto;
   padding: 20px;
   background-color: #fff;
-  /* Set the background color for the bottom 2/3 of the page */
   border-radius: 0 0 10px 10px;
-  /* Apply border-radius only to the bottom corners */
 }
 
 .header {
@@ -85,23 +70,16 @@ body {
   background-position: center top;
 }
 
-.main-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .total-visit-container {
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  /* Add margin to separate from the containers below */
 }
 
-.main-container {
+.profile-and-visit {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .exercise-container {
@@ -114,33 +92,20 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.visit-container {
-  grid-area: visitList;
-  flex: 1;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 .chart-container {
   grid-area: chart;
-  width: 100%;
-  padding: 20px;
+  width: 92;
+  padding: 40px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
-  /* Add margin to separate from the containers above */
-}
-
-.total-visit-container {
-  grid-area: visitTime;
 }
 
 .visit-chart {
-  width: 100%;
+  width: 90%;
 }
+
 
 .col-md-10,
 .col-lg-7 {
@@ -156,26 +121,4 @@ body {
   padding-right: 15px;
   padding-left: 15px;
 }
-.grid-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.total-visit-container,
-.exercise-container,
-.chart-container {
-  width: 100%; /* Full width by default */
-  margin-bottom: 20px; /* Adjust as needed */
-}
-
-.total-visit-container {
-  flex: 1; /* Adjust the flex factor as needed */
-}
-
-.exercise-container,
-.chart-container {
-  flex: 1; /* Adjust the flex factor as needed */
-  margin-left: 20px; /* Add margin to separate containers */
-}
-
 </style>
