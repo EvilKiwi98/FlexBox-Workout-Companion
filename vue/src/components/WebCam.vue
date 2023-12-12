@@ -122,6 +122,7 @@ export default {
             ProfileService.uploadProfilePicture(userId, this.imageSrc)
                 .then(response => {
                     console.log('Profile picture set successfully');
+                    this.$router.go(0)
                 })
                 .catch(error => {
                     console.error('Error setting profile picture:', error);
@@ -131,11 +132,13 @@ export default {
                 ProfileService.updateProfilePicture(userId, this.imageSrc)
                 .then(response => {
                     console.log('profile updated');
+                    this.$router.go(0)
                 })
                 .catch(error => {
                     console.log(error.status)
                 });
             }
+            
         },
     },
     // load cameras

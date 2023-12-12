@@ -47,7 +47,7 @@ public class ProfileController {
 
         return ResponseEntity.ok("Profile picture uploaded successfully");
     }
-    
+
     @RequestMapping(path = "/profile/updatePicture/{userId}", method = RequestMethod.PUT)
     public ResponseEntity<String> updateProfilePicture(@PathVariable int userId, @RequestBody Map<String, String> requestBody){
         String base64String = requestBody.get("base64String");
