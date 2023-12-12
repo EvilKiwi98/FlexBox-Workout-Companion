@@ -10,7 +10,7 @@ import java.util.Base64;
 @Component
 public class JdbcProfileDao implements ProfileDao {
     private final JdbcTemplate jdbcTemplate;
-
+    
     public JdbcProfileDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
 
