@@ -67,11 +67,13 @@ export default {
 <style scoped>
 .visit-info {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column; /* Updated to stack items vertically */
+    align-items: center; /* Optional: Center items horizontally */
     margin: 20px 0;
 }
 
 .card {
+    width: 200px; /* Set a fixed width for the cards */
     background-color: #3498db;
     color: #fff;
     border-radius: 8px;
@@ -79,6 +81,7 @@ export default {
     padding: 20px;
     text-align: center;
     transition: transform 0.3s ease;
+    margin-bottom: 10px; /* Optional: Add margin between stacked items */
 }
 
 .card:hover {

@@ -72,7 +72,7 @@ export default {
   box-sizing: border-box;
   padding-right: 10px;
   display: flex;
-  justify-content: center;
+  
 }
 
 .profile-box {
