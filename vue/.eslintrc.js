@@ -16,14 +16,14 @@ module.exports = {
     'import/resolver': {
       alias: {
         map: [
-          ['@', './src']
+          ['@', './src'],
+          ['vue-qrcode-reader', 'vue-qrcode-reader/dist/vue-qrcode-reader.umd.cjs'],
         ],
-        extensions: [".vue", ".js"]
-      }
+        extensions: ['.vue', '.js'],
+      },
     },
   },
-  // Needed for accessing .env from import.meta.env
-  'parserOptions': {
-    'ecmaVersion': 2022
-  }
-}
+  parserOptions: {
+    ecmaVersion: 2022,
+  },
+};

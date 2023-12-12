@@ -12,10 +12,15 @@
       <div class="dashboard-section event-list-container">
         <event-list />
       </div>
-    <div>
-    <button @click="navigateToScan">Scan QR Code</button>
     </div>
-  </div>
+
+    <div class="qrcode-container">
+      <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded"></StreamBarcodeReader>
+      <ImageBarcodeReader @decode="onDecode" @error="onError"></ImageBarcodeReader>
+      <!-- <div id="app">
+        <QRScanner />
+      </div> -->
+    </div>
   </div>
 </template>
 
@@ -23,20 +28,50 @@
 import CheckInOut from "../components/CheckInOut.vue";
 import ExerciseLog from "../components/ExerciseLog.vue";
 import EventList from "../components/EventList.vue";
+import { StreamBarcodeReader } from "vue-barcode-reader";
+import { ImageBarcodeReader } from "vue-barcode-reader";
+// import QRScanner from "../components/QRScanner.vue";
 
 export default {
   components: {
     CheckInOut,
     ExerciseLog,
     EventList,
+    StreamBarcodeReader,
+    
+    // QRScanner
+  },
+  data() {
+    return {
+      decodedResult: null
+    };
   },
   methods: {
-    setCheckInOutTime() {},
-  },
-  navigateToScan(){
-    this.$router.push({ name: 'scan' });
+    setCheckInOutTime() { },
+    navigateToScan() {
+      this.$router.push({ name: 'scan' });
+    },
+    // onDetect(result) {
+      
+    //   console.log(result);
+    //   this.decodedResult = result;
+    // },
+    onDecode(result) { 
+      console.log(result);
+      this.decodedResult = result;
+      if (this.decodedResult) {
+        window.location.href = this.decodedResult;
+      }
+    },
+    redirectToWebsite() {
+      // Redirect to another website based on the decoded result
+      if (this.decodedResult) {
+        window.location.href = this.decodedResult;
+      }
+    }
   }
-};
+}
+
 </script>
 
 <style scoped>
@@ -69,8 +104,10 @@ export default {
 }
 
 .welcome-header {
-  font-size: 50px; /* Adjust the font size as needed */
-  color: #333; /* Change the color as needed */
+  font-size: 50px;
+  /* Adjust the font size as needed */
+  color: #333;
+  /* Change the color as needed */
 }
 
 .content {
@@ -113,6 +150,7 @@ export default {
   font-size: 24px;
   margin-bottom: 15px;
 }
+
 @media screen and (max-width: 400px) {
   .content {
     grid-template-columns: 1fr;
@@ -122,4 +160,10 @@ export default {
       "events";
   }
 }
-</style>
+
+.qrcode-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}</style>

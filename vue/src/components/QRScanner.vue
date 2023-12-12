@@ -1,20 +1,35 @@
 <template>
   <div>
-    <qrcode-stream @decode="onDecode"></qrcode-stream>
+    <qrcode-stream @detect="onDetect"></qrcode-stream>
+
   </div>
 </template>
-  
-  <script>
+
+<script>
+import { QrcodeStream } from 'vue-qrcode-reader'
+
 export default {
+  components: {
+    QrcodeStream,
+  },
+
+  data() {
+    return {
+      stopCamera: false,
+    };
+  },
   methods: {
-    onDecode(result) {
-      // Handle the decoded QR code result
-      console.log("Decoded QR code:", result);
-      // You can perform actions based on the decoded result, such as navigating to another page
+    onDecode(content) {
+      console.log(content)
+      this.stopCamera = true;
+      alert(`QR Code Decoded: ${content}`);
+      // You can perform additional actions with the decoded content.
     },
   },
 };
 </script>
 
-<style>
+
+<style scoped>
+/* Add your component-specific styles here */
 </style>
