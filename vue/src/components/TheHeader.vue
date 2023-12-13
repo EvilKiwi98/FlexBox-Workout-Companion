@@ -7,26 +7,23 @@
 
         <!-- Main navigation bar -->
         <div id="nav" v-if="$store.state.token">
-            <img src="@/assets/Flex_Box_Logo.png" alt="Logo" class="logo"/>
-
-            <router-link v-bind:to="{ name: 'home' }" class="nav-link">Home</router-link>
-            <span v-if="$store.state.token !== ''" class="nav-links-container">
-                <router-link v-bind:to="{ name: 'profile' }" class="nav-link">Profile</router-link>
-                <router-link v-bind:to="{ name: 'employee' }" class="nav-link">Employee Services</router-link>
-                <router-link v-bind:to="{ name: 'tutorial' }" class="nav-link">Equipment Tutorials</router-link>
-                <router-link v-bind:to="{ name: 'contactForm' }" class="nav-link">Contact Form</router-link>
-                <router-link v-bind:to="{ name: 'scan' }" class="nav-link">QR Code Scanner</router-link>
-            </span>
-            <check-in-out/>
+            <img src="@/assets/Flex_Box_Logo.png" alt="Logo" class="logo" />
+            <router-link v-bind:to="{ name: 'home' }" class="nav-link" id="home">Home</router-link>
+            <router-link v-bind:to="{ name: 'profile' }" class="nav-link" id="profile">Profile</router-link>
+            <router-link v-bind:to="{ name: 'employee' }" class="nav-link" id="employee">Employee Services</router-link>
+            <router-link v-bind:to="{ name: 'tutorial' }" class="nav-link" id="equipment">Equipment Tutorials</router-link>
+            <router-link v-bind:to="{ name: 'contactForm' }" class="nav-link" id="contact">Contact Form</router-link>
+            <router-link v-bind:to="{ name: 'scan' }" class="nav-link" id="qr-code">QR Code Scanner</router-link>
+            <check-in-out id="check-in" />
         </div>
-        
+
     </div>
 </template>
 
 <script>
 import CheckInOut from '../components/CheckInOut.vue';
 export default {
-    components:{
+    components: {
         CheckInOut
     }
 }
@@ -36,6 +33,45 @@ export default {
 #capstone-app {
     font-family: 'Exo 2', sans-serif;
     margin: 20px;
+}
+
+#nav {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-column-gap: 5px;
+    grid-row-gap:5px;
+    align-items:center;
+    grid-template-areas:
+        "logo home-nav profile-nav employee-nav equipment-nav contact-nav qr-code-nav check-in-nav";
+}
+#home{
+    grid-area:home-nav
+}
+#profile {
+    grid-area: profile-nav
+}
+
+#employee {
+    grid-area: employee-nav
+}
+
+#equipment {
+    grid-area: equipment-nav
+}
+
+#contact {
+    grid-area: contact-nav
+}
+
+#qr-code {
+    grid-area: qr-code-nav
+}
+
+#check-in {
+    grid-area: check-in-nav
 }
 
 #top-nav {
@@ -58,23 +94,14 @@ export default {
     /* Rounded corners */
 }
 
-#nav {
-    background-color: #ffffff;
-    color: #000000;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    /* Center items vertically */
-}
+
 
 .logo {
-    max-height: 170px; /* Adjust the max height of the logo as needed */
-    margin-right: 20px; /* Adjust the margin as needed */
-}
-.nav-links-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    max-height: 170px;
+    /* Adjust the max height of the logo as needed */
+    margin-right: 20px;
+    /* Adjust the margin as needed */
+    grid-area:"logo"
 }
 
 .nav-link {
@@ -84,10 +111,10 @@ export default {
     font-weight: bold;
     padding: 5px 10px;
     border-radius: 8px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.nav-link:hover{
+.nav-link:hover {
     transition: transform 0.3s ease;
     transform: scale(1.08);
 }
@@ -101,5 +128,4 @@ export default {
     text-decoration: underline;
     background-color: #4fa3e0;
     color: #ffffff;
-}
-</style>
+}</style>
