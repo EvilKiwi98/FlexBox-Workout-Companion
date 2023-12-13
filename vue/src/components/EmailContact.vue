@@ -2,11 +2,11 @@
   <div class="container">
     <form ref="form" @submit.prevent="sendEmail">
       <label>Name</label>
-      <input type="text" v-model="userName" name="name">
+      <input type="text" v-model="userName" name="name" placeholder="Your name">
       <label>Email</label>
-      <input type="email" v-model="userEmail" name="email">
+      <input type="email" v-model="userEmail" name="email" placeholder="example@email.com">
       <label>Message</label>
-      <textarea v-model="message" name="message"></textarea>
+      <textarea v-model="message" name="message" placeholder="Enter your message here.."></textarea>
       <input type="submit" value="Send">
     </form>
   </div>

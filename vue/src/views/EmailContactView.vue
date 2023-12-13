@@ -31,6 +31,7 @@ export default {
   background-color: #a7d6ef;
   display: grid;
   border-radius:8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   grid-template-columns:1fr 2fr 1fr;
   grid-template-areas:
   ". the-header ."
