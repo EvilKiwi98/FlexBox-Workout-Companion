@@ -1,41 +1,56 @@
 <template>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <div class="main">
         <span class="header">
-            <h1>Select the camera you want to use, and take a picture you wish to set as your profile image.</h1>
-            <p> Your image should be a portrait style shot, i.e shoulders and up. Make sure to smile! </p>
+            <h1>Take a picture you wish to set as your profile image.</h1>
+            <h4> Your image should be a portrait style shot, i.e shoulders and up. Make sure to smile! </h4>
         </span>
-        <div id="camera-container">
-            <WebCam @photoTaken="photoTaken" @init="webcamInit" ref="webcam"
-                :constraints="{ video: { width: { ideal: 1080 }, height: { ideal: 1350 } }, facingMode: 'environment' }"
-                id="camera" />
-            <select @change="setCamera" v-model="deviceId" id="device">
-                <option value="">-</option>
-                <option v-for="camera in cameras" v-bind:key="camera.id" :value="camera.deviceId">{{ camera.label }}
-                </option>
-            </select>
-            <button v-on:click="takePhoto" id="take-photo-button"> Take Photo!</button>
-        </div>
+        <div class="card-deck" id="card-deck">
+            <div class="card bg-light text-dark text-center rounded-lg" style="width: 30rem;" id="camera-container">
+                <WebCam @photoTaken="photoTaken" @init="webcamInit" ref="webcam"
+                    :constraints="{ video: { width: { ideal: 1080 }, height: { ideal: 1350 } }, facingMode: 'environment' }"
+                    id="camera" />
+                <select @change="setCamera" v-model="deviceId" id="device">
+                    <option value="">-</option>
+                    <option v-for="camera in cameras" v-bind:key="camera.id" :value="camera.deviceId">{{ camera.label }}
+                    </option>
+                </select>
+                <div class="card-body">
+                    <button v-on:click="takePhoto" id="take-photo-button"> Take Photo!</button>
+                </div>
+            </div>
 
-        <div id="taken-photo-container" v-if="imageSrc">
-            <span id="confirm-message">Do you want this to be your profile picture?</span>
-            <span id="confirm-selection">
-                <button v-on:click="setProfilePicture()" id="yes-button"> Yes </button>
-                <button v-on:click="resetImage()" id="no-button"> No (retake) </button>
-            </span>
-            <img :src="imageSrc" class="taken-image" />
-        </div>
 
-        <div id="profile-picture-container">
-            <span> Your current profile image: </span>
-            <img :src="profilePictureUrl" alt="Profile Picture" id="profile-picture" />
-        </div>
+            <div class="card bg-light text-dark text-center rounded-lg" style="width: 30rem;" id="taken-photo-container"
+            >
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h4>New Image:</h4>
+                    </li>
+                    <li class="list-group-item"><img :src="imageSrc" class="taken-image" v-show="imageSrc" /></li>
+                    <li class="list-group-item" v-show="imageSrc"> Set this as your new photo?<button v-on:click="setProfilePicture()" id="yes-button"> Yes </button>
+                        <button v-on:click="resetImage()" id="no-button"> No </button></li>
+                </ul>
+            </div>
 
+            <div class="card bg-light text-dark text-center rounded-lg" style="width: 30rem;" id="profile-picture-container"
+                >
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h4>Your current profile picture: </h4>
+                    </li>
+                    <li class="list-group-item"><img :src="profilePictureUrl" alt="Profile Picture" id="profile-picture" v-if="profilePictureUrl"/>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
   
 <script>
 import { ref, onMounted } from 'vue';
-import { useStore} from 'vuex';
+import { useStore } from 'vuex';
 import ProfileService from '../services/ProfileService';
 
 
@@ -117,33 +132,33 @@ export default {
             if (!this.imageSrc) {
                 return;
             }
-            if (this.profilePictureUrl === null){
-            const userId = this.$store.getters.getUserId;
-            ProfileService.uploadProfilePicture(userId, this.imageSrc)
-                .then(response => {
-                    console.log('Profile picture set successfully');
-                    this.$router.go(0)
-                })
-                .catch(error => {
-                    console.error('Error setting profile picture:', error);
-                });
+            if (this.profilePictureUrl === null) {
+                const userId = this.$store.getters.getUserId;
+                ProfileService.uploadProfilePicture(userId, this.imageSrc)
+                    .then(response => {
+                        console.log('Profile picture set successfully');
+                        this.$router.go(0)
+                    })
+                    .catch(error => {
+                        console.error('Error setting profile picture:', error);
+                    });
             } else {
                 const userId = this.$store.getters.getUserId;
                 ProfileService.updateProfilePicture(userId, this.imageSrc)
-                .then(response => {
-                    console.log('profile updated');
-                    this.$router.go(0)
-                })
-                .catch(error => {
-                    console.log(error.status)
-                });
+                    .then(response => {
+                        console.log('profile updated');
+                        this.$router.go(0)
+                    })
+                    .catch(error => {
+                        console.log(error.status)
+                    });
             }
-            
+
         },
     },
     // load cameras
     mounted() {
-        
+
 
         this.cameras = this.$refs.webcam.cameras;
         if (this.cameras.length === 0) {
@@ -162,6 +177,10 @@ export default {
   
 <style scoped>
 .main {
+    width:98.2%;
+    border-radius:8px;
+    margin-left:10px;
+    padding:5px;
     display: grid;
     text-align: center;
     background-color: #a7d6ef;
@@ -170,15 +189,15 @@ export default {
     grid-column-gap: 5px;
     grid-row-gap: 5px;
     grid-template-areas:
-        ". header ."
-        ". camera-container ."
-        ". tp-container ."
-        " . profile-pic ."
+        "header header header"
+        "card-deck card-deck card-deck"
+}
+
+#card-deck {
+    grid-area: card-deck
 }
 
 #camera-container {
-    width: 540px;
-    height: 675px;
     grid-area: camera-container;
 }
 
@@ -207,24 +226,11 @@ export default {
 }
 
 #taken-photo-container {
-    width: 540px;
-    height: 675px;
-    display: grid;
-    align-content: center;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 5px;
-    grid-row-gap: 5px;
-    grid-template-areas:
-        "confirmation confirm-selection"
-        "taken-image taken-image";
     grid-area: tp-container
 }
 
 #profile-picture-container {
     grid-area: profile-pic;
-    width: 540px;
-    height: 675px;
-    margin-bottom: 10px;
 }
 
 #profile-picture {
@@ -232,7 +238,6 @@ export default {
     height: 100%;
     object-fit: cover;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-    margin-top: 10px;
 }
 
 #confirm-message {
@@ -249,9 +254,9 @@ export default {
 #yes-button {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     border-radius: 6px;
-    width: 50px;
+    margin: 2px;
+    width: 90px;
     height: 40px;
-    margin: 8px;
 
 }
 
@@ -265,8 +270,8 @@ export default {
 #no-button {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     border-radius: 6px;
-    margin: 8px;
-    width: 70px;
+    margin: 2px;
+    width: 90px;
     height: 40px;
 
 
@@ -289,5 +294,10 @@ export default {
 
 .header {
     grid-area: header;
-}
-</style>
+    background: #ffffffc5;
+    border-style: solid;
+    border-radius: 8px;
+    border-width: 1px;
+    margin-top: 15px;
+    padding: 5px;
+}</style>
