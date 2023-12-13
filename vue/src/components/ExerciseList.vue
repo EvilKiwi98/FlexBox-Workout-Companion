@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <div class="exercise-list-container">
+      <span>
       <h1>Exercise List</h1>
+      <h4> Search all your logged exercise history here.</h4>
+    </span>
       <div class="exercise-filter">
         <label for="filterDate">Filter Exercises by Date</label>
         <input type="date" id="filterDate" v-model="selectedDate" ref="filterDateInput" required />
