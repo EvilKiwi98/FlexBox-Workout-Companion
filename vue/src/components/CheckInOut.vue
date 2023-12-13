@@ -114,12 +114,12 @@ export default {
 <style scoped>
 .main {
   display:grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
   grid-template-areas:
-  "the-button message"
-  "the-button message";
+  "the-button"
+  "message";
 
 }
 #messages{

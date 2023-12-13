@@ -5,7 +5,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { StreamBarcodeReader } from "vue-barcode-reader";
 export default {
@@ -21,7 +20,6 @@ export default {
     onDecode(result) {
       console.log(result);
       this.decodedResult = result;
-
       // Check if the decoded result is a valid URL
       if (this.isUrl(this.decodedResult)) {
         // Redirect to the website
@@ -42,7 +40,6 @@ export default {
   },
 };
 </script>
-
 <style>
 .qrcode-container {
   margin-top: 20px;
