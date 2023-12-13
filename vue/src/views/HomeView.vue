@@ -10,53 +10,28 @@
         <event-list />
       </div>
     </div>
-
-    <div class="qrcode-container">
-      <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded"></StreamBarcodeReader>
-      
-    
-    </div>
   </div>
 </template>
 
 <script>
 import ExerciseLog from "../components/ExerciseLog.vue";
 import EventList from "../components/EventList.vue";
-import { StreamBarcodeReader } from "vue-barcode-reader";
+
 
 
 export default {
   components: {
     ExerciseLog,
     EventList,
-    StreamBarcodeReader,
+    
     
    
   },
   data() {
-    return {
-      decodedResult: null
-    };
   },
   methods: {
     setCheckInOutTime() { },
-    navigateToScan() {
-      this.$router.push({ name: 'scan' });
-    },
-  
-    onDecode(result) { 
-      console.log(result);
-      this.decodedResult = result;
-      if (this.decodedResult) {
-        window.location.href = this.decodedResult;
-      }
-    },
-    redirectToWebsite() {
-      // Redirect to another website based on the decoded result
-      if (this.decodedResult) {
-        window.location.href = this.decodedResult;
-      }
-    }
+    
   }
 }
 
@@ -73,9 +48,9 @@ export default {
 .home {
   font-family: "Exo 2", sans-serif;
   text-align: center;
-  margin: 50px 0;
+  margin: 50px auto;
   padding: 30px;
-  width: 100%;
+  width: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   position: relative;
 }
@@ -86,7 +61,7 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 50%;
+  bottom: 0;
   background-color: #a7d6ef;
   z-index: -1;
 }
@@ -149,9 +124,4 @@ export default {
   }
 }
 
-.qrcode-container {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}</style>
+</style>

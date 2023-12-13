@@ -4,7 +4,7 @@
     <div id="login">
       <form v-on:submit.prevent="login">
         <h1>Welcome to FlexBox! Please Sign In</h1>
-        <div role="alert" v-if="invalidCredentials">
+        <div role="alert" id="invalid" v-if="invalidCredentials">
           Invalid username and password!
         </div>
         <div role="alert" v-if="this.$route.query.registration">
@@ -99,7 +99,7 @@ body{
 }
 
 #sign-in-btn{
-  margin-left:360px;
+  margin-left:290px;
   font-family: 'Exo 2', sans-serif;
     padding: 10px;
     font-size: 16px;
@@ -112,8 +112,9 @@ body{
 }
 
 #sign-up{
-  margin-left:165px;
+  margin-left:235px;
 }
+
 label {
   margin-right: 0.5rem;
 }
@@ -130,7 +131,14 @@ label {
   background-blend-mode: lighten;
   grid-area:login;
 }
+
 h1{
   text-align: center;
 } 
+
+#invalid{
+  text-align: center;
+  margin-bottom: 2%;
+}
+
 </style>

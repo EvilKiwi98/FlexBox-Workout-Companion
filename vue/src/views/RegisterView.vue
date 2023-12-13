@@ -8,15 +8,15 @@
       </div>
       <div class="form-input-group">
         <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
+        <input type="text" id="username" class="input-box" v-model="user.username" required autofocus />
       </div>
       <div class="form-input-group">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
+        <input type="password" id="password" class="input-box" v-model="user.password" required />
       </div>
       <div class="password-confirmation">
         <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
+        <input type="password" id="confirmPassword" class="input-box" v-model="user.confirmPassword" required />
       </div>
       <button type="submit" id="create-account-btn">Create Account</button>
       <p><router-link id="login" v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
@@ -79,14 +79,23 @@ export default {
   text-align:center;
   margin-bottom: 1rem;
 }
+
+.input-box{
+  border-style:solid;
+  border-width:2px;
+  border-radius:5px;
+}
+
 .password-confirmation{
   text-align:center;
   margin-right: 63px;
   margin-bottom: 1rem;
 }
+
 label {
   margin-right: 0.5rem;
 }
+
 body{
   background-image: url(../assets/regback.jpg);
   background-repeat: no-repeat;
@@ -95,6 +104,7 @@ body{
   width: 99%;
   height: 1080px;
 }
+
 #register{
   align-content:center;
   margin-left:30%;
@@ -107,8 +117,9 @@ body{
   background-blend-mode: lighten;
   grid-area:login;
 }
+
 #create-account-btn{
-  margin-left:340px;
+  margin-left:270px;
   font-family: 'Exo 2', sans-serif;
     padding: 10px;
     font-size: 16px;
@@ -119,10 +130,13 @@ body{
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
 h1{
   text-align: center;
 } 
+
 #login{
-  margin-left:145px;
+  margin-left:210px;
 }
+
 </style>
