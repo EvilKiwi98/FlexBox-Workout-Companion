@@ -1,6 +1,8 @@
 <template>
   <div class="main">
-    <p id="instructions"> Search the User Id of a specific user. Search all exercises will return all of that users listed exercises. You can also check the user in and out.</p>
+    <p id="instructions"> Search the User Id of a specific user. Search all exercises will return all of that users listed
+      exercises. You can also check the user in and out.</p>
+
     <div id="searchButton">
       <button class="button toggle-btn" v-on:click="toggleEmployeeForm">
         {{ showEmployeeForm ? 'Hide Employee Search' : 'Show Employee Search' }}
@@ -8,16 +10,12 @@
     </div>
 
     <div class="search-form" v-show="showEmployeeForm">
-
-      
-      <span v-show="showErrorMessage" class="error-message"> {{ errorMessage }}</span>
+      <span v-show="showErrorMessage" class="error-message"> {{ errorMessage }} </span>
       <div class="input-box">
-      <label for="userIdInput" id="user-id-label">Enter User Id:</label>
-      <input type="number" id="user-id-input" v-model="userId" min=0 />
+        <label for="userIdInput" id="user-id-label">Enter User Id:</label>
+        <input type="number" id="user-id-input" v-model="userId" min=0 />
+        
       </div>
-      <button class="button search-btn" v-on:click="employeeGetExerciseByUserId(userId)">
-        Search all exercises
-      </button>
       <div id="check-inout-button">
         <button @click="toggleCheckInOut" :class="{ 'check-btn-in': !isCheckedIn, 'check-btn-out': isCheckedIn }">
           {{ checkInOutLabel }}
@@ -28,7 +26,16 @@
         <span v-show="!isCheckedIn" class="status-message">User checked out</span>
       </span>
 
-      <div class="exercise-list-container">
+      <div class="exercise-filter">
+        <label for="filterDate">Filter Exercises by Date</label>
+        <input type="date" id="filterDate" v-model="selectedDate" ref="filterDateInput" required />
+        <button class="button" @click="getExerciseByDayByUserId(this.userId, this.selectedDate)">Search</button>
+        <button class="button" @click="toggleExerciseList">
+          {{ showExerciseList ? 'Hide' : 'Show' }} Results
+        </button>
+      </div>
+
+      <div class="exercise-list-container" v-if="showExerciseList">
         <ul class="exercise-list">
           <li v-for="exercise in exercises" :key="exercise.exercise_id" class="exercise-item">
             <span class="exercise-name">{{ exercise.exerciseName }}</span>
@@ -37,10 +44,15 @@
             <span v-show="exercise.mode === 'duration'" class="exercise-duration">Duration: {{ exercise.duration }}
               mins</span>
             <span class="exercise-weight">Weight: {{ exercise.weight }} lbs</span>
-            <span class="exercise-date">Date: {{ exercise.date }}</span>
+            <span class="exercise-date">Date: {{ formatDate(exercise.date) }}</span>
+          </li>
+
+          <li v-if="exercises.length === 0" class="no-exercises-message">
+            No exercises available for the selected date.
           </li>
         </ul>
       </div>
+
     </div>
   </div>
 </template>
@@ -53,11 +65,13 @@ export default {
   data() {
     return {
       totalVisitDuration: "",
-      errorMessage: "AA",
+      errorMessage: "",
       exercises: [],
       showEmployeeForm: false,
       showMessage: false,
       showErrorMessage: false,
+      showExerciseList: false,
+      selectedDate: "",
       userId: null,
       exercise: {
         exerciseName: "",
@@ -88,6 +102,15 @@ export default {
       this.showEmployeeForm = !this.showEmployeeForm;
     },
 
+    toggleExerciseList() {
+      this.showExerciseList = !this.showExerciseList;
+      this.selectedDate = '';
+      this.$refs.filterDateInput.value = '';
+      if (!this.showExerciseList) {
+        this.getExerciseByUserId(this.userId);
+      }
+    },
+
     switchMessage() {
       setTimeout(() => {
         this.showMessage = false;
@@ -111,9 +134,37 @@ export default {
       }
     },
 
+    getExerciseByDayByUserId(userId, selectedDate) {
+      if (!this.selectedDate) {
+        this.errorMessage = "Please enter a valid date to search."
+        this.showErrorMessage = true;
+        this.switchMessage();
+      } else if (this.userId <= 0) {
+        this.errorMessage = "Please enter a valid User ID to search."
+        this.showErrorMessage = true;
+        this.switchMessage();
+      } else {
+        this.isLoading = true;
+        ExerciseService.getExerciseByDayByUserId(userId, selectedDate)
+          .then((response) => {
+            this.isLoading = false;
+            this.exercises = response.data.map((exercise) => ({
+              ...exercise,
+              date: this.reformatDate(exercise.date), // Reformat date
+            }));
+          });
+      }
+    },
+
     formatDate(date) {
       const options = { year: "numeric", month: "short", day: "numeric" };
       return new Date(date).toLocaleDateString("en-US", options);
+    },
+
+    reformatDate(date) {
+      // Assuming date is in "YYYY-MM-DD" format
+      const [year, month, day] = date.split("-");
+      return `${month}/${day}/${year}`;
     },
 
     getTotalVisitDurationByUserId() {
@@ -252,16 +303,18 @@ export default {
   margin-top: 20px;
   background-color: #a7d6ef;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  border-radius:10px;
-  display: flex; /* Use flexbox */
-  flex-direction: column; /* Stack elements vertically */
+  border-radius: 10px;
+  display: flex;
+  /* Use flexbox */
+  flex-direction: column;
+  /* Stack elements vertically */
   align-items: center;
 }
 
 #searchButton {
   margin-bottom: 20px;
   font-family: 'Exo 2', sans-serif;
-  
+
 }
 
 .toggle-btn {
@@ -284,10 +337,9 @@ export default {
   grid-row-gap: 10px;
   grid-template-areas:
     "instructions instructions instructions"
-    ". input-box ."
-    "search-exercise-button . check-inout-button"
+    "exercise-filter input-box check-inout-button"
     ". error-message system-message"
-    "exercise-list exercise-list exercise-list"
+    "exercise-list . ."
 
 
 }
@@ -296,8 +348,8 @@ export default {
   grid-area: user-id-input;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   width: 100px;
-  text-align:center;
-  border-radius:5px;
+  text-align: center;
+  border-radius: 5px;
 }
 
 #user-id-label {
@@ -340,7 +392,7 @@ export default {
 
 .button.search-btn:hover {
   background-color: #f0f0f0;
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
   transform: scale(1.02);
 
 }
@@ -373,6 +425,10 @@ export default {
   grid-area: input-box;
 }
 
+.exercise-filter {
+  grid-area: exercise-filter;
+}
+
 .check-btn-out {
   background-color: #e74c3c;
   /* Red color for Check Out */
@@ -390,15 +446,12 @@ export default {
   padding: 5px;
   color: #090909;
   border-radius: 5px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: rgba(66, 119, 121, 0.614);
   width: 35%;
-  background-color: cadetblue;
+  font-weight: bold;
 }
 
 .error-message {
-  color:red;
+  color: red;
   font-weight: bold;
   font-size: 16px;
   grid-area: error-message;
@@ -426,10 +479,6 @@ export default {
 
 .exercise-item:hover {
   transform: scale(1.02);
-}
-
-.exercise-details {
-  display: block;
 }
 
 .exercise-name {
