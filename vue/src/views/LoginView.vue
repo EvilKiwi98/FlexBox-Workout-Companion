@@ -127,7 +127,7 @@ label {
   border-style:solid;
   border-radius:8px;
   border-width:1px;
-  background-color: rgba(237, 237, 237, 0.50);
+  background-color: rgba(237, 237, 237, 0.75);
   background-blend-mode: lighten;
   grid-area:login;
 }

@@ -17,6 +17,7 @@
     "@progress/kendo-vue-layout": "^4.1.0",
     "apexcharts": "^3.44.2",
     "axios": "^0.21.4",
+    "bootstrap": "^5.3.2",
     "chart.js": "^4.4.1",
     "cloudinary": "^1.41.0",
     "cors": "^2.8.5",
