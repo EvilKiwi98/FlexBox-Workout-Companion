@@ -14,7 +14,6 @@
 import { Bar } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js';
 import CheckInOutService from '../services/CheckInOutService';
-import 'chartjs-plugin-annotation';
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement);
 
 export default {
@@ -133,60 +132,107 @@ export default {
       this.fetchData();
     },
     updateUserGoal() {
-      const userGoal = prompt('Enter your goal in minutes:');
-      this.userGoal = parseInt(userGoal) || 0;
-      this.drawGoalLine();
-    },
-    drawGoalLine() {
+  const userGoal = prompt('Enter your goal in minutes:');
+  this.userGoal = parseInt(userGoal) || 0;
+
   if (this.$refs.chart && this.$refs.chart.chart) {
     const chart = this.$refs.chart.chart;
 
-    // Remove existing goal line if any
-    chart.options.annotation.annotations = chart.options.annotation.annotations.filter(
-      (annotation) => annotation.id !== 'myGoalLine'
+    // Ensure chart.options is defined
+    if (!chart.options) {
+      chart.options = {};
+    }
+
+    // Ensure chart.options.scales is defined
+    if (!chart.options.scales) {
+      chart.options.scales = {};
+    }
+
+    // Ensure chart.options.scales.yAxes is defined
+    if (!chart.options.scales.yAxes) {
+      chart.options.scales.yAxes = [{ ticks: {} }];
+    }
+
+    // Update the min and max values for the left y-axis
+    chart.options.scales.yAxes[0].ticks.min = Math.min(...chart.data.datasets[0].data, this.userGoal);
+    chart.options.scales.yAxes[0].ticks.max = Math.max(...chart.data.datasets[0].data, this.userGoal + 1000);
+
+    // Log the updated y-axis range
+    console.log(
+      'Updated y-axis range:',
+      chart.options.scales.yAxes[0].ticks.min,
+      '-',
+      chart.options.scales.yAxes[0].ticks.max
     );
 
-    // Add new annotation for the goal line
-    const goalLineAnnotation = {
-      id: 'myGoalLine',
-      type: 'line',
-      mode: 'horizontal',
-      scaleID: 'y-axis-0',
-      value: this.userGoal,
-      borderColor: '#e74c3c',
-      borderWidth: 2,
-    };
-
-    // Add the goal line annotation to the chart options
-    chart.options.annotation.annotations.push(goalLineAnnotation);
-
-    // Use chart.update to reflect the changes
+    // Update the chart
     chart.update();
+    this.drawGoalLine();
   }
 },
 
 
-  },
+drawGoalLine() {
+  const chart = this.$refs.chart.chart;
 
+  // Remove existing goal line if any
+  chart.data.datasets = chart.data.datasets.filter(dataset => dataset.label !== 'My Minutes Goal');
+
+  const labels = chart.data.labels;
+  const values = chart.data.datasets[0].data;
+  const goalLineData = values.map(() => this.userGoal);
+
+  const goalLineDataset = {
+    label: `Goal: ${this.userGoal} Minutes`, 
+    borderColor: '#e74c3c',
+    borderWidth: 2,
+    pointRadius: 0,
+    data: goalLineData,
+    fill: false,
+    type: 'line',
+    order: 3,
+    z: 10,
+  };
+  chart.data.datasets.push(goalLineDataset);
+  chart.update();
+},
+
+  },
   async mounted() {
-  // Fetch data when the component is mounted
+  console.log('Mounted hook is called');
+
   await this.fetchData();
 
   if (this.$refs.chart && this.$refs.chart.chart) {
     const chart = this.$refs.chart.chart;
 
-    // Hide the right y-axis
-    chart.options.scales.yAxes[1].display = false;
+    if (chart.data.datasets.length > 0 && chart.data.datasets[0].data) {
+      // Set the min and max values for the left y-axis
+      chart.options.scales.yAxes[0].ticks.min = 0;
+      chart.options.scales.yAxes[0].ticks.max = Math.max(
+        ...chart.data.datasets[0].data,
+        this.userGoal + 1000
+      );
 
-    // Set the max value for the left y-axis
-    chart.options.scales.yAxes[0].ticks.max = this.userGoal + 1000; // Adjust as needed
+      // Log the initial y-axis range
+      console.log(
+        'Initial y-axis range:',
+        chart.options.scales.yAxes[0].ticks.min,
+        '-',
+        chart.options.scales.yAxes[0].ticks.max
+      );
 
-    // Update the chart
-    chart.update();
+      // Update the chart
+      chart.update();
 
-    this.drawGoalLine();
+      this.drawGoalLine();
+    } else {
+      console.error('Chart dataset or dataset data is undefined or empty.');
+    }
+  } else {
+    console.error('Chart or chart.chart is undefined.');
   }
-},
+}
 
 };
 
