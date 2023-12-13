@@ -1,13 +1,15 @@
 <template>
-  <div class="profile-view">
-    <div class="profile-visit-container">
-      <profile/>
-    </div>
-    <div class="exercise-container">
-      <exercise-list/>
-    </div>
-    <div class="chart-container">
-      <visit-chart/>
+  <div class="body">
+    <div class="profile-view">
+      <div class="profile-visit-container">
+        <profile />
+      </div>
+      <div class="exercise-container">
+        <exercise-list />
+      </div>
+      <div class="chart-container">
+        <visit-chart />
+      </div>
     </div>
   </div>
 </template>
@@ -43,14 +45,16 @@ export default {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
 }
 
 .exercise-container {
   grid-area: exerciseList;
+  width: 100%;
   flex: 2;
   margin-right: 20px;
   padding: 20px;
-  background-color: #fff;
+  background-color: #ffffffc0;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

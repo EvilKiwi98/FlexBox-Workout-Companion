@@ -1,24 +1,10 @@
 <template>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-  <!-- <div class="container">
-    <div class="profile-container">
-      <div class="profile-box">
-        <h1 class="profile-title">My Profile</h1>
-        <div class="profile-content">
-          <img v-if="profile.profilePicUrl" :src="profile.profilePicUrl" alt="Profile Picture" class="profile-picture" />
-          <div class="profile-details">
-            <span class="profile-username">Username: {{ profile.username }}</span>
-            <span class="profile-email">Email Address: {{ profile.emailAddress }}</span>
-            <router-link v-bind:to="{ name: 'camera' }">Update Your Profile Pic</router-link>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
+
   <div class="card-deck">
-    <div class="card bg-light text-dark" style="width: 18rem;">
-      <img v-if="profile.profilePicUrl" :src="profile.profilePicUrl" alt="Profile Picture" class="profile-picture" />
+    <div class="card bg-light text-dark text-center rounded-sm" style="width: 18rem;">
+      <img v-if="profile.profilePicUrl" :src="profile.profilePicUrl" alt="Profile Picture" class="rounded-lg border border-dark" />
       <div class="card-body">
         <h5 class="card-title">My Profile</h5>
       </div>
