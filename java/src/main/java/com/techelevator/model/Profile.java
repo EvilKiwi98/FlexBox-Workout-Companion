@@ -7,13 +7,23 @@ private int profileId;
     private String username;
     private String profilePicUrl;
     private String emailAddress;
+    private int visitDurationGoal;
 
-    public Profile(int profileId, int userId, String username, String profilePicUrl, String emailAddress) {
+    public Profile(int profileId, int userId, String username, String profilePicUrl, String emailAddress, int visitDurationGoal) {
         this.profileId = profileId;
         this.userId = userId;
         this.username = username;
         this.profilePicUrl = profilePicUrl;
         this.emailAddress = emailAddress;
+        this.visitDurationGoal = visitDurationGoal;
+    }
+
+    public int getVisitDurationGoal() {
+        return visitDurationGoal;
+    }
+
+    public void setVisitDurationGoal(int visitDurationGoal) {
+        this.visitDurationGoal = visitDurationGoal;
     }
 
     public int getProfileId() {

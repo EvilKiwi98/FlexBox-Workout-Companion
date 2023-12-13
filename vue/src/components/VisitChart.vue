@@ -14,15 +14,22 @@
 import { Bar } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js';
 import CheckInOutService from '../services/CheckInOutService';
+import { reactive } from 'vue';
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement);
-
+import ProfileService from '../services/ProfileService';
 export default {
   name: 'BarChart',
   components: { Bar },
   data() {
     return {
       userId: '',
-      chartData: {
+      userGoal: 0,
+      userGoalsByViewMode: reactive ({
+        days: 0,
+        weeks: 0,
+        months: 0,
+      }),
+      chartData: reactive ({
         labels: [],
         datasets: [
           {
@@ -31,10 +38,10 @@ export default {
             data: [],
           },
         ],
-      },
+      }),
       chartKey: 0,
-      viewMode: 'days', // Default view mode
-      userGoal: 0, // Initialize with a default value
+      viewMode: 'days',
+
     };
   },
   computed: {
@@ -131,108 +138,120 @@ export default {
       this.viewMode = mode;
       this.fetchData();
     },
-    updateUserGoal() {
-  const userGoal = prompt('Enter your goal in minutes:');
-  this.userGoal = parseInt(userGoal) || 0;
+    async updateUserGoal() {
+      const userGoal = prompt('Enter your goal in minutes:');
+      const parsedUserGoal = parseInt(userGoal) || 0;
+      try {
+        // Call the ProfileService method with the user's goal
+        await ProfileService.updateVisitDurationGoalByUserId(parsedUserGoal, this.userId);
 
-  if (this.$refs.chart && this.$refs.chart.chart) {
-    const chart = this.$refs.chart.chart;
+      this.userGoal = parsedUserGoal;
+      this.userGoalsByViewMode[this.viewMode] = parsedUserGoal;
 
-    // Ensure chart.options is defined
-    if (!chart.options) {
-      chart.options = {};
-    }
+      if (this.$refs.chart && this.$refs.chart.chart) {
+        const chart = this.$refs.chart.chart;
 
-    // Ensure chart.options.scales is defined
-    if (!chart.options.scales) {
-      chart.options.scales = {};
-    }
-
-    // Ensure chart.options.scales.yAxes is defined
-    if (!chart.options.scales.yAxes) {
-      chart.options.scales.yAxes = [{ ticks: {} }];
-    }
-
-    // Update the min and max values for the left y-axis
-    chart.options.scales.yAxes[0].ticks.min = Math.min(...chart.data.datasets[0].data, this.userGoal);
-    chart.options.scales.yAxes[0].ticks.max = Math.max(...chart.data.datasets[0].data, this.userGoal + 1000);
-
-    // Log the updated y-axis range
-    console.log(
-      'Updated y-axis range:',
-      chart.options.scales.yAxes[0].ticks.min,
-      '-',
-      chart.options.scales.yAxes[0].ticks.max
-    );
-
-    // Update the chart
-    chart.update();
-    this.drawGoalLine();
-  }
-},
+        // Ensure chart.options is defined
+        if (!chart.options) {
+          chart.options = {};
+        }
 
 
-drawGoalLine() {
+        if (!chart.options.scales) {
+          chart.options.scales = {};
+        }
+
+
+        if (!chart.options.scales.yAxes) {
+          chart.options.scales.yAxes = [{ ticks: {} }];
+        }
+
+
+        chart.options.scales.yAxes[0].ticks.min = Math.min(...chart.data.datasets[0].data, this.userGoal);
+        chart.options.scales.yAxes[0].ticks.max = Math.max(...chart.data.datasets[0].data, this.userGoal + 1000);
+
+        // Log the updated y-axis range
+        console.log(
+          'Updated y-axis range:',
+          chart.options.scales.yAxes[0].ticks.min,
+          '-',
+          chart.options.scales.yAxes[0].ticks.max
+        );
+
+        // Update the chart
+        chart.update();
+        this.drawGoalLine();
+      }
+    } catch (error) {
+        console.error('Error updating user goal:', error);
+        // Handle the error as needed
+      }
+    },
+    drawGoalLine() {
   const chart = this.$refs.chart.chart;
 
-  // Remove existing goal line if any
-  chart.data.datasets = chart.data.datasets.filter(dataset => dataset.label !== 'My Minutes Goal');
-
-  const labels = chart.data.labels;
-  const values = chart.data.datasets[0].data;
-  const goalLineData = values.map(() => this.userGoal);
+  // Remove existing goal line datasets
+  chart.data.datasets = chart.data.datasets.filter(
+    (dataset) => !dataset.label.startsWith('Goal:')
+  );
 
   const goalLineDataset = {
-    label: `Goal: ${this.userGoal} Minutes`, 
+    label: `Goal: ${this.userGoalsByViewMode[this.viewMode]} Minutes`,
     borderColor: '#e74c3c',
     borderWidth: 2,
     pointRadius: 0,
-    data: goalLineData,
+    data: chart.data.labels.map(() => this.userGoalsByViewMode[this.viewMode]),
     fill: false,
     type: 'line',
     order: 3,
     z: 10,
   };
+
   chart.data.datasets.push(goalLineDataset);
+
+  // Reassign the datasets property to trigger reactivity
+  this.chartData.datasets = [...chart.data.datasets];
+
   chart.update();
-},
+}
+
 
   },
   async mounted() {
-  console.log('Mounted hook is called');
+    console.log('Mounted hook is called');
 
-  await this.fetchData();
+    await this.fetchData();
 
-  if (this.$refs.chart && this.$refs.chart.chart) {
-    const chart = this.$refs.chart.chart;
+    if (this.$refs.chart && this.$refs.chart.chart) {
+      const chart = this.$refs.chart.chart;
 
-    if (chart.data.datasets.length > 0 && chart.data.datasets[0].data) {
-      // Set the min and max values for the left y-axis
-      chart.options.scales.yAxes[0].ticks.min = 0;
-      chart.options.scales.yAxes[0].ticks.max = Math.max(
-        ...chart.data.datasets[0].data,
-        this.userGoal + 1000
-      );
+      if (chart.data.datasets.length > 0 && chart.data.datasets[0].data) {
+        // Set the min and max values for the left y-axis
+        chart.options.scales.yAxes[0].ticks.min = 0;
+        chart.options.scales.yAxes[0].ticks.max = Math.max(
+          ...chart.data.datasets[0].data,
+          this.userGoal + 1000
+        );
 
-      // Log the initial y-axis range
-      console.log(
-        'Initial y-axis range:',
-        chart.options.scales.yAxes[0].ticks.min,
-        '-',
-        chart.options.scales.yAxes[0].ticks.max
-      );
+        // Log the initial y-axis range
+        console.log(
+          'Initial y-axis range:',
+          chart.options.scales.yAxes[0].ticks.min,
+          '-',
+          chart.options.scales.yAxes[0].ticks.max
+        );
 
-      // Update the chart
-      chart.update();
+        // Update the chart
+        chart.update();
 
-      this.drawGoalLine();
+        this.drawGoalLine();
+      } else {
+        console.error('Chart dataset or dataset data is undefined or empty.');
+      }
     } else {
-      console.error('Chart dataset or dataset data is undefined or empty.');
+      console.error('Chart or chart.chart is undefined.');
     }
-  } else {
-    console.error('Chart or chart.chart is undefined.');
   }
-}
 
 };
 
