@@ -2,13 +2,13 @@
   <div class="container">
     <div class="exercise-list-container">
       <span>
-      <h1>Exercise List</h1>
-      <h4> Search all your logged exercise history here.</h4>
-    </span>
+        <h1>Exercise List</h1>
+        <h4> Search all your logged exercise history here.</h4>
+      </span>
       <div class="exercise-filter">
         <label for="filterDate">Filter Exercises by Date</label>
         <input type="date" id="filterDate" v-model="selectedDate" ref="filterDateInput" required />
-        <button class="button" @click="getExerciseByDayByUserId">Filter</button>
+        <button class="button" @click="getExerciseByDayByUserId">Filter</button> 
         <button class="button" @click="toggleExerciseList">
           {{ showExerciseList ? 'Hide' : 'Show' }} All Exercises
         </button>
@@ -46,6 +46,7 @@ export default {
       selectedDate: '',
       userId: null,
       date: null,
+      isLoading: false,
       exercise: {
         exerciseName: "",
         userId: "",
@@ -69,6 +70,7 @@ export default {
       this.exercise.userId = this.$store.getters.getUserId;
     },
     getExerciseByUserId() {
+      this.isLoading = true;  // Add this line
       ExerciseService.getExerciseByUserId(this.$store.getters.getUserId).then(
         (response) => {
           this.isLoading = false;
@@ -144,9 +146,9 @@ export default {
       this.selectedDate = '';
       this.$refs.filterDateInput.value = '';
       if (!this.showExerciseList) {
-      // Call getExerciseByDayByUserId when hiding the list
-      this.getExerciseByUserId();
-    }
+        // Call getExerciseByDayByUserId when hiding the list
+        this.getExerciseByUserId();
+      }
     },
   },
 };
@@ -234,4 +236,5 @@ export default {
   font-style: italic;
   color: #777;
   margin-top: 10px;
-}</style>
+}
+</style>
