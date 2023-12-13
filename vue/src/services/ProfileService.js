@@ -8,7 +8,9 @@ export default {
   getProfileByUserId(userId) {
     return axios.get(`/profile/${userId}`)
   },
-
+  updateVisitDurationGoalByUserId(goal, userId){
+    return axios.put(`/profile/${goal}/${userId}`)
+  },
   createProfile(profile) {
     return axios.post('/profile/createProfile', profile)
       
