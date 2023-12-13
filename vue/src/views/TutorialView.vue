@@ -173,6 +173,9 @@ export default {
   padding: 20px;
   text-align: center;
   /* Center the content horizontally */
+  background-color: #f4f4f4; /* Grey background color */
+  box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1); /* Grey box shadow with increased spread radius */
+  border-radius: 10px; /* Rounded corners */
 }
 
 .exercise-bar {
@@ -251,12 +254,6 @@ export default {
     display: grid;
     grid-template-columns: 50% 50%;
     grid-column-gap: 50px;
-
-
   }
-
-  .body {
-    font-family: 'Exo 2', sans-serif;
-
-  }
-}</style>
+}
+</style>
