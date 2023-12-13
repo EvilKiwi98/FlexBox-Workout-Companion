@@ -1,20 +1,21 @@
 <template>
   <div>
-    <Bar :data="chartData" :key="chartKey" />
+    <Bar ref="chart" :data="chartData" :key="chartKey" />
     <div class="button-container">
       <button @click="viewBy('days')">Lifetime</button>
       <button @click="viewBy('weeks')">Past Week</button>
       <button @click="viewBy('months')">Month Average</button>
+      <button @click="updateUserGoal">Set Goal</button>
     </div>
   </div>
 </template>
 
 <script>
 import { Bar } from 'vue-chartjs';
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js';
 import CheckInOutService from '../services/CheckInOutService';
-
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+import 'chartjs-plugin-annotation';
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement);
 
 export default {
   name: 'BarChart',
@@ -34,6 +35,7 @@ export default {
       },
       chartKey: 0,
       viewMode: 'days', // Default view mode
+      userGoal: 0, // Initialize with a default value
     };
   },
   computed: {
@@ -130,12 +132,62 @@ export default {
       this.viewMode = mode;
       this.fetchData();
     },
+    updateUserGoal() {
+      const userGoal = prompt('Enter your goal in minutes:');
+      this.userGoal = parseInt(userGoal) || 0;
+      this.drawGoalLine();
+    },
+    drawGoalLine() {
+  if (this.$refs.chart && this.$refs.chart.chart) {
+    const chart = this.$refs.chart.chart;
+
+    // Remove existing goal line if any
+    chart.options.annotation.annotations = chart.options.annotation.annotations.filter(
+      (annotation) => annotation.id !== 'myGoalLine'
+    );
+
+    // Add new annotation for the goal line
+    const goalLineAnnotation = {
+      id: 'myGoalLine',
+      type: 'line',
+      mode: 'horizontal',
+      scaleID: 'y-axis-0',
+      value: this.userGoal,
+      borderColor: '#e74c3c',
+      borderWidth: 2,
+    };
+
+    // Add the goal line annotation to the chart options
+    chart.options.annotation.annotations.push(goalLineAnnotation);
+
+    // Use chart.update to reflect the changes
+    chart.update();
+  }
+},
+
+
   },
 
   async mounted() {
-    // Fetch data when the component is mounted
-    await this.fetchData();
-  },
+  // Fetch data when the component is mounted
+  await this.fetchData();
+
+  if (this.$refs.chart && this.$refs.chart.chart) {
+    const chart = this.$refs.chart.chart;
+
+    // Hide the right y-axis
+    chart.options.scales.yAxes[1].display = false;
+
+    // Set the max value for the left y-axis
+    chart.options.scales.yAxes[0].ticks.max = this.userGoal + 1000; // Adjust as needed
+
+    // Update the chart
+    chart.update();
+
+    this.drawGoalLine();
+  }
+},
+
 };
 
 function formatDate(dateString) {
@@ -157,6 +209,7 @@ function formatYearMonth(dateString) {
   const options = { year: 'numeric', month: 'long' };
   return new Date(dateString).toLocaleDateString(undefined, options);
 }
+
 </script>
 
 <style scoped>
@@ -171,7 +224,6 @@ div {
   margin-top: 20px;
   display: flex;
   flex-direction: row;
-  /* Set the direction to row */
 }
 
 button {
