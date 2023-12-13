@@ -72,7 +72,7 @@ INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUE
 INSERT INTO user_visits (user_id, check_in_date, check_out_date, duration) VALUES (3, '2023-12-03 09:00:00', '2023-12-03 09:30:00', 30);
 
 --Members Logged Workout
-
+--
 --1st Member's Logged Workout
 INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Treadmill', 1, '2023-11-21', 1, 0, 25, 0, 'duration');
 INSERT INTO exercise (exercise_name, user_id, date, sets, reps, duration, weight, mode) VALUES ('Dumbbells', 1, '2023-11-21', 3, 10, 0, 15, 'reps');
