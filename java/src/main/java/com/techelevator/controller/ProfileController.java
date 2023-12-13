@@ -31,6 +31,11 @@ public class ProfileController {
         public Profile getUserProfileByUserId(@PathVariable int userId) {
         return profileDao.getUserProfileByUserId(userId);
     }
+    @RequestMapping(path = "/profile/{goal}/{userId}", method = RequestMethod.PUT)
+        public boolean updateVisitDurationGoalByUserId (@PathVariable int goal,@PathVariable int userId){
+        return profileDao.updateVisitDurationGoalByUserId(goal,userId);
+    }
+
     @RequestMapping(path = "/profile/createProfile", method = RequestMethod.POST)
     public Profile createProfile(@RequestBody Profile profile) {
         return profileDao.createProfile(profile);

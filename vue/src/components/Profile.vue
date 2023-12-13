@@ -39,7 +39,8 @@ export default {
       userId: null,
       username: "",
       profilePicUrl: "",
-      emailAddress: ""
+      emailAddress: "",
+      visitDurationGoal: 0,
     });
 
     const loadProfileData = async () => {

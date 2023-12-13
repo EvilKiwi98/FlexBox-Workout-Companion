@@ -14,6 +14,7 @@ CREATE TABLE profiles (
     user_id INT REFERENCES users(user_id),
     profile_picture_url varchar(255),
     email varchar(255),
+    visit_duration_goal INT,
     CONSTRAINT PK_profile PRIMARY KEY (profile_id),
     CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)
 );

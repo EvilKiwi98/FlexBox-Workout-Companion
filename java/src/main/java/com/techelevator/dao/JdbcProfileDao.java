@@ -26,7 +26,7 @@ public class JdbcProfileDao implements ProfileDao {
     @Override
     public Profile getUserProfileByUserId(int userId) {
         Profile profile = new Profile();
-        String sql = "SELECT profile_id, users.user_id, username, profile_picture_url, email FROM users\n" +
+        String sql = "SELECT profile_id, users.user_id, username, profile_picture_url, email, visit_duration_goal FROM users\n" +
                 "JOIN profiles ON users.user_id = profiles.user_id\n" +
                 "WHERE users.user_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
@@ -36,6 +36,7 @@ public class JdbcProfileDao implements ProfileDao {
             profile.setUsername(results.getString("username"));
             profile.setProfilePicUrl(results.getString("profile_picture_url"));
             profile.setEmailAddress(results.getString("email"));
+            profile.setVisitDurationGoal(results.getInt("visit_duration_goal"));
         }
         return profile;
     }
@@ -71,6 +72,16 @@ public class JdbcProfileDao implements ProfileDao {
         // Insert the image data into the images table
         String imageSql = "UPDATE images SET image_data = ? WHERE user_id = ?";
         jdbcTemplate.update(imageSql, imageBytes, userId);
+    }
+    @Override
+    public boolean updateVisitDurationGoalByUserId (int goal, int userId){
+        boolean success = false;
+        String sql = "UPDATE profiles SET visit_duration_goal = ? WHERE user_id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, goal, userId);
+        if (rowsAffected > 0){
+            success = true;
+    }
+        return success;
     }
 
 }
