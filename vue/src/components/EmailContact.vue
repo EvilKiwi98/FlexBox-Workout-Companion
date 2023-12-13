@@ -2,11 +2,11 @@
   <div class="container">
     <form ref="form" @submit.prevent="sendEmail">
       <label>Name</label>
-      <input type="text" v-model="userName" name="name">
+      <input type="text" v-model="userName" name="name" placeholder="Your name">
       <label>Email</label>
-      <input type="email" v-model="userEmail" name="email">
+      <input type="email" v-model="userEmail" name="email" placeholder="example@email.com">
       <label>Message</label>
-      <textarea v-model="message" name="message"></textarea>
+      <textarea v-model="message" name="message" placeholder="Enter your message here.."></textarea>
       <input type="submit" value="Send">
     </form>
   </div>
@@ -86,5 +86,6 @@ input[type=submit]:hover {
   background-color: #f2f2f2;
   padding: 20px;
   width: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 </style>

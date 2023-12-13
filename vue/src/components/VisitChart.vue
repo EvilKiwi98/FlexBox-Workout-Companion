@@ -1,20 +1,20 @@
 <template>
   <div>
-    <Bar :data="chartData" :key="chartKey" />
+    <Bar ref="chart" :data="chartData" :key="chartKey" />
     <div class="button-container">
       <button @click="viewBy('days')">Lifetime</button>
       <button @click="viewBy('weeks')">Past Week</button>
       <button @click="viewBy('months')">Month Average</button>
+      <button @click="updateUserGoal">Set Goal</button>
     </div>
   </div>
 </template>
 
 <script>
 import { Bar } from 'vue-chartjs';
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement } from 'chart.js';
 import CheckInOutService from '../services/CheckInOutService';
-
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement);
 
 export default {
   name: 'BarChart',
@@ -34,6 +34,7 @@ export default {
       },
       chartKey: 0,
       viewMode: 'days', // Default view mode
+      userGoal: 0, // Initialize with a default value
     };
   },
   computed: {
@@ -130,12 +131,109 @@ export default {
       this.viewMode = mode;
       this.fetchData();
     },
-  },
+    updateUserGoal() {
+  const userGoal = prompt('Enter your goal in minutes:');
+  this.userGoal = parseInt(userGoal) || 0;
 
-  async mounted() {
-    // Fetch data when the component is mounted
-    await this.fetchData();
+  if (this.$refs.chart && this.$refs.chart.chart) {
+    const chart = this.$refs.chart.chart;
+
+    // Ensure chart.options is defined
+    if (!chart.options) {
+      chart.options = {};
+    }
+
+    // Ensure chart.options.scales is defined
+    if (!chart.options.scales) {
+      chart.options.scales = {};
+    }
+
+    // Ensure chart.options.scales.yAxes is defined
+    if (!chart.options.scales.yAxes) {
+      chart.options.scales.yAxes = [{ ticks: {} }];
+    }
+
+    // Update the min and max values for the left y-axis
+    chart.options.scales.yAxes[0].ticks.min = Math.min(...chart.data.datasets[0].data, this.userGoal);
+    chart.options.scales.yAxes[0].ticks.max = Math.max(...chart.data.datasets[0].data, this.userGoal + 1000);
+
+    // Log the updated y-axis range
+    console.log(
+      'Updated y-axis range:',
+      chart.options.scales.yAxes[0].ticks.min,
+      '-',
+      chart.options.scales.yAxes[0].ticks.max
+    );
+
+    // Update the chart
+    chart.update();
+    this.drawGoalLine();
+  }
+},
+
+
+drawGoalLine() {
+  const chart = this.$refs.chart.chart;
+
+  // Remove existing goal line if any
+  chart.data.datasets = chart.data.datasets.filter(dataset => dataset.label !== 'My Minutes Goal');
+
+  const labels = chart.data.labels;
+  const values = chart.data.datasets[0].data;
+  const goalLineData = values.map(() => this.userGoal);
+
+  const goalLineDataset = {
+    label: `Goal: ${this.userGoal} Minutes`, 
+    borderColor: '#e74c3c',
+    borderWidth: 2,
+    pointRadius: 0,
+    data: goalLineData,
+    fill: false,
+    type: 'line',
+    order: 3,
+    z: 10,
+  };
+  chart.data.datasets.push(goalLineDataset);
+  chart.update();
+},
+
   },
+  async mounted() {
+  console.log('Mounted hook is called');
+
+  await this.fetchData();
+
+  if (this.$refs.chart && this.$refs.chart.chart) {
+    const chart = this.$refs.chart.chart;
+
+    if (chart.data.datasets.length > 0 && chart.data.datasets[0].data) {
+      // Set the min and max values for the left y-axis
+      chart.options.scales.yAxes[0].ticks.min = 0;
+      chart.options.scales.yAxes[0].ticks.max = Math.max(
+        ...chart.data.datasets[0].data,
+        this.userGoal + 1000
+      );
+
+      // Log the initial y-axis range
+      console.log(
+        'Initial y-axis range:',
+        chart.options.scales.yAxes[0].ticks.min,
+        '-',
+        chart.options.scales.yAxes[0].ticks.max
+      );
+
+      // Update the chart
+      chart.update();
+
+      this.drawGoalLine();
+    } else {
+      console.error('Chart dataset or dataset data is undefined or empty.');
+    }
+  } else {
+    console.error('Chart or chart.chart is undefined.');
+  }
+}
+
 };
 
 function formatDate(dateString) {
@@ -157,6 +255,7 @@ function formatYearMonth(dateString) {
   const options = { year: 'numeric', month: 'long' };
   return new Date(dateString).toLocaleDateString(undefined, options);
 }
+
 </script>
 
 <style scoped>
@@ -171,7 +270,6 @@ div {
   margin-top: 20px;
   display: flex;
   flex-direction: row;
-  /* Set the direction to row */
 }
 
 button {
