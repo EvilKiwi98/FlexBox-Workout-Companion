@@ -1,5 +1,5 @@
 <template>
-  <div class="qr-code-scanner-view">
+  <div>
     <div class="qrcode-container">
       <StreamBarcodeReader
         @decode="onDecode"
@@ -13,8 +13,9 @@
 import { StreamBarcodeReader } from "vue-barcode-reader";
 
 export default {
-  StreamBarcodeReader,
-
+  components: {
+    StreamBarcodeReader,
+  },
   data() {
     return {
       decodedResult: null,
@@ -34,7 +35,11 @@ export default {
   redirectToWebsite() {
     // Redirect to another website based on the decoded result
     if (this.decodedResult) {
-      window.location.href = this.decodedResult;
+      try {
+        window.location.href = this.decodedResult;
+      } catch (error) {
+        console.error("Error redirecting:", error);
+      }
     }
   },
 };
