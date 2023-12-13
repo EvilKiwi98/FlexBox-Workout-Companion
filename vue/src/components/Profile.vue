@@ -1,5 +1,7 @@
 <template>
-  <div class="container">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <!-- <div class="container">
     <div class="profile-container">
       <div class="profile-box">
         <h1 class="profile-title">My Profile</h1>
@@ -8,11 +10,33 @@
           <div class="profile-details">
             <span class="profile-username">Username: {{ profile.username }}</span>
             <span class="profile-email">Email Address: {{ profile.emailAddress }}</span>
-            <router-link v-bind:to="{ name : 'camera'}">Update Your Profile Pic</router-link>
+            <router-link v-bind:to="{ name: 'camera' }">Update Your Profile Pic</router-link>
           </div>
         </div>
       </div>
     </div>
+  </div> -->
+  <div class="card-deck">
+    <div class="card bg-light text-dark" style="width: 18rem;">
+      <img v-if="profile.profilePicUrl" :src="profile.profilePicUrl" alt="Profile Picture" class="profile-picture" />
+      <div class="card-body">
+        <h5 class="card-title">My Profile</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item bg-light text-dark">Username: {{ profile.username }}</li>
+        <li class="list-group-item bg-light text-dark">Email Address: {{ profile.emailAddress }}</li>
+      </ul>
+      <div class="card-body">
+        <router-link v-bind:to="{ name: 'camera' }">Update Your Profile Pic</router-link>
+      </div>
+    </div>
+
+    <div class="card bg-light" style="width: 18rem;">
+      <div class="card-body">
+        <total-visit-time/>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -20,6 +44,7 @@
 import { ref, onMounted, watchEffect } from 'vue';
 import { useStore } from 'vuex';
 import ProfileService from "../services/ProfileService";
+import TotalVisitTime from '../components/TotalVisitTime.vue';
 
 export default {
   setup() {
@@ -55,66 +80,20 @@ export default {
       profile,
     };
   },
+  components: {
+    TotalVisitTime
+  }
 };
 </script>
 
   
 <style scoped>
-.container {
-  display: flex;
-  max-width: 1200px;
-  margin: 20px auto;
-}
-
-.profile-container {
-  
-  width: 100%; /* Adjust the width as needed */
-  box-sizing: border-box;
-  padding-right: 10px;
-  display: flex;
-  
-}
-
-.profile-box {
-  border: 5px solid #6ad5e5;
-  border-radius: 10px;
-  overflow: hidden;
-  padding: 20px;
-  max-width: 400px; /* Adjust the width as needed */
-  box-sizing: border-box;
-  text-align: center; /* Center text content within the box */
-}
-
-.profile-title {
-  font-size: 24px;
-  color: #333;
-}
-
-.profile-content {
-  text-align: center;
-}
-
-.profile-details {
-  margin-top: 20px;
-}
-
-.profile-username {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-}
 
 .profile-picture {
-  max-width: 100%; /* Adjust the width as needed */
+  max-width: 100%;
+  /* Adjust the width as needed */
   margin-top: 10px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.profile-email {
-  display: block;
-  margin-top: 10px;
-  font-size: 16px;
-  color: #555;
 }
 </style>

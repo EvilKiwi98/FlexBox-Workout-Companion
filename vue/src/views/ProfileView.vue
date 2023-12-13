@@ -2,7 +2,6 @@
   <div class="profile-view">
     <div class="profile-visit-container">
       <profile/>
-      <total-visit-time/>
     </div>
     <div class="exercise-container">
       <exercise-list/>
@@ -16,14 +15,12 @@
 <script>
 import ExerciseList from '../components/ExerciseList.vue';
 import VisitChart from '../components/VisitChart.vue';
-import TotalVisitTime from '../components/TotalVisitTime.vue';
 import Profile from '../components/Profile.vue';
 
 export default {
   components: {
     ExerciseList,
     VisitChart,
-    TotalVisitTime,
     Profile
   }
 }
