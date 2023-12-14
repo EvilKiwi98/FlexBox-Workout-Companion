@@ -19,7 +19,7 @@
             <check-in-out id="check-in" />
 
         </div>
-        <span class="image-bar">
+        <span class="image-bar" v-if="$store.state.token">
             <random-fitness-image class="random-image" /> <random-fitness-image class="random-image" /> <random-fitness-image class="random-image" /> <random-fitness-image class="random-image" /> <random-fitness-image class="random-image" /> <random-fitness-image class="random-image" />
         </span>
     </div>
