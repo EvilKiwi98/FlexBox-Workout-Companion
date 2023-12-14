@@ -1,0 +1,75 @@
+<template>
+    <div>
+      <h2>List of Exercises:</h2>
+      <ul>
+        <li v-for="exercise in englishExercises" :key="exercise.id">
+          {{ exercise.name }} 
+          <P>{{ exercise.description }}</P></li>
+          <li v-for="image in exerciseImages" :key="image.id">
+            <img :src=image.image alt="Exercise Image"/>
+           
+          </li>
+          
+        
+      </ul>
+    </div>
+  </template>
+  
+  <script>
+  import axios from 'axios';
+  
+  export default {
+    data() {
+      return {
+        englishExercises: [],
+        exerciseImages: [],
+        exerciseUrl: ""
+      };
+    },
+    mounted() {
+      this.getEnglishExercises();
+      this.getExerciseImage();
+    },
+    methods: {
+      async getEnglishExercises() {
+        try {
+          const response = await axios.get('https://wger.de/api/v2/exercise/', {
+            params: {
+              language: 2, // Language code for English is 2
+            },
+            headers: {
+              Authorization: '0cbf2789d52b1545ca9b839866d21f12c428a9e5', // Replace 'YOUR_API_KEY' with your actual API key
+            },
+          });
+  
+          if (response.status === 200) {
+            this.englishExercises = response.data.results;
+          } else {
+            console.error(`Error: ${response.status}`);
+          }
+        } catch (error) {
+          console.error('An error occurred while fetching data:', error);
+        }
+      },
+      async getExerciseImage() {
+        try {
+          const response = await axios.get('https://wger.de/api/v2/exerciseimage/', {
+        
+            headers: {
+              Authorization: '0cbf2789d52b1545ca9b839866d21f12c428a9e5', // Replace 'YOUR_API_KEY' with your actual API key
+            },
+          });
+  
+          if (response.status === 200) {
+            this.exerciseImages = response.data.results;
+          } else {
+            console.error(`Error: ${response.status}`);
+          }
+        } catch (error) {
+          console.error('An error occurred while fetching data:', error);
+        }
+      },
+    },
+  };
+  </script>
+  

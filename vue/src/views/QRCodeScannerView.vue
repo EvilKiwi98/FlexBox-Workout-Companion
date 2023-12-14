@@ -2,14 +2,17 @@
   <div>
     <div class="qrcode-container">
       <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded"></StreamBarcodeReader>
+    <AaronTest></AaronTest>
     </div>
   </div>
 </template>
 <script>
 import { StreamBarcodeReader } from "vue-barcode-reader";
+import AaronTest from "../components/AaronTest.vue";
 export default {
   components: {
     StreamBarcodeReader,
+    AaronTest
   },
   data() {
     return {
