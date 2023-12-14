@@ -4,7 +4,8 @@
 
   <div class="card-deck">
     <div class="card bg-light text-dark text-center rounded-sm" style="width: 18rem;">
-      <img v-if="!profile.profilePicUrl == null" :src="profile.profilePicUrl" alt="Profile Picture" class="rounded-lg border border-dark" />
+      <p v-if="profile.profilePicUrl == undefined"> You have not yet set a profile image! </p>
+      <img v-if="profile.profilePicUrl" :src="profile.profilePicUrl" alt="Profile Picture" class="rounded-lg border border-dark" />
       <div class="card-body">
         <h5 class="card-title">My Profile</h5>
       </div>
@@ -38,7 +39,7 @@ export default {
     const profile = ref({
       userId: null,
       username: "",
-      profilePicUrl:null,
+      profilePicUrl:"",
       emailAddress: "",
       visitDurationGoal: 0,
     });

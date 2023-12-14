@@ -8,9 +8,9 @@
       <div class="exercise-filter">
         <label for="filterDate">Filter Exercises by Date</label>
         <input type="date" id="filterDate" v-model="selectedDate" ref="filterDateInput" required />
-        <button class="button" @click="getExerciseByDayByUserId">Filter</button> 
+        <button class="button" @click="getExerciseByDayByUserId">Search</button> 
         <button class="button" @click="toggleExerciseList">
-          {{ showExerciseList ? 'Hide' : 'Show' }} All Exercises
+          {{ showExerciseList ? 'Hide' : 'Show' }} Results
         </button>
       </div>
       <div class="exercise-list-wrapper" v-if="showExerciseList">
