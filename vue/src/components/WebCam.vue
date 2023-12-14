@@ -46,6 +46,8 @@
                 </ul>
             </div>
         </div>
+        <router-link v-bind:to="{ name: 'profile' }" class="nav-link" id="profile-link">Return</router-link>
+
     </div>
 </template>
   
@@ -192,10 +194,14 @@ export default {
     grid-template-areas:
         "header header header"
         "card-deck card-deck card-deck"
+        ". profile-link ."
 }
 
 #card-deck {
     grid-area: card-deck
+}
+#profile-link{
+    grid-area: profile-link
 }
 
 #camera-container {

@@ -4,6 +4,7 @@
     <div id="login">
       <form v-on:submit.prevent="login">
         <h1>Welcome to FlexBox! Please Sign In</h1>
+        <img src="../assets/Flex_Box_Logo copy.png" id="logo"/>
         <div role="alert" id="invalid" v-if="invalidCredentials">
           Invalid username and password!
         </div>
@@ -81,6 +82,12 @@ body{
   width:99%;
   height:1080px;
   color: black;
+}
+
+#logo{
+  height: 200px;
+  width:auto;
+  margin-left:175px;
 }
 
 .main{

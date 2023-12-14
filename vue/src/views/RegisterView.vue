@@ -3,6 +3,7 @@
   <div id="register" class="text-center">
     <form v-on:submit.prevent="register">
       <h1>Create Account</h1>
+      <img src="../assets/Flex_Box_Logo copy.png" id="logo"/>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
@@ -78,6 +79,12 @@ export default {
 .form-input-group {
   text-align:center;
   margin-bottom: 1rem;
+}
+
+#logo{
+  width:auto;
+  height:200px;
+  margin-left: 175px;
 }
 
 .input-box{

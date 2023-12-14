@@ -50,7 +50,7 @@ export default {
         labels: [],
         datasets: [
           {
-            label: 'Metric',
+            label: 'Total Usage',
             backgroundColor: '#3498DB',
             data: [],
           },
