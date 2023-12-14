@@ -14,6 +14,8 @@
             <router-link v-bind:to="{ name: 'tutorial' }" class="nav-link" id="equipment">Equipment Tutorials</router-link>
             <router-link v-bind:to="{ name: 'contactForm' }" class="nav-link" id="contact">Contact Form</router-link>
             <router-link v-bind:to="{ name: 'scan' }" class="nav-link" id="qr-code">QR Code Scanner</router-link>
+            <router-link v-bind:to="{ name: 'additional' }" class="nav-link" id="additional">Learn More</router-link>
+
             <check-in-out id="check-in" />
         </div>
 
@@ -40,12 +42,12 @@ export default {
     color: #000000;
     padding: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-column-gap: 5px;
     grid-row-gap:5px;
     align-items:center;
     grid-template-areas:
-        "logo home-nav profile-nav employee-nav equipment-nav contact-nav qr-code-nav check-in-nav";
+        "logo home-nav profile-nav employee-nav equipment-nav contact-nav qr-code-nav additional-nav check-in-nav";
 }
 #home{
     grid-area:home-nav
@@ -68,6 +70,9 @@ export default {
 
 #qr-code {
     grid-area: qr-code-nav
+}
+#additional {
+    grid-area: additional-nav
 }
 
 #check-in {

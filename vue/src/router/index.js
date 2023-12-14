@@ -12,6 +12,7 @@ import TutorialView from '../views/TutorialView.vue';
 import CameraView from '../views/CameraView.vue';
 import EmailContactView from '../views/EmailContactView.vue';
 import QRCodeScannerView from '../views/QRCodeScannerView.vue';
+import AdditionalExercisesView from '../views/AdditionalExercisesView.vue'
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -26,6 +27,14 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/additionalExercises',
+    name: 'additional',
+    component: AdditionalExercisesView,
     meta: {
       requiresAuth: true
     }
