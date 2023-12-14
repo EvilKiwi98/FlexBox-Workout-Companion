@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>My Visit History</h1>
     <Bar ref="chart" :data="chartData" :key="chartKey" />
     <div class="button-container">
       <button @click="viewBy('days')">Lifetime</button>
