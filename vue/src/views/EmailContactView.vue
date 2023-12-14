@@ -18,7 +18,7 @@ export default {
     return {};
   },
   components: {
-    EmailContact
+    EmailContact,
   }
 };
 </script>
