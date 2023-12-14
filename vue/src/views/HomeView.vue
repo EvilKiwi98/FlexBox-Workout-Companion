@@ -51,6 +51,7 @@ export default {
   width: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   position: relative;
+  border-radius:8px;
 }
 
 .random-image{
