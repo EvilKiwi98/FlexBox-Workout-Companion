@@ -26,7 +26,7 @@
   <style scoped>
   .contact-page {
     font-family: 'Exo 2', sans-serif;
-    text-align: center;
+    text-align: left;
     padding: 20px;
     background-color: #a7d6ef;
     display: grid;
