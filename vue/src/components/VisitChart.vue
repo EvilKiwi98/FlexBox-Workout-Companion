@@ -198,7 +198,7 @@ export default {
   const goalLineDataset = {
     label: `Goal: ${this.userGoalsByViewMode[this.viewMode]} Minutes`,
     borderColor: '#e74c3c',
-    borderWidth: 2,
+    borderWidth: 4,
     pointRadius: 0,
     data: chart.data.labels.map(() => this.userGoalsByViewMode[this.viewMode]),
     fill: false,

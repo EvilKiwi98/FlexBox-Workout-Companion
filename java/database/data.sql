@@ -274,6 +274,6 @@ VALUES ('Dumbbell Debugging Basics', 'In Dumbbell Debugging, you''ll lift weight
 INSERT INTO schedule (event_name, event_description, event_date, event_start_time, event_duration)
 VALUES ('Ctrl+Alt+Defeat Cardio Circuit', 'Sweating out bugs and boosting endorphins – join us and reboot your body.', '2023-12-19', '14:00:00', 60);
 
-insert into profiles (user_id, profile_picture_url, email) VALUES (1, 'C:\\Users\\Student\\Pictures\\Gym Icons', 'aloskota@gmail.com');
+insert into profiles (user_id, profile_picture_url, email) VALUES (1, 'test', 'flexmaster2000@gmail.com');
 
 COMMIT TRANSACTION;
