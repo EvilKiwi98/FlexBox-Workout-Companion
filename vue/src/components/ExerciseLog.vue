@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>Log Your Exercise</h1>
-    <p class="status-message" v-show="showStatusMessage">{{ statusMessage }}</p>
     <p class="error-message" v-show="showErrorMessage">{{ errorMessage }}</p>
     <form class="exercise-form" v-on:submit.prevent="submitExercise">
       <div class="exercise-buttons">
@@ -12,7 +11,7 @@
       <div class="input-container">
         <div class="form-group">
           <label for="sets">Sets</label>
-          <input type="number" id="sets" v-model="exercise.sets" required />
+          <input type="number" id="sets" v-model="exercise.sets" required placeholder="Enter your number of sets."/>
         </div>
       </div>
 
@@ -20,11 +19,11 @@
         <div class="input-container">
           <div class="form-group">
             <label for="reps">Reps</label>
-            <input type="number" id="reps" v-model="exercise.reps" min="0" required />
+            <input type="number" id="reps" v-model="exercise.reps" min="0" required placeholder="Enter your number of reps."/>
           </div>
           <div class="form-group">
             <label for="weight">Weight</label>
-            <input type="number" id="weight" v-model="exercise.weight" min="0" required />
+            <input type="number" id="weight" v-model="exercise.weight" min="0" required placeholder="Enter the weight used (number only)." />
           </div>
         </div>
       </div>
@@ -46,6 +45,7 @@
       </div>
 
       <button type="submit">Submit</button>
+      <p class="status-message" v-show="showStatusMessage">{{ statusMessage }}</p>
     </form>
   </div>
 </template>

@@ -29,6 +29,7 @@
                         <h4>New Image:</h4>
                     </li>
                     <li class="list-group-item"><img :src="imageSrc" class="taken-image" v-show="imageSrc" /></li>
+                    <li class="list-group-item" v-show="!imageSrc" > Go ahead and take a picture! </li>
                     <li class="list-group-item" v-show="imageSrc"> Set this as your new photo?<button v-on:click="setProfilePicture()" id="yes-button"> Yes </button>
                         <button v-on:click="resetImage()" id="no-button"> No </button></li>
                 </ul>
@@ -40,8 +41,8 @@
                     <li class="list-group-item">
                         <h4>Your current profile picture: </h4>
                     </li>
-                    <li class="list-group-item"><img :src="profilePictureUrl" alt="Profile Picture" id="profile-picture" v-if="profilePictureUrl"/>
-                    </li>
+                    <li class="list-group-item"><img :src="profilePictureUrl" alt="Profile Picture" id="profile-picture" v-if="profilePictureUrl"/></li>
+                    <li class="list-group-item" v-show="!profilePictureUrl" > You have not yet set a profile image. </li>
                 </ul>
             </div>
         </div>
