@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <h1 class="welcome-header">Welcome to FlexBox</h1>
-
     <div class="content">
       <div class="dashboard-section exercise-log-container">
         <exercise-log />
@@ -23,7 +22,6 @@ export default {
   components: {
     ExerciseLog,
     EventList,
-    
     
    
   },
@@ -53,6 +51,10 @@ export default {
   width: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   position: relative;
+}
+
+.random-image{
+  grid-area:random-image
 }
 
 .home:before {

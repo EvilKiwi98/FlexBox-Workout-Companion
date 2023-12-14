@@ -17,16 +17,21 @@
             <router-link v-bind:to="{ name: 'additional' }" class="nav-link" id="additional">Learn More</router-link>
 
             <check-in-out id="check-in" />
-        </div>
 
+        </div>
+        <span class="image-bar">
+            <random-fitness-image class="random-image" /> <random-fitness-image class="random-image" /> <random-fitness-image class="random-image" /> <random-fitness-image class="random-image" /> <random-fitness-image class="random-image" /> <random-fitness-image class="random-image" />
+        </span>
     </div>
 </template>
 
 <script>
 import CheckInOut from '../components/CheckInOut.vue';
+import RandomFitnessImage from '../components/RandomFitnessImage.vue'
 export default {
     components: {
-        CheckInOut
+        CheckInOut,
+        RandomFitnessImage
     }
 }
 </script>
@@ -44,14 +49,27 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-column-gap: 5px;
-    grid-row-gap:5px;
-    align-items:center;
+    grid-row-gap: 5px;
+    align-items: center;
     grid-template-areas:
-        "logo home-nav profile-nav employee-nav equipment-nav contact-nav qr-code-nav additional-nav check-in-nav";
+        "logo home-nav profile-nav employee-nav equipment-nav contact-nav qr-code-nav additional-nav check-in-nav"
 }
-#home{
-    grid-area:home-nav
+
+.image-bar{
+    display:inline-flex;
+    width:100%;
+    align-content: center;
 }
+
+.random-image {
+    margin-left:75px;
+    margin-right:75px;
+}
+
+#home {
+    grid-area: home-nav
+}
+
 #profile {
     grid-area: profile-nav
 }
@@ -71,6 +89,7 @@ export default {
 #qr-code {
     grid-area: qr-code-nav
 }
+
 #additional {
     grid-area: additional-nav
 }
@@ -106,7 +125,7 @@ export default {
     /* Adjust the max height of the logo as needed */
     margin-right: 20px;
     /* Adjust the margin as needed */
-    grid-area:"logo"
+    grid-area: "logo"
 }
 
 .nav-link {
@@ -133,4 +152,5 @@ export default {
     text-decoration: underline;
     background-color: #4fa3e0;
     color: #ffffff;
-}</style>
+}
+</style>

@@ -51,8 +51,8 @@
   
   <style scoped>
   #thang{
-    width:200px;
-    height:auto;
+    width:auto;
+    height:100px;
   }
   </style>
     
